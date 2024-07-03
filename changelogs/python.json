@@ -1,0 +1,49 @@
+[
+    {
+        "identifier": "read_transaction",
+        "type": "method",
+        "msg": "Asshole, read_transaction is deprecated! Move to execute_read instead!",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.execute_read",
+        "version": "5.0"
+    },
+    {
+        "identifier": "write_transaction",
+        "type": "method",
+        "msg": "Asshole, write_transaction is deprecated! Move to execute_write instead!",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.execute_write",
+        "version": "5.0"
+    },
+    {
+        "identifier": "neo4j.work",
+        "type": "import_statement__name",
+        "msg": "Importing `neo4j.work` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.",
+        "version": "5.0"
+    },
+    {
+        "identifier": "neo4j.work",
+        "type": "import_from_statement__module_name",
+        "msg": "Importing `neo4j.work` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.",
+        "version": "5.0"
+    },
+    {
+        "identifier": ["driver", "trust"],
+        "type": "method__kwarg",
+        "msg": "The `trust` option has been deprecated. Use `trusted_certificates` instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#trusted-certificates-ref",
+        "version": "5.0"
+    },
+    {
+        "identifier": ["driver", "update_routing_table_timeout"],
+        "type": "method__kwarg",
+        "msg": "`update_routing_table_timeout` was removed. Server-side keep-alives communicated through configuration hints together with `connection_acquisition_timeout` are sufficient to avoid the driver getting stuck.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#connection-acquisition-timeout-ref",
+        "version": "5.0"
+    },
+    {
+        "identifier": ["driver", "session_connection_timeout"],
+        "type": "method__kwarg",
+        "msg": "`session_connection_timeout` was removed. Server-side keep-alives communicated through configuration hints together with `connection_acquisition_timeout` are sufficient to avoid the driver getting stuck.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#connection-acquisition-timeout-ref",
+        "version": "5.0"
+    }
+]
