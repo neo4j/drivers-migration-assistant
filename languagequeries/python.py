@@ -8,6 +8,13 @@ class PythonQueries:
                 (#eq? @method_name "{name}")))
         """
 
+    def type(self, name):
+        return f"""
+            (type
+              (identifier) @type_name
+              (#eq? @type_name "{name}"))
+        """
+
     def import_from_statement__module_name(self, name):
         return f"""
             (import_from_statement

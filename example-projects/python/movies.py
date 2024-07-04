@@ -28,11 +28,12 @@ database = os.getenv("NEO4J_DATABASE", "movies")
 
 port = os.getenv("PORT", 8080)
 
+
 driver = GraphDatabase.driver(url,
     auth=basic_auth(username, password),
     trust=None, session_connection_timeout=10, update_routing_table_timeout=4)
 
-session.last_bookmark()
+b: Bookmark = session.last_bookmark()
 
 def get_db():
     if not hasattr(g, "neo4j_db"):

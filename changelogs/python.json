@@ -14,6 +14,13 @@
         "version": "5.0"
     },
     {
+        "identifier": "Bookmark",
+        "type": "type",
+        "msg": "`neo4j.Bookmark` is deprecated. Use `neo4j.Bookmarks` instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Bookmarks",
+        "version": "5.0"
+    },
+    {
         "identifier": "neo4j.work",
         "type": "import_statement__name",
         "msg": "Importing `neo4j.work` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.",
