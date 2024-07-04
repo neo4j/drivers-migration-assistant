@@ -3,7 +3,6 @@ from json import dumps
 import logging
 import os
 import neo4j.work
-from neo4j import Bookmark
 from neo4j.work import Transaction
 
 from flask import (
@@ -32,7 +31,6 @@ driver = GraphDatabase.driver(url,
     auth=basic_auth(username, password),
     trust=None, session_connection_timeout=10, update_routing_table_timeout=4)
 
-session.last_bookmark()
 
 def get_db():
     if not hasattr(g, "neo4j_db"):

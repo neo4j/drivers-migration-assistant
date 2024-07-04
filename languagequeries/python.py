@@ -16,6 +16,16 @@ class PythonQueries:
             )
         """
 
+    def import_from_statement__name(self, module_name, name):
+        return f"""
+            (import_from_statement
+              module_name: (dotted_name) @module_name
+              (#eq? @module_name "{module_name}")
+              name: (dotted_name) @name
+              (#eq? @name "{name}")
+            )
+        """
+
     def import_statement__name(self, name):
         return f"""
             (import_statement
