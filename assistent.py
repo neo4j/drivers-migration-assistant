@@ -35,6 +35,8 @@ def parse(path, language_name, context_lines):
         parser = Parser(language)
         tree = parser.parse(bytes(source_text, 'utf8'))
 
+        messages = []
+
         changes_json = json.loads(open(f'changelogs/{language_name}.json').read())
         for change in changes_json:
             if isinstance(change['identifier'], str):
@@ -46,12 +48,12 @@ def parse(path, language_name, context_lines):
 
             patterns = language.query(query)
             captures = clean_captures(patterns.captures(tree.root_node), change)
-            for capture in captures:
-                node = capture[0]
-                click.echo('\n\n\033[91;1m>> ' + change['msg'] + '\033[0m')  # click.echo removes ANSI codes when output to file
-                #click.echo("\n\n" + tw.indent(tw.fill("\033[91;1m" + change['msg'] + "\033[0m"), '  '))
 
-                click.echo('\n', nl=False)
+            for capture in captures:
+                output = ''
+                node = capture[0]
+                output += '\n\n\033[91;1m>> ' + change['msg'] + '\033[0m\n\n'
+                #click.echo("\n\n" + tw.indent(tw.fill("\033[91;1m" + change['msg'] + "\033[0m"), '  '))
 
                 matched_line_n = node.range.start_point[0]
                 for i in range(
@@ -65,16 +67,18 @@ def parse(path, language_name, context_lines):
                         line_content += source_lines[i][node.range.end_point[1]:]
                     else:
                         line_content = source_lines[i]
-                    print_source_line(line_content, i)
+                    output += f'  \033[1m{i}\033[0m {line_content}\n'
 
                 if change.get('ref'):
-                    click.echo('\n  \033[1;4m' + 'Docs:' + '\033[0m ' + change.get('ref'))
+                    output += '\n  \033[1;4m' + 'Docs:' + '\033[0m ' + change.get('ref') + '\n'
+
+                messages.append((matched_line_n, output))
+
+        messages.sort(key=lambda msg: msg[0])  # sort by line number
+        for msg in messages:
+            click.echo(msg[1], nl=False)  # click.echo removes ANSI codes when output to file
 
     click.echo('\n\033[1;4m' + 'Library full manual:' + f'\033[0m https://neo4j.com/docs/{language_name}-manual/current/ \n')
-
-
-def print_source_line(content, line_n):
-    click.echo(f'  \033[1m{line_n}\033[0m {content}')
 
 
 def clean_captures(captures, change):
