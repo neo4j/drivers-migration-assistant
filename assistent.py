@@ -77,11 +77,18 @@ def parse(path, language_name, context_lines):
                 if change.get('ref'):
                     output += '\n  \033[1;4m' + 'Docs:' + '\033[0m ' + change.get('ref') + '\n'
 
-                messages.append((matched_line_n, output))
+                messages.append({
+                    'meta': {
+                        'line': matched_line_n,
+                        'col_start': node.range.start_point[1],
+                        'col_end': node.range.end_point[1]
+                    },
+                    'content': output
+                })
 
-        messages.sort(key=lambda msg: msg[0])  # sort by line number
+        messages.sort(key=lambda msg: (msg['meta']['line'], msg['meta']['col_start']))  # sort by line number; break ties by starting col number
         for msg in messages:
-            click.echo(msg[1], nl=False)  # click.echo removes ANSI codes when output to file
+            click.echo(msg['content'], nl=False)  # click.echo removes ANSI codes when output to file
 
     click.echo('\n\033[1;4m' + 'Library full manual:' + f'\033[0m https://neo4j.com/docs/{language_name}-manual/current/ \n')
 
