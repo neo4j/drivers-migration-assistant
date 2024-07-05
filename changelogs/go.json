@@ -1,0 +1,16 @@
+[
+    {
+        "identifier": "ReadTransaction",
+        "type": "method",
+        "msg": "`Session.read_transaction()` was deprecated in favor of `Session.execute_read()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.commit()`, `.rollback()`, `.close()`) are not available on managed transactions anymore.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.execute_read",
+        "version": "5.0"
+    },
+    {
+        "identifier": "WriteTransaction",
+        "type": "method",
+        "msg": "`Session.write_transaction()` was deprecated in favor of `Session.execute_write()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.commit()`, `.rollback()`, `.close()`) are not available on managed transactions anymore.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.execute_write",
+        "version": "5.0"
+    }
+]

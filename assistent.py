@@ -1,6 +1,6 @@
 import click
 import json
-import textwrap as tw
+#import textwrap as tw
 from glob import iglob
 from tree_sitter import Language, Parser
 
@@ -18,12 +18,17 @@ from tree_sitter import Language, Parser
 def parse(path, language_name, context_lines):
 
     if language_name == 'python':
-        import tree_sitter_python
+        import tree_sitter_python as tslang
         from languagequeries.python import PythonQueries
-        language = Language(tree_sitter_python.language())
         queries = PythonQueries()
+    elif language_name == 'go':
+        import tree_sitter_go as tslang
+        from languagequeries.go import GoQueries
+        queries = GoQueries()
     else:
         raise ValueError('Invalid language. Valid choices are: python, java, go, javascript, dotnet.')
+
+    language = Language(tslang.language())
 
     file_paths = iglob(path.strip(), recursive=True)
     for file_path in file_paths:
