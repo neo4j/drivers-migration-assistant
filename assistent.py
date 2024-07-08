@@ -15,7 +15,11 @@ from tree_sitter import Language, Parser
     '--context-lines', '-c', 'context_lines', default=3,
     help='Number of surrounding lines to show around each hit, both before and after.'
 )
-def parse(path, language_name, context_lines):
+@click.option(
+    '--rough-parsing', '-R', 'rough_parsing', is_flag=True, flag_value=True,
+    help='Whether to use a coarser parser. This is likely to surface more matches, but with more possible false positives as well.'
+)
+def parse(path, language_name, context_lines, rough_parsing):
 
     if language_name == 'python':
         import tree_sitter_python as tslang
@@ -44,15 +48,17 @@ def parse(path, language_name, context_lines):
 
         changes_json = json.loads(open(f'changelogs/{language_name}.json').read())
         for change in changes_json:
-            if isinstance(change['identifier'], str):
-                query = getattr(queries, change['type'])(change['identifier'])
-            elif isinstance(change['identifier'], list):
-                query = getattr(queries, change['type'])(*change['identifier'])
-            else:
-                raise ValueError('Change identifier must be str or list.')
+            captures = []
+            for pattern in change['patterns']:
+                if isinstance(pattern['pattern'], str):
+                    query = getattr(queries, pattern['type'])(pattern['pattern'])
+                elif isinstance(pattern['pattern'], list):
+                    query = getattr(queries, pattern['type'])(*pattern['pattern'])
+                else:
+                    raise ValueError('Change identifier must be str or list.')
 
-            patterns = language.query(query)
-            captures = clean_captures(patterns.captures(tree.root_node), change)
+                patterns = language.query(query)
+                captures += clean_captures(patterns.captures(tree.root_node), change)
 
             for capture in captures:
                 output = ''

@@ -63,6 +63,7 @@ driver = GraphDatabase.driver(url,
 
 b: Bookmark = session.last_bookmark()
 b: neo4j.Bookmark = session.last_bookmark()
+p: SummaryNotificationPosition = None
 
 session.id
 
@@ -210,3 +211,5 @@ if __name__ == "__main__":
 
     d.hour_minute_second
     Time(second=12.2)
+
+
