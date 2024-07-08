@@ -57,7 +57,7 @@ def parse(path, language_name, context_lines):
             for capture in captures:
                 output = ''
                 node = capture[0]
-                output += '\n\n\033[91;1m>> ' + change['msg'] + '\033[0m\n\n'
+                output += '\n\n\033[91;1m>> ' + change['msg'].format(**change) + '\033[0m\n\n'
                 #click.echo("\n\n" + tw.indent(tw.fill("\033[91;1m" + change['msg'] + "\033[0m"), '  '))
 
                 matched_line_n = node.range.start_point[0]
@@ -74,8 +74,17 @@ def parse(path, language_name, context_lines):
                         line_content = source_lines[i]
                     output += f'  \033[1m{i}\033[0m {line_content}\n'
 
+                if change.get('deprecated'):
+                    output += '\n  \033[1;4m' + 'Deprecated in:' + '\033[0m ' + change.get('deprecated')
+                if change.get('removed'):
+                    output += '\n  \033[1;4m' + 'Removed in:' + '\033[0m ' + change.get('removed')
                 if change.get('ref'):
-                    output += '\n  \033[1;4m' + 'Docs:' + '\033[0m ' + change.get('ref') + '\n'
+                    refs = change.get('ref')
+                    if isinstance(refs, str):
+                        refs = [refs, ]
+                    for link in refs:
+                        output += '\n  \033[1;4m' + 'Docs:' + '\033[0m ' + link
+                output += '\n'
 
                 messages.append({
                     'meta': {
@@ -96,7 +105,7 @@ def parse(path, language_name, context_lines):
 def clean_captures(captures, change):
     '''
     Change entries having a list identifier result in as many matches as list elements.
-    We are (normally?) only interested in the last match.
+    (Normally?) Only the last match is relevant.
     '''
     if isinstance(change['identifier'], str):
         step_size = 1
