@@ -2,69 +2,307 @@
     {
         "identifier": "last_bookmark",
         "type": "method",
-        "msg": "`Session.last_bookmark()` was deprecated and has been superseded by `Session.last_bookmarks()`. The logic is similar, but the new function returns `neo4j.Bookmarks` rather than `str`.",
+        "msg": "`Session.last_bookmark()` was deprecated and has been superseded by `Session.last_bookmarks()`. The logic is similar, but the new method returns `neo4j.Bookmarks` rather than `str`.",
         "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.last_bookmarks",
-        "version": "5.0"
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "is_fatal_during_discovery",
+        "type": "method",
+        "msg": "`Neo4jError.is_fatal_during_discovery()` was deprecated and will be removed without replacement.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.exceptions.Neo4jError",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "invalidates_all_connections",
+        "type": "method",
+        "msg": "`Neo4jError.invalidates_all_connections()` was deprecated and will be removed without replacement.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.exceptions.Neo4jError",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "id",
+        "type": "property",
+        "msg": "`Node.id` and `Relationship.id` were deprecated and have been superseded by `Node.element_id` and `Relationship.element_id`. Old identifiers were integers, wereas new elementIds are strings. This also affects Graph objects as indexing graph.nodes[...] and graph.relationships[...] with integers has been deprecated in favor of indexing them with strings.",
+        "ref": "https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "subseconds",
+        "type": "property",
+        "msg": "`Duration.subseconds` was deprecated in {deprecated} and removed in {removed}. Use `nanoseconds` instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#duration",
+        "deprecated": "4.4",
+        "removed": "5.0"
+    },
+    {
+        "identifier": "hours_minutes_seconds",
+        "type": "property",
+        "msg": "`Duration.hours_minutes_seconds` was deprecated in {deprecated} and removed in {removed}. Use `hours_minutes_seconds_nanoseconds` instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#duration",
+        "deprecated": "4.4",
+        "removed": "5.0"
+    },
+    {
+        "identifier": "hour_minute_second",
+        "type": "property",
+        "msg": "`Time.hour_minute_second` and `DateTime.hour_minute_second` was removed in {removed}. Use `hour_minute_second_nanosecond` instead.",
+        "ref": ["https://neo4j.com/docs/api/python-driver/current/types/temporal.html#neo4j.time.Time.hour_minute_second_nanosecond", "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#neo4j.time.DateTime.hour_minute_second_nanosecond"],
+        "removed": "5.0"
+    },
+    {
+        "identifier": "second",
+        "type": "property",
+        "msg": "`Time.second` returns an int instead of a float. Use `nanosecond` to get the sub-second information.",
+        "ref": ["https://neo4j.com/docs/api/python-driver/current/types/temporal.html#neo4j.time.Time.second"],
+        "removed": "5.0"
+    },
+    {
+        "identifier": "version_info",
+        "type": "property",
+        "msg": "`ResultSummary.server.version_info` was deprecated in {deprecated} and removed in {removed}. Use `ResultSummary.server.agent`, `ResultSummary.server.protocol_version`, or call the `dbms.components` Cypher procedure instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.ServerInfo",
+        "deprecated": "4.3",
+        "removed": "5.0"
+    },
+    {
+        "identifier": "(neo4j\\.)?Bookmark",
+        "type": "type",
+        "msg": "`neo4j.Bookmark` is deprecated. Use `neo4j.Bookmarks` instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Bookmarks",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.Bookmark",
+        "type": "import_statement__name",
+        "msg": "Importing `neo4j.Bookmark` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.Bookmark",
+        "type": "import_from_statement__module_name",
+        "msg": "Importing `neo4j.Bookmark` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.",
+        "deprecated": "5.0"
     },
     {
         "identifier": ["neo4j", "Bookmark"],
         "type": "import_from_statement__name",
-        "msg": "`neo4j.Bookmark` is deprecated. Use `neo4j.Bookmarks` instead.",
-        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Bookmarks",
-        "version": "5.0"
-    },
-    {
-        "identifier": "Bookmark",
-        "type": "type",
-        "msg": "`neo4j.Bookmark` is deprecated. Use `neo4j.Bookmarks` instead.",
-        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Bookmarks",
-        "version": "5.0"
+        "msg": "Importing `neo4j.Bookmark` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.",
+        "deprecated": "5.0"
     },
     {
         "identifier": "neo4j.work",
         "type": "import_statement__name",
         "msg": "Importing `neo4j.work` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.",
-        "version": "5.0"
+        "deprecated": "5.0"
     },
     {
         "identifier": "neo4j.work",
         "type": "import_from_statement__module_name",
         "msg": "Importing `neo4j.work` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.",
-        "version": "5.0"
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": ["neo4j", "work"],
+        "type": "import_from_statement__name",
+        "msg": "Importing `neo4j.work` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.packstream",
+        "type": "import_statement__name",
+        "msg": "Importing `neo4j.packstream` has been deprecated: it's internal and should not be used by client code.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.packstream",
+        "type": "import_from_statement__module_name",
+        "msg": "Importing `neo4j.packstream` has been deprecated: it's internal and should not be used by client code.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": ["neo4j", "packstream"],
+        "type": "import_from_statement__name",
+        "msg": "Importing `neo4j.packstream` has been deprecated: it's internal and should not be used by client code.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.routing",
+        "type": "import_statement__name",
+        "msg": "Importing `neo4j.routing` has been deprecated: it's internal and should not be used by client code.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.routing",
+        "type": "import_from_statement__module_name",
+        "msg": "Importing `neo4j.routing` has been deprecated: it's internal and should not be used by client code.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": ["neo4j", "routing"],
+        "type": "import_from_statement__name",
+        "msg": "Importing `neo4j.routing` has been deprecated: it's internal and should not be used by client code.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.config",
+        "type": "import_statement__name",
+        "msg": "Importing `neo4j.config` has been deprecated: it's internal and should not be used by client code.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.config",
+        "type": "import_from_statement__module_name",
+        "msg": "Importing `neo4j.config` has been deprecated: it's internal and should not be used by client code.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": ["neo4j", "config"],
+        "type": "import_from_statement__name",
+        "msg": "Importing `neo4j.config` has been deprecated: it's internal and should not be used by client code.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.meta",
+        "type": "import_statement__name",
+        "msg": "Importing `neo4j.meta` has been deprecated: it's internal and should not be used by client code. `ExperimantalWarning` should be imported directly from neo4j. `neo4j.meta.version` is exposed through `neo4j.__version__`.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.meta",
+        "type": "import_from_statement__module_name",
+        "msg": "Importing `neo4j.meta` has been deprecated: it's internal and should not be used by client code. `ExperimantalWarning` should be imported directly from neo4j. `neo4j.meta.version` is exposed through `neo4j.__version__`.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": ["neo4j", "meta"],
+        "type": "import_from_statement__name",
+        "msg": "Importing `neo4j.meta` has been deprecated: it's internal and should not be used by client code. `ExperimantalWarning` should be imported directly from neo4j. `neo4j.meta.version` is exposed through `neo4j.__version__`.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.data",
+        "type": "import_statement__name",
+        "msg": "Importing `neo4j.data` has been deprecated: it's internal and should not be used by client code. `Record` should be imported directly from `neo4j` instead. `neo4j.data.DataHydrator` and `neo4j.data.DataDeydrator` have been removed without replacement.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.data",
+        "type": "import_from_statement__module_name",
+        "msg": "Importing `neo4j.data` has been deprecated: it's internal and should not be used by client code. `Record` should be imported directly from `neo4j` instead. `neo4j.data.DataHydrator` and `neo4j.data.DataDeydrator` have been removed without replacement.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": ["neo4j", "data"],
+        "type": "import_from_statement__name",
+        "msg": "Importing `neo4j.data` has been deprecated: it's internal and should not be used by client code. `Record` should be imported directly from `neo4j` instead. `neo4j.data.DataHydrator` and `neo4j.data.DataDeydrator` have been removed without replacement.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.time",
+        "type": "import_from_statement__module_name",
+        "msg": "Importing submodules from `neo4j.time` (`neo4j.time.[arithmetic|clock_implementations|hydration|metaclasses]`) has been deprecated. Everything needed should be imported from neo4j.time directly.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "neo4j.time..*",
+        "type": "import_statement__name",
+        "msg": "Importing submodules from `neo4j.time` (`neo4j.time.[arithmetic|clock_implementations|hydration|metaclasses]`) has been deprecated. Everything needed should be imported from neo4j.time directly.",
+        "deprecated": "5.0"
     },
     {
         "identifier": ["driver", "trust"],
         "type": "method__kwarg",
         "msg": "The `trust` option has been deprecated. Use `trusted_certificates` instead.",
         "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#trusted-certificates-ref",
-        "version": "5.0"
+        "deprecated": "5.0"
     },
     {
         "identifier": ["driver", "update_routing_table_timeout"],
         "type": "method__kwarg",
         "msg": "`update_routing_table_timeout` was removed. Server-side keep-alives communicated through configuration hints together with `connection_acquisition_timeout` are sufficient to avoid the driver getting stuck.",
         "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#connection-acquisition-timeout-ref",
-        "version": "5.0"
+        "deprecated": "5.0"
     },
     {
         "identifier": ["driver", "session_connection_timeout"],
         "type": "method__kwarg",
         "msg": "`session_connection_timeout` was removed. Server-side keep-alives communicated through configuration hints together with `connection_acquisition_timeout` are sufficient to avoid the driver getting stuck.",
         "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#connection-acquisition-timeout-ref",
-        "version": "5.0"
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": ["Duration", "subseconds"],
+        "type": "function__kwarg",
+        "msg": "The argument `subseconds` to `neo4j.time.Duration` was deprecated in {deprecated} and removed in {removed}. Use `milliseconds`, `microseconds`, or `nanoseconds` instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#duration",
+        "deprecated": "4.4",
+        "removed": "5.0"
+    },
+    {
+        "identifier": ["Time", "second", "[0-9]+\\.[0-9]+"],
+        "type": "function__kwarg__type",
+        "msg": "The `neo4j.time.Time` constructor does not accept floats for `second` anymore. Use `nanosecond` instead. Similar remarks hold for the object property `second`.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#neo4j.time.Time",
+        "removed": "5.0"
     },
     {
         "identifier": "read_transaction",
         "type": "method",
         "msg": "`Session.read_transaction()` was deprecated in favor of `Session.execute_read()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.commit()`, `.rollback()`, `.close()`) are not available on managed transactions anymore.",
         "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.execute_read",
-        "version": "5.0"
+        "deprecated": "5.0"
     },
     {
         "identifier": "write_transaction",
         "type": "method",
         "msg": "`Session.write_transaction()` was deprecated in favor of `Session.execute_write()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.commit()`, `.rollback()`, `.close()`) are not available on managed transactions anymore.",
         "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.execute_write",
-        "version": "5.0"
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "(de)?hydrate_point",
+        "type": "function",
+        "msg": "`neo4j.spatial.hydrate_point` and `neo4j.spatial.dehydrate_point` have been deprecated without replacement: they are internal functions.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": ["neo4j.spatial", "(de)?hydrate_point"],
+        "type": "import_from_statement__name",
+        "msg": "`neo4j.spatial.hydrate_point` and `neo4j.spatial.dehydrate_point` have been deprecated without replacement: they are internal functions.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "(Session|Workspace|Pool)?Config",
+        "type": "function",
+        "msg": "`neoj4.Config`, `neoj4.PoolConfig`, `neoj4.SessionConfig`, and `neoj4.WorkspaceConfig` have been deprecated without replacement: they are internal classes.",
+        "deprecated": "5.0"
+    },
+    {
+        "identifier": "Data(Hydrator|Dehydrator)",
+        "type": "function",
+        "msg": "`neo4j.data.DataHydrator` and `neo4j.data.DataDeydrator` have been removed without replacement.",
+        "removed": "5.0"
+    },
+    {
+        "identifier": "(neo4j\\.)?SummaryNotificationPosition",
+        "type": "type",
+        "msg": "`neo4j.SummaryNotificationPosition` is deprecated. Use `neo4j.SummaryInputPosition` instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.SummaryInputPosition",
+        "deprecated": "5.22"
+    },
+    {
+        "identifier": "neo4j.SummaryNotificationPosition",
+        "type": "import_statement__name",
+        "msg": "`neo4j.SummaryNotificationPosition` is deprecated. Use `neo4j.SummaryInputPosition` instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.SummaryInputPosition",
+        "deprecated": "5.22"
+    },
+    {
+        "identifier": ["neo4j", "SummaryNotificationPosition"],
+        "type": "import_from_statement__name",
+        "msg": "`neo4j.SummaryNotificationPosition` is deprecated. Use `neo4j.SummaryInputPosition` instead.",
+        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.SummaryInputPosition",
+        "deprecated": "5.22"
     }
 ]

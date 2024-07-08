@@ -4,8 +4,19 @@ import logging
 import os
 import neo4j.work
 from neo4j import Bookmark
+import neo4j.Bookmark
 from neo4j.work import Transaction
-
+import neo4j.packstream
+from neo4j.time import arithmetic
+from neo4j.time import metaclasses
+from neo4j.time import hydration
+from neo4j.time import clock_implementations
+import neo4j.time.arithmetic
+import neo4j.time.metaclasses
+import neo4j.time.hydration
+import neo4j.time.clock_implementations
+from neo4j.spatial import dehydrate_point
+import neo4j.SummaryNotificationPosition
 from flask import (
     Flask,
     g,
@@ -17,6 +28,20 @@ from neo4j import (
     basic_auth,
 )
 
+hydrate_point(p)
+dehydrate_point(p)
+
+w = WorkspaceConfig()
+w = PoolConfig()
+w = Config()
+w = SessionConfig()
+
+
+Duration(hours=1, subseconds=10)
+Duration.hours_minutes_seconds
+Duration.subseconds
+
+result.server.version_info
 
 app = Flask(__name__, static_url_path="/static/")
 
@@ -28,12 +53,18 @@ database = os.getenv("NEO4J_DATABASE", "movies")
 
 port = os.getenv("PORT", 8080)
 
+method_name = 'read_transaction'
+locals()['method_name']()
+
 
 driver = GraphDatabase.driver(url,
     auth=basic_auth(username, password),
     trust=None, session_connection_timeout=10, update_routing_table_timeout=4)
 
 b: Bookmark = session.last_bookmark()
+b: neo4j.Bookmark = session.last_bookmark()
+
+session.id
 
 def get_db():
     if not hasattr(g, "neo4j_db"):
@@ -176,3 +207,6 @@ if __name__ == "__main__":
     logging.root.setLevel(logging.INFO)
     logging.info("Starting on port %d, database is at %s", port, url)
     app.run(port=port)
+
+    d.hour_minute_second
+    Time(second=12.2)

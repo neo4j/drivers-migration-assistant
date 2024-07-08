@@ -4,25 +4,25 @@
 update_routing_table_timeout and session_connection_timeout have been deprecated and will be removed in 5.0.
 Server-side keep-alives communicated through configuration hints together with connection_acquisition_timeout are sufficient to avoid the driver getting stuck.
 
-5.0a2 ⚠️ Deprecated Nodes' and Relationships' id property (int) in favor of element_id (str).
+~ 5.0a2 ⚠️ Deprecated Nodes' and Relationships' id property (int) in favor of element_id (str).
 This also affects Graph objects as indexing graph.nodes[...] and graph.relationships[...] with integers has been deprecated in favor of indexing them with strings.
 
 ✔⚠️ The trust option has been deprecated.
 Use trusted_certificates instead.
 New options trusted_certificates and ssl_context have been added
 
-⚠️ Session.last_bookmark was deprecated. Its behaviour is partially incorrect and cannot be fixed without breaking its signature.
+✔⚠️ Session.last_bookmark was deprecated. Its behaviour is partially incorrect and cannot be fixed without breaking its signature.
 Use Session.last_bookmarks instead.
-neo4j.Bookmark was deprecated.
+✔ neo4j.Bookmark was deprecated.
 Use neo4j.Bookmarks instead.
 
 Removed deprecated parts in the neo4j.time module (#635).
 Duration
-The constructor does not accept subseconds anymore.
+✔ The constructor does not accept subseconds anymore.
 Use milliseconds, microseconds, or nanoseconds instead.
-The property subseconds has been removed.
+✔ The property subseconds has been removed.
 Use nanoseconds instead.
-The property hours_minutes_seconds has been removed.
+✔ The property hours_minutes_seconds has been removed.
 Use hours_minutes_seconds_nanoseconds instead.
 For all math operations holds: they are element-wise on (months, days, nanoseconds). This affects (i.e., changes) the working of //, %, /, and *.
 Years are equal to 12 months.
@@ -31,40 +31,34 @@ seconds, milliseconds, microseconds, and nanoseconds are implicitly converted to
 Multiplication and division allow for floats but will always result in integer values (round to nearest even).
 
 Time
-The constructor does not accept floats for second anymore.
-Use nanosecond instead.
+✔ The constructor does not accept floats for second anymore. Use nanosecond instead.
 Ticks are now nanoseconds since midnight (int).
-The property ticks_ns has been renamed to ticks.
-The old ticks is no longer supported.
-The propertyfrom_ticks_ns has been renamed to from_ticks.
-The old from_ticks is no longer supported.
-The property second returns an int instead of a float.
-Use nanosecond to get the sub-second information.
-The property hour_minute_second has been removed.
-Use hour_minute_second_nanosecond instead.
+The property ticks_ns has been renamed to ticks. The old ticks is no longer supported.
+The property from_ticks_ns has been renamed to from_ticks. The old from_ticks is no longer supported.
+✔ The property second returns an int instead of a float. Use nanosecond to get the sub-second information.
+✔ The property hour_minute_second has been removed. Use hour_minute_second_nanosecond instead.
+
 DateTime
-The property hour_minute_second has been removed.
-Use hour_minute_second_nanosecond instead.
-The property second returns an int instead of a float.
-Use nanosecond to get the sub-second information.
+✔ The property hour_minute_second has been removed. Use hour_minute_second_nanosecond instead.
+The property second returns an int instead of a float. Use nanosecond to get the sub-second information.
 
-The first argument of transaction functions is now a ManagedTransaction object. It behaves exactly like a regular Transaction object, except it does not offer the commit, rollback, close, and closed methods.
+✔ The first argument of transaction functions is now a ManagedTransaction object. It behaves exactly like a regular Transaction object, except it does not offer the commit, rollback, close, and closed methods.
 
-Removed deprecated ResultSummary.server.version_info (#636).
-Use ResultSummary.server.agent, ResultSummary.server.protocol_version, or call the dbms.components procedure instead.
+✔ Removed deprecated ResultSummary.server.version_info (#636). Use ResultSummary.server.agent, ResultSummary.server.protocol_version, or call the dbms.components procedure instead.
 
-Importing submodules from neo4j.time (neo4j.time.xyz) has been deprecated. Everything needed should be imported from neo4j.time directly.
-neo4j.spatial.hydrate_point and neo4j.spatial.dehydrate_point have been deprecated without replacement. They are internal functions.
-Importing neo4j.packstream has been deprecated. It's internal and should not be used by client code.
-Importing neo4j.routing has been deprecated. It's internal and should not be used by client code.
-Importing neo4j.config has been deprecated. It's internal and should not be used by client code.
-neoj4.Config, neoj4.PoolConfig, neoj4.SessionConfig, and neoj4.WorkspaceConfig have been deprecated without replacement. They are internal classes.
-Importing neo4j.meta has been deprecated. It's internal and should not be used by client code. ExperimantalWarning should be imported directly from neo4j. neo4j.meta.version is exposed through neo4j.__vesrion__
-Importing neo4j.data has been deprecated. It's internal and should not be used by client code. Record should be imported directly from neo4j instead. neo4j.data.DataHydrator and neo4j.data.DataDeydrator have been removed without replacement.
+✔ Importing submodules from neo4j.time (neo4j.time.xyz) has been deprecated. Everything needed should be imported from neo4j.time directly.
+✔ neo4j.spatial.hydrate_point and neo4j.spatial.dehydrate_point have been deprecated without replacement. They are internal functions.
+✔ Importing neo4j.packstream has been deprecated. It's internal and should not be used by client code.
+✔ Importing neo4j.routing has been deprecated. It's internal and should not be used by client code.
+✔ Importing neo4j.config has been deprecated. It's internal and should not be used by client code.
+✔ neoj4.Config, neoj4.PoolConfig, neoj4.SessionConfig, and neoj4.WorkspaceConfig have been deprecated without replacement. They are internal classes.
+✔ Importing neo4j.meta has been deprecated. It's internal and should not be used by client code. ExperimantalWarning should be imported directly from neo4j. neo4j.meta.version is exposed through neo4j.__vesrion__
+✔ Importing neo4j.data has been deprecated. It's internal and should not be used by client code. Record should be imported directly from neo4j instead.
+✔ neo4j.data.DataHydrator and neo4j.data.DataDeydrator have been removed without replacement.
 
 5.3 ⚠️ Deprecated package-alias neo4j-driver. It will stop receiving updates starting with 6.0.0. Please install neo4j instead (#867).
 
- The experimental BookmarkManager API received a necessary change that simplifies it and makes it work correctly (#859).
+5.3 The experimental BookmarkManager API received a necessary change that simplifies it and makes it work correctly (#859). Added in 5.0, changed in 5.3, stabilized in 5.8.
 It will no longer track bookmarks per database. This effectively changes the signature of almost all bookmark manager related methods:
 neo4j.BookmarkManger and neo4j.AsyncBookmarkManger abstract base classes:
 update_bookmarks has no longer a database argument.
@@ -76,9 +70,9 @@ initial_bookmarks is no longer a mapping from database name to bookmarks but pla
 bookmarks_supplier no longer receives the database name as an argument.
 bookmarks_consumer no longer receives the database name as an argument.
 
- Undocumented helper methods Neo4jError.is_fatal_during_discovery and Neo4jError.invalidates_all_connections have been deprecated and will be removed without replacement in version 6.0
+✔ Undocumented helper methods Neo4jError.is_fatal_during_discovery and Neo4jError.invalidates_all_connections have been deprecated and will be removed without replacement in version 6.0
 
 ✔ 5.7 ⚠️ Importing neo4j.work and its submodules has been deprecated. Everything should be imported directly from neo4j instead.
 
-5.22 ⚠️ As part of this work, SummaryNotificationPosition has been deprecated in favor of SummaryInputPosition.
+✔ 5.22 ⚠️ As part of this work, SummaryNotificationPosition has been deprecated in favor of SummaryInputPosition.
 
