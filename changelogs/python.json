@@ -6,7 +6,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "last_bookmark",
+        "pattern": "^last_bookmark$",
         "type": "method"
       }
     ]
@@ -18,7 +18,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "is_fatal_during_discovery",
+        "pattern": "^is_fatal_during_discovery$",
         "type": "method"
       }
     ]
@@ -30,7 +30,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "invalidates_all_connections",
+        "pattern": "^invalidates_all_connections$",
         "type": "method"
       }
     ]
@@ -42,7 +42,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "id",
+        "pattern": "^id$",
         "type": "property"
       }
     ]
@@ -55,7 +55,7 @@
     "removed": "5.0",
     "patterns": [
       {
-        "pattern": "subseconds",
+        "pattern": "^subseconds$",
         "type": "property"
       }
     ]
@@ -68,7 +68,7 @@
     "removed": "5.0",
     "patterns": [
       {
-        "pattern": "hours_minutes_seconds",
+        "pattern": "^hours_minutes_seconds$",
         "type": "property"
       }
     ]
@@ -83,7 +83,7 @@
     "removed": "5.0",
     "patterns": [
       {
-        "pattern": "hour_minute_second",
+        "pattern": "^hour_minute_second$",
         "type": "property"
       }
     ]
@@ -97,7 +97,7 @@
     "removed": "5.0",
     "patterns": [
       {
-        "pattern": "second",
+        "pattern": "^second$",
         "type": "property"
       }
     ]
@@ -110,7 +110,7 @@
     "removed": "5.0",
     "patterns": [
       {
-        "pattern": "version_info",
+        "pattern": "^version_info$",
         "type": "property"
       }
     ]
@@ -133,7 +133,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "neo4j.Bookmark",
+        "pattern": "^neo4j.Bookmark$",
         "type": "import_from_statement__module_name"
       },
       {
@@ -141,7 +141,7 @@
         "type": "import_from_statement__name"
       },
       {
-        "pattern": "neo4j.Bookmark",
+        "pattern": "^neo4j.Bookmark$",
         "type": "import_statement__name"
       }
     ]
@@ -152,7 +152,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "neo4j.work",
+        "pattern": "^neo4j.work$",
         "type": "import_from_statement__module_name"
       },
       {
@@ -160,7 +160,7 @@
         "type": "import_from_statement__name"
       },
       {
-        "pattern": "neo4j.work",
+        "pattern": "^neo4j.work$",
         "type": "import_statement__name"
       }
     ]
@@ -171,7 +171,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "neo4j.packstream",
+        "pattern": "^neo4j.packstream$",
         "type": "import_from_statement__module_name"
       },
       {
@@ -179,7 +179,7 @@
         "type": "import_from_statement__name"
       },
       {
-        "pattern": "neo4j.packstream",
+        "pattern": "^neo4j.packstream$",
         "type": "import_statement__name"
       }
     ]
@@ -190,7 +190,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "neo4j.routing",
+        "pattern": "^neo4j.routing$",
         "type": "import_from_statement__module_name"
       },
       {
@@ -198,7 +198,7 @@
         "type": "import_from_statement__name"
       },
       {
-        "pattern": "neo4j.routing",
+        "pattern": "^neo4j.routing$",
         "type": "import_statement__name"
       }
     ]
@@ -209,7 +209,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "neo4j.config",
+        "pattern": "^neo4j.config$",
         "type": "import_statement__name"
       },
       {
@@ -217,7 +217,7 @@
         "type": "import_from_statement__name"
       },
       {
-        "pattern": "neo4j.config",
+        "pattern": "^neo4j.config$",
         "type": "import_from_statement__module_name"
       }
     ]
@@ -228,7 +228,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "neo4j.meta",
+        "pattern": "^neo4j.meta$",
         "type": "import_from_statement__module_name"
       },
       {
@@ -236,7 +236,7 @@
         "type": "import_from_statement__name"
       },
       {
-        "pattern": "neo4j.meta",
+        "pattern": "^neo4j.meta$",
         "type": "import_statement__name"
       }
     ]
@@ -251,11 +251,11 @@
         "type": "import_from_statement__name"
       },
       {
-        "pattern": "neo4j.data",
+        "pattern": "^neo4j.data$",
         "type": "import_from_statement__module_name"
       },
       {
-        "pattern": "neo4j.data",
+        "pattern": "^neo4j.data$",
         "type": "import_statement__name"
       }
     ]
@@ -266,11 +266,11 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "neo4j.time",
+        "pattern": "^neo4j.time$",
         "type": "import_from_statement__module_name"
       },
       {
-        "pattern": "neo4j.time..*",
+        "pattern": "^neo4j.time..*$",
         "type": "import_statement__name"
       }
     ]
@@ -343,7 +343,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "read_transaction",
+        "pattern": "^read_transaction$",
         "type": "method"
       }
     ]
@@ -355,7 +355,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "write_transaction",
+        "pattern": "^write_transaction$",
         "type": "method"
       }
     ]
@@ -370,7 +370,7 @@
         "type": "import_from_statement__name"
       },
       {
-        "pattern": "(de)?hydrate_point",
+        "pattern": "^(de)?hydrate_point$",
         "type": "function"
       }
     ]
@@ -381,7 +381,7 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "pattern": "(Session|Workspace|Pool)?Config",
+        "pattern": "^(Session|Workspace|Pool)?Config$",
         "type": "function"
       }
     ]
@@ -392,7 +392,7 @@
     "removed": "5.0",
     "patterns": [
       {
-        "pattern": "Data(Hydrator|Dehydrator)",
+        "pattern": "^Data(Hydrator|Dehydrator)$",
         "type": "function"
       }
     ]
@@ -404,7 +404,7 @@
     "deprecated": "5.22",
     "patterns": [
       {
-        "pattern": "neo4j.SummaryNotificationPosition",
+        "pattern": "^neo4j.SummaryNotificationPosition$",
         "type": "import_statement__name"
       },
       {
@@ -412,7 +412,7 @@
         "type": "import_from_statement__name"
       },
       {
-        "pattern": "(neo4j\\.)?SummaryNotificationPosition",
+        "pattern": "^(neo4j\\.)?SummaryNotificationPosition$",
         "type": "type"
       }
     ]
