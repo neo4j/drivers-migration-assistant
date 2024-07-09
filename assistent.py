@@ -41,7 +41,7 @@ To continue, type Y to confirm you've carefully read this info or anything else 
 )
 @click.option(
     '--accept-warning', 'accept_warning', is_flag=True, flag_value=True,
-    help='Skip the initial warning.'
+    help='Accept and skip the opening warning.'
 )
 @click.option(
     '--no-output-colors', 'no_output_colors', is_flag=True, flag_value=True,
@@ -49,7 +49,7 @@ To continue, type Y to confirm you've carefully read this info or anything else 
 )
 @click.option(
     '--rough-parsing', '-R', 'rough_parsing', is_flag=True, flag_value=True,
-    help='Use a coarser parser. This is likely to surface more matches, but with more possible false positives as well.'
+    help='Use a coarser parser. This is likely to surface more matches, though with a higher rate of false positives.'
 )
 def parse(path, language_name, context_lines, version, accept_warning, no_output_colors, rough_parsing):
     assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors, rough_parsing)
@@ -72,7 +72,6 @@ def parse(path, language_name, context_lines, version, accept_warning, no_output
             f'\033[0;{color_removed}m {assistent.source.removed_count}\033[0m \n')
 
         assistent.print_message('\n' + '-'*50)
-
 
     assistent.print_message(
         '\n\n\033[1;4m' + 'Total deprecations:' +

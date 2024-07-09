@@ -1,8 +1,7 @@
 ✔ 5.0a1 Result, Session, and Transaction can no longer be imported from neo4j.work. Import them from neo4j instead.
 
 ✔ 4.4.6, 5.0a2 Deprecate timeout config options introduced in 4.4.5 (#768).
-update_routing_table_timeout and session_connection_timeout have been deprecated and will be removed in 5.0.
-Server-side keep-alives communicated through configuration hints together with connection_acquisition_timeout are sufficient to avoid the driver getting stuck.
+update_routing_table_timeout and session_connection_timeout have been deprecated and will be removed in 5.0. Server-side keep-alives communicated through configuration hints together with connection_acquisition_timeout are sufficient to avoid the driver getting stuck.
 
 ~ 5.0a2 ⚠️ Deprecated Nodes' and Relationships' id property (int) in favor of element_id (str).
 This also affects Graph objects as indexing graph.nodes[...] and graph.relationships[...] with integers has been deprecated in favor of indexing them with strings.
@@ -32,9 +31,9 @@ Multiplication and division allow for floats but will always result in integer v
 
 Time
 ✔ The constructor does not accept floats for second anymore. Use nanosecond instead.
-Ticks are now nanoseconds since midnight (int).
-The property ticks_ns has been renamed to ticks. The old ticks is no longer supported.
-The property from_ticks_ns has been renamed to from_ticks. The old from_ticks is no longer supported.
+✔ Ticks are now nanoseconds since midnight (int).
+✔ The property ticks_ns has been renamed to ticks. The old ticks is no longer supported.
+✔ The property from_ticks_ns has been renamed to from_ticks. The old from_ticks is no longer supported.
 ✔ The property second returns an int instead of a float. Use nanosecond to get the sub-second information.
 ✔ The property hour_minute_second has been removed. Use hour_minute_second_nanosecond instead.
 

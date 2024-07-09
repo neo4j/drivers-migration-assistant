@@ -67,6 +67,10 @@ p: SummaryNotificationPosition = None
 
 session.id
 
+Time.from_ticks(ticks=15.32)
+Time.from_ticks_ns(ticks=15)
+timeobj.ticks_ns
+
 def get_db():
     if not hasattr(g, "neo4j_db"):
         if neo4j_version.startswith("4"):

@@ -79,6 +79,24 @@ class PythonQueries:
             )
         """
 
+    def method__kwarg__type(self, method_name, kwarg_name, type_name):
+        return f"""
+            (call
+              function: (attribute
+                attribute: (identifier) @method_name
+                {match_var('method_name', method_name)}
+              )
+              arguments: (argument_list
+                (keyword_argument
+                  name: (identifier) @kwarg_name
+                  {match_var('kwarg_name', kwarg_name)}
+                  value: (_) @type_name
+                  {match_var('type_name', type_name)}
+                )
+              )
+            )
+        """
+
     def function__kwarg(self, function_name, kwarg_name):
         return f"""
             (call

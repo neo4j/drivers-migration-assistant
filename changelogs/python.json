@@ -36,6 +36,30 @@
     ]
   },
   {
+    "identifier": "from_ticks_ns",
+    "msg": "`neo4j.time.Time.from_ticks_ns()` was renamed to `neo4j.time.Time.from_ticks()`.",
+    "ref": "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#neo4j.time.Time.from_ticks",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "pattern": "^from_ticks_ns$",
+        "type": "method"
+      }
+    ]
+  },
+  {
+    "identifier": "ticks_ns",
+    "msg": "`neo4j.time.Time.ticks_ns` was renamed to `neo4j.time.Time.ticks`.",
+    "ref": "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#neo4j.time.Time.ticks",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "pattern": "^ticks_ns$",
+        "type": "property"
+      }
+    ]
+  },
+  {
     "identifier": "id",
     "msg": "`Node.id` and `Relationship.id` were deprecated and have been superseded by `Node.element_id` and `Relationship.element_id`. Old identifiers were integers, wereas new elementIds are strings. This also affects Graph objects as indexing graph.nodes[...] and graph.relationships[...] with integers has been deprecated in favor of indexing them with strings.",
     "ref": "https://neo4j.com/docs/cypher-manual/current/functions/scalar/#functions-elementid",
@@ -333,6 +357,18 @@
       {
         "pattern": ["Time", "second", "[0-9]+\\.[0-9]+"],
         "type": "function__kwarg__type"
+      }
+    ]
+  },
+  {
+    "identifier": "Time.from_ticks(ticks=float)",
+    "msg": "The parameter `ticks` to `neo4j.time.Time.from_ticks()` no longer accepts floats but only ints.  It's now nanoseconds since midnight instead of seconds.  Similar remarks hold for the object property `ticks`.",
+    "ref": "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#neo4j.time.Time",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "pattern": ["from_ticks", "ticks", "[0-9]+\\.[0-9]+"],
+        "type": "method__kwarg__type"
       }
     ]
   },
