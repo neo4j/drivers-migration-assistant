@@ -12,15 +12,20 @@ color_deprecated = '93'  # bright red
 color_removed = '91'  # bright yellow
 color_code_highlight = '46'  # light blue
 
-welcome_warning = '''
-This is an assistant migrator for Neo4j language libraries (drivers).
+intro = '''
+This is the assistant migrator for Neo4j language libraries (drivers). It scans your codebase and raises issues you should address before upgrading to a more recent version. It doesn't automatically rewrite your code; it only points at where action is needed, providing in-context information on how each hit should be addressed.
+'''
+welcome_warning = intro + '''
+Be aware that:
+- The assistant can detect the largest majority of the changes you need to do in your code, but there is a small percentage of changelog entries that can't be surfaced in this form. For a thorough list of changes across versions, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
+- Some of the hits may be false positives, so evaluate each hit.
+- Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. To broaden the search radius, use --rough-parsing. The coarser parser is likely to return more false positives, so the best course of action is to run the assistant with the default parser, fix all the surfaced hits, and then run it again with the rough parser.
+- Your Cypher queries may also need changing, but this tool doesn't analyze them. See https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/ .
 
-...
-
-To continue, type Y to confirm you've read this info or anything else to quit: '''
+To continue, type Y to confirm you've carefully read this info or anything else to quit: '''
 
 
-@click.command()
+@click.command(help=intro)
 @click.argument('path')
 @click.option(
     '--language', '-l', 'language_name', required=True,
@@ -47,8 +52,8 @@ To continue, type Y to confirm you've read this info or anything else to quit: '
     help='Use a coarser parser. This is likely to surface more matches, but with more possible false positives as well.'
 )
 def parse(path, language_name, context_lines, version, accept_warning, no_output_colors, rough_parsing):
-    warn_user(accept_warning)
-    assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors)
+    assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors, rough_parsing)
+    warn_user(accept_warning, language_name)
     file_paths = iglob(path.strip(), recursive=True)
     deprecated_count = 0; removed_count = 0;
     for file_path in file_paths:
@@ -84,9 +89,9 @@ def parse(path, language_name, context_lines, version, accept_warning, no_output
         f'\033[0m https://neo4j.com/docs/{language_name}-manual/current/migration/ \n\n')
 
 
-def warn_user(accept_warning):
+def warn_user(accept_warning, language_name):
     if not accept_warning:
-        agree = input(welcome_warning)
+        agree = input(welcome_warning.format(language_name=language_name))
         if agree.lower() != 'y':
             print("You don't YOLO much, do you?")
             exit()
@@ -94,11 +99,12 @@ def warn_user(accept_warning):
 
 class DriverMigrationAssistent:
 
-    def __init__(self, language_name, context_lines, version, no_output_colors):
+    def __init__(self, language_name, context_lines, version, no_output_colors, rough_parsing):
         self.language_name = language_name
         self.version = version
         self.context_lines = context_lines
         self.no_output_colors = no_output_colors
+        self.rough_parsing = rough_parsing
         self.language, self.queries = self.include_language()
 
     def include_language(self):
@@ -128,7 +134,7 @@ class DriverMigrationAssistent:
                 captures += self.get_captures_for_pattern(pattern)
 
             for capture in captures:
-                msg = self.process_capture(capture, change)
+                msg = self.process_capture(capture[0].range.start_point, capture[0].range.end_point, change)
                 if msg != False:
                     messages.append(msg)
 
@@ -148,12 +154,16 @@ class DriverMigrationAssistent:
             raise ValueError('Change identifier must be str or list.')
 
         matches = self.language.query(query)
-        captures = self.clean_captures(matches.captures(self.source.ast.root_node), pattern)
+        captures = self.uniqueify_captures(matches.captures(self.source.ast.root_node), pattern)
         return captures
 
-    def process_capture(self, capture, change):
+    def process_capture(self, start_point, end_point, change):
+        '''
+        start_point: tuple of (row, col) number where hits starts.
+        end_point: tuple of (row, col) number where hits ends.
+        change: change entry from which this hit resulted.
+        '''
         output = ''
-        node = capture[0]
 
         if self.is_deprecated(change):
             color_code = color_deprecated
@@ -164,16 +174,18 @@ class DriverMigrationAssistent:
         output += f'\n\n\033[{color_code};1m>> ' + change['msg'].format(**change) + '\033[0m\n\n'
         #click.echo("\n\n" + tw.indent(tw.fill("\033[91;1m" + change['msg'] + "\033[0m"), '  '))
 
-        matched_line_n = node.range.start_point[0]
+        matched_line_n = start_point[0]
         for i in range(
             max(matched_line_n - self.context_lines, 0),
             min(matched_line_n + self.context_lines + 1, len(self.source.lines))
         ):
             if i == matched_line_n:
                 # highlight the matched text
-                line_content  = self.source.lines[i][:node.range.start_point[1]]
-                line_content += f'\033[{color_code_highlight}m{self.source.lines[i][node.range.start_point[1]:node.range.end_point[1]]}\033[0m'
-                line_content += self.source.lines[i][node.range.end_point[1]:]
+                match_start = start_point[1]
+                match_end = end_point[1]
+                line_content  = self.source.lines[i][:match_start]
+                line_content += f'\033[{color_code_highlight}m{self.source.lines[i][match_start:match_end]}\033[0m'
+                line_content += self.source.lines[i][match_end:]
             else:
                 line_content = self.source.lines[i]
             output += f'  \033[1m{i}\033[0m {line_content}\n'
@@ -185,7 +197,7 @@ class DriverMigrationAssistent:
         if change.get('ref'):
             refs = change.get('ref')
             if isinstance(refs, str):
-                refs = [refs, ]
+                refs = [refs, ]  # make iterable
             for link in refs:
                 output += '\n  \033[1;4m' + 'Docs:' + '\033[0m ' + link
         output += '\n'
@@ -193,8 +205,8 @@ class DriverMigrationAssistent:
         return {
             'meta': {
                 'line': matched_line_n,
-                'col_start': node.range.start_point[1],
-                'col_end': node.range.end_point[1],
+                'col_start': start_point[1],
+                'col_end': end_point[1],
                 'deprecated': self.is_deprecated(change),
                 'removed': self.is_removed(change)
             },
@@ -207,10 +219,10 @@ class DriverMigrationAssistent:
     def count_removals(self, messages):
         return sum(msg['meta']['removed'] for msg in messages)
 
-    def clean_captures(self, captures, pattern):
+    def uniqueify_captures(self, captures, pattern):
         '''
         Pattern change entries consisting of a list yield as many matches as
-        list elements. (Normally?) Only the last match is relevant.
+        list elements, from tree-sitter. (Normally?) Only the last match is relevant.
         '''
         if isinstance(pattern['pattern'], str):
             step_size = 1
@@ -229,6 +241,7 @@ class DriverMigrationAssistent:
 
     def print_message(self, message):
         if self.no_output_colors:
+            # see ANSI escape sequences https://stackoverflow.com/a/33206814
             message = re.sub(r'(3|4|9|10)[0-7]', '', message)
         # click.echo removes ANSI codes when output to file
         click.echo(message, nl=False)
