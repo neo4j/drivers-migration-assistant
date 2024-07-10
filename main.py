@@ -17,8 +17,7 @@ Be aware that:
 - Some of the hits may be false positives, so evaluate each hit.
 - Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. To broaden the search radius, use --regex-parser. The regex parser is likely to return more false positives, so the best course of action is to run the assistent with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/ .
-
-To continue, type Y to confirm you've carefully read this info or anything else to quit: '''
+'''
 
 
 @click.command(help=intro + '\nPATH is the location of project to migrate. Supports globbing.')
@@ -26,7 +25,8 @@ To continue, type Y to confirm you've carefully read this info or anything else 
 @click.argument('path', nargs=-1)
 @click.option(
     '--language', '-l', 'language_name', required=True,
-    help='What language the project to migrate is in (one of: python, java, go, javascript, dotnet).'
+    type=click.Choice(['python', 'go', 'javascript', 'java', 'dotnet']),
+    help='What language the project to migrate is in.'
 )
 @click.option(
     '--context-lines', '-c', 'context_lines', default=3, show_default=True,
@@ -48,7 +48,15 @@ To continue, type Y to confirm you've carefully read this info or anything else 
     '--regex-parser', '-R', 'regex_parser', is_flag=True, flag_value=True,
     help='Use a coarser parser. This is likely to surface more matches, though with a higher rate of false positives.'
 )
-def assist(path, language_name, context_lines, version, accept_warning, no_output_colors, regex_parser):
+@click.option(
+    '--interactive', '-I', 'interactive', is_flag=True, flag_value=True,
+    help=''
+)
+@click.option(
+    '--show-ignored', 'show_ignored', is_flag=True, flag_value=True,
+    help=''
+)
+def assist(path, language_name, context_lines, version, accept_warning, no_output_colors, regex_parser, interactive, show_ignored):
     assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors, regex_parser)
     warn_user(accept_warning, language_name)
     file_paths = []
@@ -58,20 +66,44 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
     deprecated_count = 0; removed_count = 0;
     for file_path in file_paths:
         messages = assistent.process_file(file_path)
-        for msg in messages:
+        for i in range(len(messages)):
+            msg = messages[i]
+
+            if not show_ignored and assistent.should_ignore_msg(msg):
+                click.echo(
+                    '\n' + f'\033[1;{color_interactive_prompt}m' +
+                    f'  ({i+1}/{len(messages)}) ' +
+                    'Ignored' + '\033[0m',
+                    nl=False)
+                continue
+
             assistent.print_message(msg['content'])
+            click.echo(
+                '\n' + f'\033[1;{color_interactive_prompt}m' +
+                f'  ({i+1}/{len(messages)}) ' +
+                '\033[0m', nl=False
+            )
+
+            if interactive:
+                choice = click.prompt(
+                    f'\033[1;{color_interactive_prompt}m' +
+                    'What to do? [(n) Next, (i) Ignore forever]' +
+                    '\033[0m'
+                )
+                if choice == 'i':
+                    assistent.set_ignore_msg(msg)
 
         deprecated_count += assistent.source.deprecated_count
         removed_count += assistent.source.removed_count
 
-        assistent.print_message(
+        '''assistent.print_message(
             '\n\n\033[1;4m' + 'Deprecations in file:' +
             f'\033[0;{color_deprecated}m {assistent.source.deprecated_count}\033[0m \n')
         assistent.print_message(
             '\033[1;4m' + 'Removals in file:' +
             f'\033[0;{color_removed}m {assistent.source.removed_count}\033[0m \n')
-
-        assistent.print_message('\n' + '-'*50)
+        '''
+        assistent.print_message('\n\n' + '-'*50)
 
     assistent.print_message(
         '\n\n\033[1;4m' + 'Total deprecations:' +
@@ -90,8 +122,9 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
 
 def warn_user(accept_warning, language_name):
     if not accept_warning:
-        agree = input(welcome_warning.format(language_name=language_name))
-        if agree.lower() != 'y':
+        print(welcome_warning.format(language_name=language_name))
+        agree = click.confirm('Have you carefully read this info?')
+        if not agree:
             print("You don't YOLO much, do you?")
             exit()
 

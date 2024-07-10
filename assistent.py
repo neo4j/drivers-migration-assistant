@@ -4,7 +4,7 @@ from packaging.version import Version
 import click
 
 from parsers import TreeSitterParser, RegexParser
-from utils import File
+from utils import File, hash_message
 from config import *
 
 
@@ -21,7 +21,7 @@ class DriverMigrationAssistent:
             self.parser = TreeSitterParser(language_name)
 
     def process_file(self, file_path):
-        self.print_message('\n\n\033[92;1;4mFile:\033[24m ' + file_path + '\033[0m')
+        self.print_message('\n\n\033[92;1;4mFile:\033[24m ' + file_path + '\033[0m\n')
         self.source = File(file_path)
         self.parser.set_source(self.source)
 
@@ -37,8 +37,8 @@ class DriverMigrationAssistent:
                 if msg != False:
                     messages.append(msg)
 
-        self.source.deprecated_count = self.count_deprecations(messages)
-        self.source.removed_count = self.count_removals(messages)
+        self.source.deprecated_count += self.count_deprecations(messages)
+        self.source.removed_count += self.count_removals(messages)
 
         # sort msgs by source line number; break ties by starting col number
         messages.sort(key=lambda msg: (msg['meta']['line'], msg['meta']['col_start']))
@@ -121,3 +121,25 @@ class DriverMigrationAssistent:
             message = re.sub(r'(3|4|9|10)[0-7]', '', message)
         # click.echo removes ANSI codes when output to file
         click.echo(message, nl=False)
+
+    def set_ignore_msg(self, message):
+        if not self.should_ignore_msg(message):  # no double entries
+            f = open('ignore.db', 'a')
+            f.write(hash_message(message, self.source) + '\n')
+
+    def should_ignore_msg(self, message):
+        try:
+            f = open('ignore.db', 'r')
+        except:
+            return False
+
+        hashes = [h.strip() for h in f.readlines()]
+        if hash_message(message, self.source) in hashes:
+            # Ignored msgs shouldn't count in counters
+            if message['meta']['removed']:
+                self.source.removed_count -= 1
+            if message['meta']['deprecated']:
+                self.source.deprecated_count -= 1
+            return True
+
+        return False

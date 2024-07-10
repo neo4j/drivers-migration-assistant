@@ -439,7 +439,7 @@
   },
   {
     "identifier": "Time.from_ticks(ticks=float)",
-    "msg": "The parameter `ticks` to `neo4j.time.Time.from_ticks()` no longer accepts floats but only ints.  It's now nanoseconds since midnight instead of seconds.  Similar remarks hold for the object property `ticks`.",
+    "msg": "The parameter `ticks` to `neo4j.time.Time.from_ticks()` no longer accepts floats but only ints. It's now nanoseconds since midnight instead of seconds. Similar remarks hold for the object property `ticks`.",
     "ref": "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#neo4j.time.Time",
     "removed": "5.0",
     "patterns": [
