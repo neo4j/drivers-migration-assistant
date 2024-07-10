@@ -26,6 +26,7 @@ To continue, type Y to confirm you've carefully read this info or anything else 
 
 
 @click.command(help=intro)
+@click.help_option('--help', '-h')
 @click.argument('path')
 @click.option(
     '--language', '-l', 'language_name', required=True,
@@ -130,10 +131,13 @@ class DriverMigrationAssistent:
         for change in changes_json:
             captures = []
             for pattern in change['patterns']:
-                captures += self.get_captures_for_pattern(pattern)
+                if self.rough_parsing:
+                    captures += self.get_captures_for_re_pattern(pattern)
+                else:
+                    captures += self.get_captures_for_ts_pattern(pattern)
 
             for capture in captures:
-                msg = self.process_capture(capture[0].range.start_point, capture[0].range.end_point, change)
+                msg = self.process_capture(capture[0], capture[1], change)
                 if msg != False:
                     messages.append(msg)
 
@@ -144,23 +148,56 @@ class DriverMigrationAssistent:
         messages.sort(key=lambda msg: (msg['meta']['line'], msg['meta']['col_start']))
         return messages
 
-    def get_captures_for_pattern(self, pattern):
-        if isinstance(pattern['pattern'], str):
-            query = getattr(self.queries, pattern['type'])(pattern['pattern'])
-        elif isinstance(pattern['pattern'], list):
-            query = getattr(self.queries, pattern['type'])(*pattern['pattern'])
+    def get_captures_for_ts_pattern(self, pattern):
+        if pattern.get('ts_pattern') == None:
+            return []
+
+        if isinstance(pattern['ts_pattern'], str):
+            query = getattr(self.queries, pattern['ts_type'])(pattern['ts_pattern'])
+        elif isinstance(pattern['ts_pattern'], list):
+            query = getattr(self.queries, pattern['ts_type'])(*pattern['ts_pattern'])
         else:
             raise ValueError('Change identifier must be str or list.')
 
         matches = self.language.query(query)
-        captures = self.uniqueify_captures(matches.captures(self.source.ast.root_node), pattern)
+        captures = self.uniqueify_ts_captures(matches.captures(self.source.ast.root_node), pattern)
+        return [(c[0].range.start_point, c[0].range.end_point) for c in captures]  # only extract relevant bits
+
+    def uniqueify_ts_captures(self, captures, pattern):
+        '''
+        Pattern change entries consisting of a list yield as many matches as
+        list elements, from tree-sitter. (Normally?) Only the last match is relevant.
+        '''
+        if isinstance(pattern['ts_pattern'], str):
+            step_size = 1
+        elif isinstance(pattern['ts_pattern'], list):
+            step_size = len(pattern['ts_pattern'])
+
+        return captures[step_size-1::step_size]
+
+    def get_captures_for_re_pattern(self, pattern):
+        captures = []
+
+        if pattern.get('re_pattern') == None:
+            return captures
+
+        for i in range(len(self.source.lines)):
+            match = re.search(pattern['re_pattern'], self.source.lines[i])
+            if match != None:
+                captures.append(
+                    (
+                        (i, match.start()),
+                        (i, match.end())
+                    )
+                )
+
         return captures
 
     def process_capture(self, start_point, end_point, change):
         '''
-        start_point: tuple of (row, col) number where hits starts.
-        end_point: tuple of (row, col) number where hits ends.
-        change: change entry from which this hit resulted.
+        start_point: tuple of (row, col) where hit starts.
+        end_point: tuple of (row, col) where hit ends.
+        change: change entry from which hit resulted.
         '''
         output = ''
 
@@ -217,18 +254,6 @@ class DriverMigrationAssistent:
 
     def count_removals(self, messages):
         return sum(msg['meta']['removed'] for msg in messages)
-
-    def uniqueify_captures(self, captures, pattern):
-        '''
-        Pattern change entries consisting of a list yield as many matches as
-        list elements, from tree-sitter. (Normally?) Only the last match is relevant.
-        '''
-        if isinstance(pattern['pattern'], str):
-            step_size = 1
-        elif isinstance(pattern['pattern'], list):
-            step_size = len(pattern['pattern'])
-
-        return captures[step_size-1::step_size]
 
     def is_deprecated(self, change):
         return (change.get('deprecated') != None and

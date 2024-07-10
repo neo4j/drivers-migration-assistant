@@ -57,6 +57,15 @@ method_name = 'read_transaction'
 locals()['method_name']()
 
 
+config = {
+    'session_connection_timeout': 10,
+    'update_routing_table_timeout': 4
+}
+
+other_driver = GraphDatabase.driver(url, **config)
+
+
+
 driver = GraphDatabase.driver(url,
     auth=basic_auth(username, password),
     trust=None, session_connection_timeout=10, update_routing_table_timeout=4)
