@@ -21,7 +21,7 @@ class DriverMigrationAssistent:
             self.parser = TreeSitterParser(language_name)
 
     def process_file(self, file_path):
-        self.print_message('\n\n\033[92;1;4mFile:\033[24m ' + file_path + '\033[0m\n')
+        self.print_message('\n\n\033[92;1;4mFile:\033[24m ' + file_path + '\033[0m\n\n')
         self.source = File(file_path)
         self.parser.set_source(self.source)
 
@@ -88,7 +88,7 @@ class DriverMigrationAssistent:
                 refs = [refs, ]  # make iterable
             for link in refs:
                 output += '\n  \033[1;4m' + 'Docs:' + '\033[0m ' + link
-        output += '\n'
+        #output += '\n\n'
 
         return {
             'meta': {

@@ -70,28 +70,27 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
             msg = messages[i]
 
             if not show_ignored and assistent.should_ignore_msg(msg):
-                click.echo(
-                    '\n' + f'\033[1;{color_interactive_prompt}m' +
-                    f'  ({i+1}/{len(messages)}) ' +
-                    'Ignored' + '\033[0m',
-                    nl=False)
+                click.secho(
+                    '\n' + f'  ({i+1}/{len(messages)}) ' + 'Ignored',
+                    fg='blue', bold=True, nl=False)
                 continue
 
+            if not interactive:
+                click.secho(
+                    '\n\n\n' + f'  ({i+1}/{len(messages)}) ',
+                    fg='blue', bold=True, nl=False)
+
             assistent.print_message(msg['content'])
-            click.echo(
-                '\n' + f'\033[1;{color_interactive_prompt}m' +
-                f'  ({i+1}/{len(messages)}) ' +
-                '\033[0m', nl=False
-            )
 
             if interactive:
-                choice = click.prompt(
-                    f'\033[1;{color_interactive_prompt}m' +
-                    'What to do? [(n) Next, (i) Ignore forever]' +
-                    '\033[0m'
-                )
+                click.echo('\n\n', nl=False)
+                choice = click.prompt(click.style(
+                    f'  ({i+1}/{len(messages)}) ' + 'What to do? [(n) Next, (i) Ignore forever]',
+                    fg='blue', bold=True
+                ))
                 if choice == 'i':
                     assistent.set_ignore_msg(msg)
+
 
         deprecated_count += assistent.source.deprecated_count
         removed_count += assistent.source.removed_count
