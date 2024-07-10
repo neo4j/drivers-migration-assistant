@@ -21,7 +21,7 @@ class DriverMigrationAssistent:
             self.parser = TreeSitterParser(language_name)
 
     def process_file(self, file_path):
-        self.print_message('\n\n\033[92;1;4mFile:\033[24m ' + file_path + '\033[0m\n\n')
+        self.print_message('\n\n\033[92;1;4mFile:\033[24m ' + file_path + '\033[0m\n')
         self.source = File(file_path)
         self.parser.set_source(self.source)
 

@@ -84,10 +84,11 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
 
             if interactive:
                 click.echo('\n\n', nl=False)
-                choice = click.prompt(click.style(
-                    f'  ({i+1}/{len(messages)}) ' + 'What to do? [(n) Next, (i) Ignore forever]',
-                    fg='blue', bold=True
-                ))
+                choice = click.prompt(
+                    click.style(
+                        f'  ({i+1}/{len(messages)}) ' + 'What to do? [(n) Next, (i) Ignore forever]',
+                        fg='blue', bold=True
+                    ), type=click.Choice(['n', 'i']), show_choices=False)
                 if choice == 'i':
                     assistent.set_ignore_msg(msg)
 
