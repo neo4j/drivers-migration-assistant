@@ -20,20 +20,29 @@ pip install -r requirements.txt
 The basic invocation looks like:
 
 ```bash
-python main.py <path-to-your-codebase> -l <codebase-language>
+python main.py -l <codebase-language> <path-to-your-codebase>
 ```
 
 For example, for a python application,
 
 ```bash
-python main.py example-projects/python/movies.py -l python
+python main.py -l python example-projects/python/movies.py
 ```
+
+Paths support globbing.
+Multiple paths can be provided as positional arguments.
+For example (quotes for shell expansion),
+
+```bash
+python main.py -l python 'example-projects/python/*.py' 'example-projects/python/subdir/**/*.py'
+```
+
 
 # Accuracy
 ## Tree-sitter parser
-By default, the assistent works on an AST of your source, relying on [tree-sitter](https://tree-sitter.github.io/) to generate it. 
-This makes the deprecation/removal hits fairly accurate (although not perfect: there's no type checking in most cases). 
-However, invocations that materialize in their entirety only at runtime can't be surfaced. 
+By default, the assistent works on an AST of your source, relying on [tree-sitter](https://tree-sitter.github.io/) to generate it.
+This makes the deprecation/removal hits fairly accurate (although not perfect: there's no type checking in most cases).
+However, invocations that materialize in their entirety only at runtime can't be surfaced.
 
 Here are a few examples containing deprecated usage that would not be raised by the tree-sitter parser:
 
@@ -60,12 +69,13 @@ def tx_func(type):
 getattr(session, tx_func())(callback, args)
 ```
 
-## Rough parser
-There is another parser, which works with regexes on the raw source code rather that on its AST. To enable the rough parser, use `--rough-parsing`.
+## Regex parser
+The regex parser works with regexes on the raw source code rather that on its AST.
+To enable it, use `--regex-parser`.
 
-This parser is coarser and thus likely to return more false positives, so the best course of action is to run the assistant with the default parser, fix all the surfaced hits, and then run it again with the rough parser.
+This has less awareness of code structure and is thus likely to return more false positives, so the best course of action is to run the assistant with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
 
-Example of false positive from the rough parser:
+Example of false positive from the regex parser:
 
 ```log
 >> `Node.id` and `Relationship.id` were deprecated and have been superseded by `Node.element_id` and
@@ -73,7 +83,7 @@ Example of false positive from the rough parser:
 This also affects Graph objects as indexing graph.nodes[...] and graph.relationships[...] with integers
 has been deprecated in favor of indexing them with strings.
 
-  102 
+  102
   103 def serialize_movie(movie):
   104     return {
   105         "id": movie["id"],

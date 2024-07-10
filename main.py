@@ -8,21 +8,22 @@ from assistent import DriverMigrationAssistent
 
 
 intro = '''
-This is the assistant migrator for Neo4j language libraries (drivers). It scans your codebase and raises issues you should address before upgrading to a more recent version. It doesn't automatically rewrite your code; it only points at where action is needed, providing in-context information on how each hit should be addressed.
+This is the migration assistent for Neo4j language libraries (drivers). It scans your codebase and raises issues you should address before upgrading to a more recent version.
+It doesn't automatically rewrite your code; it only points at where action is needed, providing in-context information on how each hit should be addressed.
 '''
 welcome_warning = intro + '''
 Be aware that:
-- The assistant can detect the largest majority of the changes you need to do in your code, but there is a small percentage of changelog entries that can't be surfaced in this form. For a thorough list of changes across versions, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
+- The assistent can detect the largest majority of the changes you need to do in your code, but there is a small percentage of changelog entries that can't be surfaced in this form. For a thorough list of changes across versions, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
 - Some of the hits may be false positives, so evaluate each hit.
-- Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. To broaden the search radius, use --rough-parsing. The coarser parser is likely to return more false positives, so the best course of action is to run the assistant with the default parser, fix all the surfaced hits, and then run it again with the rough parser.
+- Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. To broaden the search radius, use --regex-parser. The regex parser is likely to return more false positives, so the best course of action is to run the assistent with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/ .
 
 To continue, type Y to confirm you've carefully read this info or anything else to quit: '''
 
 
-@click.command(help=intro)
+@click.command(help=intro + '\nPATH is the location of project to migrate. Supports globbing.')
 @click.help_option('--help', '-h')
-@click.argument('path')
+@click.argument('path', nargs=-1)
 @click.option(
     '--language', '-l', 'language_name', required=True,
     help='What language the project to migrate is in (one of: python, java, go, javascript, dotnet).'
@@ -44,13 +45,16 @@ To continue, type Y to confirm you've carefully read this info or anything else 
     help="Don't enrich output with colors."
 )
 @click.option(
-    '--rough-parsing', '-R', 'rough_parsing', is_flag=True, flag_value=True,
+    '--regex-parser', '-R', 'regex_parser', is_flag=True, flag_value=True,
     help='Use a coarser parser. This is likely to surface more matches, though with a higher rate of false positives.'
 )
-def assist(path, language_name, context_lines, version, accept_warning, no_output_colors, rough_parsing):
-    assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors, rough_parsing)
+def assist(path, language_name, context_lines, version, accept_warning, no_output_colors, regex_parser):
+    assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors, regex_parser)
     warn_user(accept_warning, language_name)
-    file_paths = iglob(path.strip(), recursive=True)
+    file_paths = []
+    for file_path in path:
+        file_paths += iglob(file_path.strip(), recursive=True)
+
     deprecated_count = 0; removed_count = 0;
     for file_path in file_paths:
         messages = assistent.process_file(file_path)

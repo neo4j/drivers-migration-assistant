@@ -10,12 +10,12 @@ from config import *
 
 class DriverMigrationAssistent:
 
-    def __init__(self, language_name, context_lines, version, no_output_colors, rough_parsing):
+    def __init__(self, language_name, context_lines, version, no_output_colors, regex_parser):
         self.language_name = language_name
         self.version = version
         self.context_lines = context_lines
         self.no_output_colors = no_output_colors
-        if rough_parsing:
+        if regex_parser:
             self.parser = RegexParser()
         else:
             self.parser = TreeSitterParser(language_name)
@@ -70,12 +70,13 @@ class DriverMigrationAssistent:
                 # highlight the matched text
                 match_start = start_point[1]
                 match_end = end_point[1]
-                line_content  = self.source.lines[i][:match_start]
+                line_content = self.source.lines[i][:match_start]
                 line_content += f'\033[{color_code_highlight}m{self.source.lines[i][match_start:match_end]}\033[0m'
                 line_content += self.source.lines[i][match_end:]
+                output += f'  > \033[1m{i}\033[0m {line_content}\n'
             else:
                 line_content = self.source.lines[i]
-            output += f'  \033[1m{i}\033[0m {line_content}\n'
+                output += f'    \033[1m{i}\033[0m {line_content}\n'
 
         if change.get('deprecated'):
             output += '\n  \033[1;4m' + 'Deprecated in:' + '\033[0m ' + change.get('deprecated')
