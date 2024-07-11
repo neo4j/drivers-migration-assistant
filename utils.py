@@ -3,8 +3,8 @@ import click
 
 
 class Color:
-    deprecated = 'bright_red'
-    removed = 'bright_yellow'
+    deprecated = 'bright_yellow'
+    removed = 'bright_red'
     code_highlight = 'cyan'
     interactive_prompt = 'blue'
     file = 'green'

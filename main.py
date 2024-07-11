@@ -12,9 +12,9 @@ It doesn't automatically rewrite your code; it only points at where action is ne
 '''
 welcome_warning = intro + '''
 Be aware that:
-- The assistent can detect the largest majority of the changes you need to do in your code, but there is a small percentage of changelog entries that can't be surfaced in this form. For a thorough list of changes across versions, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
+- The assistent can detect almost all the changes you need to do in your code, but there is a small percentage of changelog entries that can't be surfaced in this form. For a thorough list of changes, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
 - Some of the hits may be false positives, so evaluate each hit.
-- Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. To broaden the search radius, use --regex-parser. The regex parser is likely to return more false positives, so the best course of action is to run the assistent with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
+- Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. To broaden the search radius, use the regex parser.
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/ .
 '''
 
@@ -49,11 +49,11 @@ Be aware that:
 )
 @click.option(
     '--interactive', '-I', 'interactive', is_flag=True, flag_value=True,
-    help=''
+    help='Run the tool interactely, pausing after each entry with option to set some entries to ignored.'
 )
 @click.option(
     '--show-ignored', 'show_ignored', is_flag=True, flag_value=True,
-    help=''
+    help='Include ignored entries in output.'
 )
 def assist(path, language_name, context_lines, version, accept_warning, no_output_colors, regex_parser, interactive, show_ignored):
     assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors, regex_parser)
