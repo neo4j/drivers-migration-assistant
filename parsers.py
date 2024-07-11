@@ -1,6 +1,5 @@
 import re
 from tree_sitter import Language, Parser
-from sys import exit
 
 
 class TreeSitterParser:
@@ -15,8 +14,7 @@ class TreeSitterParser:
             from languagequeries.go import GoQueries
             self.queries = GoQueries()
         else:
-            print('Invalid language. Valid choices are: python, java, go, javascript, dotnet.')
-            exit(1)
+            raise ValueError('Invalid language. Valid choices are: python, java, go, javascript, dotnet.')
 
         self.language = Language(tslang.language())
 
@@ -72,5 +70,4 @@ class RegexParser:
                         (i, match.end())
                     )
                 )
-
         return captures

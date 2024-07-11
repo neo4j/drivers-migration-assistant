@@ -1,10 +1,9 @@
 import click
 from sys import exit
-#import textwrap as tw
 from glob import iglob
 
-from config import *
 from assistent import DriverMigrationAssistent
+from utils import Color as color
 
 
 intro = '''
@@ -46,7 +45,7 @@ Be aware that:
 )
 @click.option(
     '--regex-parser', '-R', 'regex_parser', is_flag=True, flag_value=True,
-    help='Use a coarser parser. This is likely to surface more matches, though with a higher rate of false positives.'
+    help='Use the regex parser (likely to surface more matches, although with a higher rate of false positives).'
 )
 @click.option(
     '--interactive', '-I', 'interactive', is_flag=True, flag_value=True,
@@ -62,6 +61,7 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
     file_paths = []
     for file_path in path:
         file_paths += iglob(file_path.strip(), recursive=True)
+    assistent.print_msg('\n' + click.style('Files to process: ', bold=True) + str(len(file_paths)) + '\n')
 
     deprecated_count = 0; removed_count = 0;
     for file_path in file_paths:
@@ -69,55 +69,43 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
         for i in range(len(messages)):
             msg = messages[i]
 
-            if not show_ignored and assistent.should_ignore_msg(msg):
-                click.secho(
-                    '\n' + f'  ({i+1}/{len(messages)}) ' + 'Ignored',
-                    fg='blue', bold=True, nl=False)
+            if not show_ignored and assistent.is_ignored_msg(msg):
+                assistent.print_msg(click.style(
+                    f'({i+1}/{len(messages)}) ' + 'Ignored\n',
+                    fg='blue', bold=True))
                 continue
 
-            if not interactive:
-                click.secho(
-                    '\n\n\n' + f'  ({i+1}/{len(messages)}) ',
-                    fg='blue', bold=True, nl=False)
-
-            assistent.print_message(msg['content'])
+            assistent.print_msg(click.style(
+                f'({i+1}/{len(messages)}) {msg["content"]}',
+                fg='blue', bold=True))
 
             if interactive:
-                click.echo('\n\n', nl=False)
                 choice = click.prompt(
                     click.style(
-                        f'  ({i+1}/{len(messages)}) ' + 'What to do? [(n) Next, (i) Ignore forever]',
+                        'What to do? [(n) Next, (i) Ignore forever]',
                         fg='blue', bold=True
                     ), type=click.Choice(['n', 'i']), show_choices=False)
                 if choice == 'i':
                     assistent.set_ignore_msg(msg)
-
+                assistent.print_msg('')
 
         deprecated_count += assistent.source.deprecated_count
         removed_count += assistent.source.removed_count
 
-        '''assistent.print_message(
-            '\n\n\033[1;4m' + 'Deprecations in file:' +
-            f'\033[0;{color_deprecated}m {assistent.source.deprecated_count}\033[0m \n')
-        assistent.print_message(
-            '\033[1;4m' + 'Removals in file:' +
-            f'\033[0;{color_removed}m {assistent.source.removed_count}\033[0m \n')
-        '''
-        assistent.print_message('\n\n' + '-'*50)
+        assistent.print_msg(
+            click.style('\nDeprecations in file: ', bold=True) +
+            click.style(assistent.source.deprecated_count, fg=color.deprecated))
+        assistent.print_msg(
+            click.style('Removals in file: ', bold=True) +
+            click.style(assistent.source.removed_count, fg=color.removed) + '\n')
 
-    assistent.print_message(
-        '\n\n\033[1;4m' + 'Total deprecations:' +
-        f'\033[0;{color_deprecated}m {deprecated_count}\033[0m\n')
-    assistent.print_message(
-        '\033[1;4m' + 'Total removals:' +
-        f'\033[0;{color_removed}m {removed_count}\033[0m\n')
+        assistent.print_msg('-'*50)
 
-    assistent.print_message(
-        '\n\033[1;4m' + 'Library full manual:' +
-        f'\033[0m https://neo4j.com/docs/{language_name}-manual/current/')
-    assistent.print_message(
-        '\n\033[1;4m' + 'Migration page:' +
-        f'\033[0m https://neo4j.com/docs/{language_name}-manual/current/migration/ \n\n')
+    assistent.print_msg(click.style('\nTotal deprecations: ', bold=True) + click.style(deprecated_count, fg=color.deprecated))
+    assistent.print_msg(click.style('Total removals: ', bold=True) + click.style(removed_count, fg=color.removed))
+
+    assistent.print_msg(click.style('\nLibrary full manual: ', bold=True) + f'https://neo4j.com/docs/{language_name}-manual/current/')
+    assistent.print_msg(click.style('Migration guide: ', bold=True) + f'https://neo4j.com/docs/{language_name}-manual/current/migration/' + '\n')
 
 
 def warn_user(accept_warning, language_name):

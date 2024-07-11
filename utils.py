@@ -2,8 +2,15 @@ from hashlib import sha256
 import click
 
 
-class File:
+class Color:
+    deprecated = 'bright_red'
+    removed = 'bright_yellow'
+    code_highlight = 'cyan'
+    interactive_prompt = 'blue'
+    file = 'green'
 
+
+class File:
     def __init__(self, file_path):
         self.path = file_path
         self.text = open(file_path).read()
@@ -17,5 +24,4 @@ def hash_message(message, source):
     to_hash = source.path.strip() + '::' + \
               source.lines[message['meta']['line']].strip() + '::' + \
               click.unstyle(message['content'].split('\n')[0]).strip()
-    #print(to_hash)
     return sha256(to_hash.encode()).hexdigest()
