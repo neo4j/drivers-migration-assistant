@@ -3,6 +3,7 @@ import re
 from packaging.version import Version, InvalidVersion
 import click
 from sys import exit
+import os
 
 from parsers import TreeSitterParser, RegexParser
 from utils import File, hash_message, Color as color
@@ -30,7 +31,9 @@ class DriverMigrationAssistent:
         self.parser.set_source(self.source)
 
         messages = []
-        changes_json = json.loads(open(f'changelogs/{self.language_name}.json').read())
+        changes_json = json.loads(open(
+            os.path.join(os.path.dirname(__file__), 'changelogs', f'{self.language_name}.json')
+        ).read())
         for change in changes_json:
             captures = []
             for pattern in change['patterns']:
@@ -76,10 +79,10 @@ class DriverMigrationAssistent:
                 line_content = self.source.lines[i][:match_start]
                 line_content += click.style(self.source.lines[i][match_start:match_end], bg=color.code_highlight)
                 line_content += self.source.lines[i][match_end:]
-                output += '  > '  # text-highlight offending line
+                output += '> '  # text-highlight offending line
             else:
                 line_content = self.source.lines[i]
-                output += '    '
+                output += '  '
             output += click.style(i, bold=True) + ' ' + line_content + '\n'
 
         if change.get('deprecated') != None:
@@ -128,12 +131,12 @@ class DriverMigrationAssistent:
 
     def set_ignore_msg(self, message):
         if not self.is_ignored_msg(message):  # no double entries
-            f = open('ignore.db', 'a')
+            f = open(os.path.join(os.path.dirname(__file__), 'ignore.db'), 'a')
             f.write(hash_message(message, self.source) + '\n')
 
     def is_ignored_msg(self, message):
         try:
-            f = open('ignore.db', 'r')
+            f = open(os.path.join(os.path.dirname(__file__), 'ignore.db'), 'r')
         except:
             return False
 
