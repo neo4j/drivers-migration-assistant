@@ -20,8 +20,8 @@ class File:
 
 
 def hash_message(message, source):
-    #ex.   example-projects/python/movies.py::import neo4j.Bookmark::>> Importing `neo4j.Bookmark` and its submodules has been deprecated. Everything should be imported directly from `neo4j` instead.
+    #ex: example-projects/python/movies.py::import neo4j.Bookmark::import_neo4j.Bookmark
     to_hash = source.path.strip() + '::' + \
               source.lines[message['meta']['line']].strip() + '::' + \
-              click.unstyle(message['content'].split('\n')[0]).strip()
+              message['identifier'].strip()
     return sha256(to_hash.encode()).hexdigest()

@@ -3,8 +3,8 @@
 The migration assistent for Neo4j language libraries (drivers) scans your codebase and raises issues you should address before upgrading to a more recent version.
 It doesn't automatically rewrite your code; it only points at where action is needed, providing in-context information on how each hit should be addressed.
 
-Be aware that:
-- The assistant can detect the largest majority of the changes you need to do in your code, but there is a small percentage of changelog entries that can't be surfaced in this form. For a thorough list of changes across versions, see the migration page for [language libraries](https://neo4j.com/docs/create-applications/).
+Points of care:
+- The assistant can detect the largest majority of the changes you need to do in your code, but a small percentage of changelog entries can't be surfaced in this form. For a thorough list of changes across versions, see the migration page for [language libraries](https://neo4j.com/docs/create-applications/).
 - Some of the hits may be false positives, so evaluate each hit.
 - Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. See [Accuracy](#accuracy).
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See [Cypher -> Deprecations, additions, and compatibility](https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/).
@@ -30,7 +30,7 @@ python main.py -l python example-projects/python/movies.py
 ```
 
 Paths support globbing.
-Multiple paths can be provided as positional arguments.
+Yol can provide multiple paths as positional arguments.
 For example (quotes for shell expansion),
 
 ```bash

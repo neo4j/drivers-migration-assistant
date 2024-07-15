@@ -26,11 +26,10 @@ class DriverMigrationAssistent:
             self.parser = TreeSitterParser(language_name)
 
     def process_file(self, file_path):
-        self.print_msg(click.style(f'File: {file_path}\n', fg=color.file, bold=True))
         self.source = File(file_path)
         self.parser.set_source(self.source)
-
         messages = []
+
         changes_json = json.loads(open(
             os.path.join(os.path.dirname(__file__), 'changelogs', f'{self.language_name}.json')
         ).read())
@@ -53,6 +52,8 @@ class DriverMigrationAssistent:
 
     def process_capture(self, start_point, end_point, change):
         '''
+        Craft a user friendly message from a raw capture.
+
         start_point: tuple of (row, col) where hit starts.
         end_point: tuple of (row, col) where hit ends.
         change: change entry from which hit resulted.
@@ -99,6 +100,7 @@ class DriverMigrationAssistent:
 
         return {
             'meta': {
+                'change_id': change.get('identifier'),
                 'line': matched_line_n,
                 'col_start': start_point[1],
                 'col_end': end_point[1],

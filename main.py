@@ -11,10 +11,10 @@ This is the migration assistent for Neo4j language libraries (drivers). It scans
 It doesn't automatically rewrite your code; it only points at where action is needed, providing in-context information on how each hit should be addressed.
 '''
 welcome_warning = intro + '''
-Be aware that:
-- The assistent can detect almost all the changes you need to do in your code, but there is a small percentage of changelog entries that can't be surfaced in this form. For a thorough list of changes, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
+Points of care:
+- The assistent can detect almost all the changes you need to do in your code, but a small percentage of changelog entries can't be surfaced in this form. For a thorough list of changes, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
 - Some of the hits may be false positives, so evaluate each hit.
-- Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. To broaden the search radius, use the regex parser.
+- Implicit function calls and other hard-to-parse expressions will not be surfaced by the default parser. To broaden the search radius, use the regex parser.
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/ .
 '''
 
@@ -49,7 +49,7 @@ Be aware that:
 )
 @click.option(
     '--interactive', '-I', 'interactive', is_flag=True, flag_value=True,
-    help='Run the tool interactely, pausing after each entry with option to set some entries to ignored.'
+    help='Run the tool interactely, pausing after each entry with option to add it to the ignored list.'
 )
 @click.option(
     '--show-ignored', 'show_ignored', is_flag=True, flag_value=True,
@@ -65,6 +65,7 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
 
     deprecated_count = 0; removed_count = 0;
     for file_path in file_paths:
+        self.print_msg(click.style(f'File: {file_path}\n', fg=color.file, bold=True))
         messages = assistent.process_file(file_path)
         for i in range(len(messages)):
             msg = messages[i]
@@ -82,12 +83,12 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
             if interactive:
                 choice = click.prompt(
                     click.style(
-                        'What to do? [(n) Next, (i) Ignore forever]',
+                        'What to do? [(n) Next, (i) Add to ignore list and hide]',
                         fg='blue', bold=True
                     ), type=click.Choice(['n', 'i']), show_choices=False)
                 if choice == 'i':
                     assistent.set_ignore_msg(msg)
-                assistent.print_msg('')
+                assistent.print_msg('')  # newline
 
         deprecated_count += assistent.source.deprecated_count
         removed_count += assistent.source.removed_count
