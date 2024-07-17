@@ -12,9 +12,9 @@ It doesn't automatically rewrite your code; it only points at where action is ne
 '''
 welcome_warning = intro + '''
 Points of care:
-- The assistent can detect almost all the changes you need to do in your code, but a small percentage of changelog entries can't be surfaced in this form. For a thorough list of changes, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
+- The assistent can detect almost all the changes you need to do in your code, but a few changelog entries can't be surfaced in this form. For a thorough list of changes, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
 - Some of the hits may be false positives, so evaluate each hit.
-- Implicit function calls and other hard-to-parse expressions will not be surfaced by the default parser. To broaden the search radius, use the regex parser.
+- Implicit function calls and other hard-to-parse expressions aren't be surfaced by the default parser. To broaden the search radius, use the regex parser.
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/ .
 '''
 
@@ -48,14 +48,14 @@ Points of care:
     help='Use the regex parser (likely to surface more matches, although with a higher rate of false positives).'
 )
 @click.option(
-    '--interactive', '-I', 'interactive', is_flag=True, flag_value=True,
-    help='Run the tool interactely, pausing after each entry with option to add it to the ignored list.'
+    '--no-interactive', 'no_interactive', is_flag=True, flag_value=True,
+    help='Run the tool without pause after each entry.'
 )
 @click.option(
     '--show-ignored', 'show_ignored', is_flag=True, flag_value=True,
     help='Include ignored entries in output.'
 )
-def assist(path, language_name, context_lines, version, accept_warning, no_output_colors, regex_parser, interactive, show_ignored):
+def assist(path, language_name, context_lines, version, accept_warning, no_output_colors, regex_parser, no_interactive, show_ignored):
     assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors, regex_parser)
     warn_user(accept_warning, language_name)
     file_paths = []
@@ -65,7 +65,7 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
 
     deprecated_count = 0; removed_count = 0;
     for file_path in file_paths:
-        self.print_msg(click.style(f'File: {file_path}\n', fg=color.file, bold=True))
+        assistent.print_msg(click.style(f'File: {file_path}\n', fg=color.file, bold=True))
         messages = assistent.process_file(file_path)
         for i in range(len(messages)):
             msg = messages[i]
@@ -80,7 +80,7 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
                 f'({i+1}/{len(messages)}) {msg["content"]}',
                 fg='blue', bold=True))
 
-            if interactive:
+            if not no_interactive:
                 choice = click.prompt(
                     click.style(
                         'What to do? [(n) Next, (i) Add to ignore list and hide]',

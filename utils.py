@@ -23,5 +23,5 @@ def hash_message(message, source):
     #ex: example-projects/python/movies.py::import neo4j.Bookmark::import_neo4j.Bookmark
     to_hash = source.path.strip() + '::' + \
               source.lines[message['meta']['line']].strip() + '::' + \
-              message['identifier'].strip()
+              message['meta']['change_id'].strip()
     return sha256(to_hash.encode()).hexdigest()
