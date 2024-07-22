@@ -469,7 +469,7 @@
   },
   {
     "identifier": "Session.write_transaction",
-    "msg": "`Session.write_transaction()` was deprecated in favor of `Session.execute_write()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.commit()`, `.rollback()`, `.close()`, `.closed()`) are not available on managed transactions anymore.",
+    "msg": "`Session.write_transaction()` is deprecated in favor of `Session.execute_write()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.commit()`, `.rollback()`, `.close()`, `.closed()`) are not available on managed transactions anymore.",
     "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.execute_write",
     "deprecated": "5.0",
     "patterns": [

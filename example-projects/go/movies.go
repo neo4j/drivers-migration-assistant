@@ -60,7 +60,10 @@ type Neo4jConfiguration struct {
 }
 
 func (nc *Neo4jConfiguration) newDriver() (neo4j.Driver, error) {
+	return NewDriver(nc.Url, neo4j.BasicAuth(nc.Username, nc.Password, ""))
 	return neo4j.NewDriver(nc.Url, neo4j.BasicAuth(nc.Username, nc.Password, ""))
+	s.LastBookmark()
+	s.LastBookmarks()
 }
 
 func defaultHandler(w http.ResponseWriter, req *http.Request) {

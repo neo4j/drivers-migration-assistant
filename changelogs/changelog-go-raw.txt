@@ -1,0 +1,83 @@
+✔
+
+5.0a1
+✔ [#302] Deprecate Session.LastBookmark() for Session.LastBookmarks()
+
+✔ executeread
+
+✔ As mentioned earlier, all APIs accessible through the neo4j.NewDriver function are now deprecated (including that function) and will be removed in 6.0
+
+all the following previously exported types are now internal:
+db.AccessMode, db.WriteMode and db.ReadMode (use the existing neo4j.AccessMode, neo4j.AccessModeWrite and neo4j.AccessModeRead instead)
+db.TxHandle (no replacement)
+db.StreamHandle (no replacement)
+db.Command (no replacement)
+db.TxConfig (use the existing neo4j.TransactionConfig instead)
+db.Connection (no replacement)
+db.RoutingTable (no replacement)
+db.DefaultDatabase (no replacement)
+db.DatabaseSelector (no replacement)
+
+all deprecated elements in 4.4 have been removed
+(unpack)
+
+go get github.com/neo4j/neo4j-go-driver/v5
+
+[6bcfac0] [behavioral] calling Rollback or Commit multiple times is now prohibited
+
+[6bcfac0] a transaction timeout of 0 (which is not the default value anymore) now disables the timeout on the server side
+
+Deprecated Nodes' and Relationships' Id property (Int64) in favor of ElementId (string).
+
+a hard Go 1.18 baseline.
+
+5.8
+
+[1f1c154] ⚠️ Deprecate driver config alias and update call sites
+Please use config.Config instead of neo4j.Config
+Please use config.ServerAddressResolver instead of neo4j.ServerAddressResolver
+Please use config.ServerAddress instead of neo4j.ServerAddress
+
+5.18
+
+[21c64d6] Return an error if operation is attempted on a closed session (#570) ⚠️ Breaking Change: This update fixes a critical bug where operations on a closed session were incorrectly allowed. If your code was relying on this behavior, it may now encounter a UsageError. Please review your usage of closed sessions to ensure compatibility. The error message for operations on closed sessions is: "Operation attempted on a closed session".
+
+type ServerInfo interface {
+	// Version returns the version of Neo4j running at the server.
+	// Deprecated: since 4.3, this function is deprecated. It will be removed in 5.0. please use Agent, ProtocolVersion, or call the dbms.components procedure instead
+	Version() string
+
+if migrating from earlier than 4
+https://github.com/neo4j/neo4j-go-driver/blob/v4.0.0-beta1/MIGRATIONGUIDE.md
+
+
+Structs
+neo4j.Config (replaced by config.Config since 5.8.0)
+
+Types
+neo4j.ServerAddressResolver (replaced by config.ServerAddressResolver since 5.8.0)
+neo4j.LogLevel (replaced by log.Level since 5.17.0)
+neo4j.ERROR (replaced by log.ERROR since 5.17.0)
+neo4j.WARNING (replaced by log.WARNING since 5.17.0)
+neo4j.INFO (replaced by log.INFO since 5.17.0)
+neo4j.DEBUG (replaced by log.DEBUG since 5.17.0)
+log.Console (replaced by log.ToConsole since 5.17.0)
+log.Void (replaced by log.ToVoid since 5.17.0)
+
+Struct fields
+neo4j.Config#RootCAs (this can be configured through neo4j.Config#TlsConfig since 5.0.0)
+Functions / Methods
+neo4j.NewDriver (replaced by neo4j.NewDriverWithContext since 5.0.0)
+neo4j.SingleT (replaced by neo4j.SingleTWithContext since 5.0.0)
+neo4j.CollectT (replaced by neo4j.CollectTWithContext since 5.0.0)
+neo4j.Collect (replaced by neo4j.CollectWithContext since 5.0.0)
+neo4j.ConsoleLogger (replaced by log.ToConsole since 5.17.0)
+neo4j.ConsoleBoltLogger (replaced by log.BoltToConsole since 5.17.0)
+
+Interfaces
+neo4j.Driver (replaced by neo4j.DriverWithContext since 5.0.0)
+neo4j.Session (replaced by neo4j.SessionWithContext since 5.0.0)
+neo4j.Transaction (replaced by neo4j.ExplicitTransaction since 5.0.0)
+neo4j.TransactionWork (replaced by neo4j.ManagedTransactionWork since 5.0.0)
+neo4j.Result (replaced by neo4j.ResultWithContext since 5.0.0)
+neo4j.ServerAddress (replaced by config.ServerAddress since 5.8.0)

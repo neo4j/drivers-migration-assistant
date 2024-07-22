@@ -1,16 +1,54 @@
 [
-    {
-        "identifier": "ReadTransaction",
-        "type": "method",
-        "msg": "`Session.read_transaction()` was deprecated in favor of `Session.execute_read()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.commit()`, `.rollback()`, `.close()`) are not available on managed transactions anymore.",
-        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.execute_read",
-        "version": "5.0"
-    },
-    {
-        "identifier": "WriteTransaction",
-        "type": "method",
-        "msg": "`Session.write_transaction()` was deprecated in favor of `Session.execute_write()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.commit()`, `.rollback()`, `.close()`) are not available on managed transactions anymore.",
-        "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.execute_write",
-        "version": "5.0"
-    }
+  {
+    "identifier": "NewDriver",
+    "msg": "`NewDriver()` is deprecated in favor of `NewDriverWithContext()`. The logic is similar, but the new function takes a `ctx.Context` as first argument.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#NewDriverWithContext",
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^(neo4j\\.)?NewDriver$",
+        "ts_type": "function",
+        "re_pattern": "\\b(neo4j\\.)?NewDriver\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Session.LastBookmark",
+    "msg": "`Session.LastBookmark()` is deprecated in favor of `Session.LastBookmarks()`. The logic is similar, but the new method returns `neo4j.Bookmarks` rather than `string`.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#Session.LastBookmarks",
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^LastBookmark$",
+        "ts_type": "method",
+        "re_pattern": "\\bLastBookmark\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Session.WriteTransaction",
+    "msg": "`Session.WriteTransaction()` is deprecated in favor of `Session.ExecuteWrite()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`, `.Closed()`) are not available on managed transactions anymore.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SessionWithContext.ExecuteWrite",
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^WriteTransaction$",
+        "ts_type": "method",
+        "re_pattern": "\\bWriteTransaction\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Session.ReadTransaction",
+    "msg": "`Session.ReadTransaction()` is deprecated in favor of `Session.ExecuteRead()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`, `.Closed()`) are not available on managed transactions anymore.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SessionWithContext.ExecuteRead",
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^ReadTransaction$",
+        "ts_type": "method",
+        "re_pattern": "\\bReadTransaction\\b"
+      }
+    ]
+  }
 ]

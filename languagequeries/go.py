@@ -1,11 +1,26 @@
+from ._common import match_var
+
+
 class GoQueries:
+
+    def function(self, name):
+        return f"""
+            (call_expression
+              function: [
+                (selector_expression) @function_name
+                (identifier) @function_name
+              ]
+              {match_var('function_name', name)}
+            )
+        """
 
     def method(self, name):
         return f"""
             (call_expression
               function: (selector_expression
                 field: (field_identifier) @method_name
-                (#eq? @method_name "{name}")))
+                {match_var('method_name', name)}
+            ))
         """
 
     def type(self, name):

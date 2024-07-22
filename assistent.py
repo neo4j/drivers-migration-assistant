@@ -33,6 +33,7 @@ class DriverMigrationAssistent:
         changes_json = json.loads(open(
             os.path.join(os.path.dirname(__file__), 'changelogs', f'{self.language_name}.json')
         ).read())
+
         for change in changes_json:
             captures = []
             for pattern in change['patterns']:
