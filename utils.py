@@ -1,5 +1,7 @@
 from hashlib import sha256
 import click
+from glob import iglob
+import os.path
 
 
 class Color:
@@ -25,3 +27,18 @@ def hash_message(message, source):
               source.lines[message['meta']['line']].strip() + '::' + \
               message['meta']['change_id'].strip()
     return sha256(to_hash.encode()).hexdigest()
+
+
+def parse_path(path):
+    '''
+    Expand a path into paths to files. Supports globbing.
+    '''
+    file_paths = []
+    for file_path in path:
+        if os.path.isdir(file_path.strip()):  # expand dirs to include files and subdirs
+            file_path = os.path.join(file_path, '**', '*')
+        all_file_paths = iglob(file_path.strip(), recursive=True)
+        for path in all_file_paths:
+            if not os.path.isdir(path):  # ignore dir paths, as they've been expanded into their files
+                file_paths.append(path)
+    return file_paths
