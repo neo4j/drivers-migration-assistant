@@ -47,6 +47,7 @@
           "\\\\bConfig\\\\b"
          ],
         "ts_type": "type",
+        "ts_uniqueify": "False",
         "re_pattern": "\\b(?<!config\\.)Config\\b"
       }
     ]
