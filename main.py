@@ -58,7 +58,9 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
     assistant = DriverMigrationAssistant(language_name, context_lines, version, no_output_colors, regex_parser)
     warn_user(accept_warning, language_name)
     file_paths = parse_path(path)
+    assistant.print_msg('-'*50)
     assistant.print_msg('\n' + click.style('Files to process: ', bold=True) + str(len(file_paths)) + '\n')
+    assistant.print_msg('-'*50 + '\n')
 
     deprecated_count = 0; removed_count = 0;
     for file_path in file_paths:
