@@ -9,7 +9,7 @@ from parsers import TreeSitterParser, RegexParser
 from utils import File, hash_message, Color as color
 
 
-class DriverMigrationAssistent:
+class DriverMigrationAssistant:
 
     def __init__(self, language_name, context_lines, version, no_output_colors, regex_parser):
         self.language_name = language_name
@@ -33,6 +33,7 @@ class DriverMigrationAssistent:
         changes_json = json.loads(open(
             os.path.join(os.path.dirname(__file__), 'changelogs', f'{self.language_name}.json')
         ).read())
+
         for change in changes_json:
             captures = []
             for pattern in change['patterns']:
