@@ -14,13 +14,14 @@ import (
 
 	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
 )
-session.Run("RETURN 1", nil, WithTxTimeout(time.Second*0, 22))
+
 import (
 	c "context"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j/auth"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j/db"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j/db/AccessMode"
 	)
+
 
 type MovieResult struct {
 	Movie `json:"movie"`
@@ -65,6 +66,31 @@ type Neo4jConfiguration struct {
 	Password string
 	Database string
 }
+
+session.Run("RETURN 1", nil, WithTxTimeout(time.Second*0, 22))
+node.Id
+obj.notANeoId
+func Keys(streamHandle StreamHandle) ([]string, error) {
+ // pass
+}
+
+ var d Config = ""
+
+driver := NewDriverWithContext(func(config Config) {
+  lala
+  })
+
+driver := NewDriverWithContext(func(config Config) {
+  lala
+  })
+driver := NewDriverWithContext(func(config Config) {
+  lala
+  })
+
+
+var d config.Config = ""
+var d Config = ""
+
 
 func (nc *Neo4jConfiguration) newDriver() (neo4j.Driver, error) {
 	return NewDriver(nc.Url, neo4j.BasicAuth(nc.Username, nc.Password, ""))

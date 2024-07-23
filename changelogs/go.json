@@ -25,6 +25,45 @@
         "ts_pattern": "neo4j/db",
         "ts_type": "import_dec",
         "re_pattern": "\\bneo4j/db\\b"
+      },
+      {
+        "ts_pattern": "(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)",
+        "ts_type": "type",
+        "re_pattern": "\\b(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.Config",
+    "msg": "`neo4j.Config` is deprecated in favor of `config.Config`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#Config"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": [
+          "?!config\\.Config",
+          "\\\\bConfig\\\\b"
+         ],
+        "ts_type": "type",
+        "re_pattern": "\\b(?<!config\\.)Config\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Id",
+    "msg": "`Node.Id` and `Relationship.Id` are deprecated in favor of `Node.ElementId` and `Relationship.ElementId`. Old identifiers were Int64, wereas new ElementIds are String.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/dbtype#Node",
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/dbtype#Relationship"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^Id$",
+        "ts_type": "property",
+        "re_pattern": "\\bId\\b"
       }
     ]
   },

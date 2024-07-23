@@ -7,10 +7,10 @@ class GoQueries:
         return f"""
             (call_expression
               function: [
-                (selector_expression) @function_name
-                (identifier) @function_name
+                (selector_expression) @function
+                (identifier) @function
               ]
-              {match_var('function_name', name)}
+              {match_var('function', name)}
             )
         """
 
@@ -18,16 +18,37 @@ class GoQueries:
         return f"""
             (call_expression
               function: (selector_expression
-                field: (field_identifier) @method_name
-                {match_var('method_name', name)}
+                field: (field_identifier) @method
+                {match_var('method', name)}
             ))
         """
 
-    def type(self, name):
+    def property(self, name):
         return f"""
-            (type
-              (identifier) @type_name
-              (#eq? @type_name "{name}"))
+            (selector_expression
+              field: (field_identifier) @property
+              {match_var('property', name)}
+            )
+        """
+
+    def type(self, *args):
+        '''
+        Allows for complex type queries, such as
+        (_
+          type: (_) @type_name
+          (#match? @type_name "Config")
+          (#not-match? @type_name "config\\.Config")
+        )
+        '''
+        conditions = ''
+        for arg in args:
+            conditions += f'''{match_var('type', arg)}
+              '''
+        return f"""
+            (_
+              type: (_) @type
+              {conditions}
+            )
         """
 
     def import_dec(self, name):
@@ -42,11 +63,11 @@ class GoQueries:
         return f"""
             (call_expression
               function: [
-                (selector_expression) @function_name
-                (identifier) @function_name
+                (selector_expression) @function
+                (identifier) @function
               ]
               arguments: (argument_list) @args
-              {match_var('function_name', function_name)}
+              {match_var('function', function_name)}
               {match_var('args', arg)}
             )
         """

@@ -22,7 +22,7 @@ db.DatabaseSelector (no replacement)
 
 ✔ [6bcfac0] a transaction timeout of 0 (which is not the default value anymore) now disables the timeout on the server side
 
-Deprecated Nodes' and Relationships' Id property (Int64) in favor of ElementId (string).
+✔ Deprecated Nodes' and Relationships' Id property (Int64) in favor of ElementId (string).
 
 a hard Go 1.18 baseline.
 
@@ -77,3 +77,6 @@ neo4j.Transaction (replaced by neo4j.ExplicitTransaction since 5.0.0)
 neo4j.TransactionWork (replaced by neo4j.ManagedTransactionWork since 5.0.0)
 neo4j.Result (replaced by neo4j.ResultWithContext since 5.0.0)
 neo4j.ServerAddress (replaced by config.ServerAddress since 5.8.0)
+
+
+# Migration guide for 1.x to 4.x
