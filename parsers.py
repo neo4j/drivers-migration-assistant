@@ -2,6 +2,24 @@ import re
 from tree_sitter import Language, Parser
 
 
+'''
+Backslashes in ts_patterns should be escaped twice.
+Backslashes in re_patterns should be escaped once.
+Example:
+
+"patterns": [
+  {
+    "ts_pattern": [
+      "?!config\\.Config",
+      "\\\\bConfig\\\\b"
+     ],
+    "ts_type": "type",
+    "re_pattern": "\\b(?<!config\\.)Config\\b"
+  }
+]
+'''
+
+
 class TreeSitterParser:
 
     def __init__(self, language_name):

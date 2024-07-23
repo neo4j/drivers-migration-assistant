@@ -85,7 +85,7 @@ class DriverMigrationAssistant:
             else:
                 line_content = self.source.lines[i]
                 output += '  '
-            output += click.style(i, bold=True) + ' ' + line_content + '\n'
+            output += click.style(i+1, bold=True) + ' ' + line_content + '\n'
 
         if change.get('deprecated') != None:
             output += '\n  ' + click.style('Deprecated in: ', bold=True) + change.get('deprecated')
