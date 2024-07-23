@@ -52,7 +52,10 @@ class TreeSitterParser:
             raise ValueError('Change identifier must be str or list.')
 
         matches = self.language.query(query)
-        captures = self.uniqueify_captures(matches.captures(self.ast.root_node), pattern)
+        if pattern.get('ts_uniqueify') != None and pattern.get('ts_uniqueify') == 'True':
+            captures = self.uniqueify_captures(matches.captures(self.ast.root_node), pattern)
+        else:
+            captures = matches.captures(self.ast.root_node)
         return [(c[0].range.start_point, c[0].range.end_point) for c in captures]  # only extract relevant bits
 
     def uniqueify_captures(self, captures, pattern):
