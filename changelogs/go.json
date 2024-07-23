@@ -1,7 +1,52 @@
 [
   {
+    "identifier": "import_neo4j_v4",
+    "msg": "Upgrade the import directives for driver's packages to `v5`. Don't forget to update your dependencies as well.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "/v4/neo4j",
+        "ts_type": "import_dec",
+        "re_pattern": "\\b/v4/neo4j\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.db_internals",
+    "msg": "All previously exported types from `neo4j.db` are internal.\nFor `db.AccessMode`, `db.WriteMode` and `db.ReadMode`, use the existing `neo4j.AccessMode`, `neo4j.AccessModeWrite` and `neo4j.AccessModeRead`.\nFor `db.TxConfig`, use the existing `neo4j.TransactionConfig`.\nAll others have no replacement: `db.TxHandle`, `db.StreamHandle`, `db.Command`, `db.Connection`, `db.RoutingTable`, `db.DefaultDatabase`, `db.DatabaseSelector`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#AccessMode",
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#TransactionConfig"
+    ],
+    "removed": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "neo4j/db",
+        "ts_type": "import_dec",
+        "re_pattern": "\\bneo4j/db\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "txTimeout",
+    "msg": "A transaction timeout of `0` (which is not the default value anymore) now disables the timeout on the server side.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#WithTxTimeout",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": [
+          "WithTxTimeout",
+          "\\\\b0\\\\b"
+        ],
+        "ts_type": "function_arg",
+        "re_pattern": "WithTxTimeout\\(.*?\\b0\\b"
+      }
+    ]
+  },
+  {
     "identifier": "NewDriver",
-    "msg": "`NewDriver()` is deprecated in favor of `NewDriverWithContext()`. The logic is similar, but the new function takes a `ctx.Context` as first argument.",
+    "msg": "`NewDriver()` is deprecated in favor of `NewDriverWithContext()`. The logic is similar, but the new function/interface takes a `ctx.Context` as first argument.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#NewDriverWithContext",
     "deprecated": "5.0",
     "patterns": [
@@ -14,7 +59,7 @@
   },
   {
     "identifier": "Session.LastBookmark",
-    "msg": "`Session.LastBookmark()` is deprecated in favor of `Session.LastBookmarks()`. The logic is similar, but the new method returns `neo4j.Bookmarks` rather than `string`.",
+    "msg": "`Session.LastBookmark()` is deprecated in favor of `Session.LastBookmarks()`. The logic is similar, but the new method returns `neo4j.Bookmarks` instead of `string`.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#Session.LastBookmarks",
     "deprecated": "5.0",
     "patterns": [

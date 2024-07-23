@@ -30,44 +30,23 @@ class GoQueries:
               (#eq? @type_name "{name}"))
         """
 
-    def import_from_statement__module_name(self, name):
+    def import_dec(self, name):
         return f"""
-            (import_from_statement
-              module_name: (dotted_name) @module_name
-              (#eq? @module_name "{name}")
+            (import_spec
+              path: (interpreted_string_literal) @name
+              {match_var('name', name)}
             )
         """
 
-    def import_from_statement__name(self, module_name, name):
+    def function_arg(self, function_name, arg):
         return f"""
-            (import_from_statement
-              module_name: (dotted_name) @module_name
-              (#eq? @module_name "{module_name}")
-              name: (dotted_name) @name
-              (#eq? @name "{name}")
-            )
-        """
-
-    def import_statement__name(self, name):
-        return f"""
-            (import_statement
-              name: (dotted_name) @name
-              (#eq? @name "{name}")
-            )
-        """
-
-    def method__kwarg(self, method_name, kwarg_name):
-        return f"""
-            (call
-              function: (attribute
-                attribute: (identifier) @method_name
-                (#eq? @method_name "{method_name}")
-              )
-              arguments: (argument_list
-                (keyword_argument
-                  name: (identifier) @kwarg_name
-                  (#eq? @kwarg_name "{kwarg_name}")
-                )
-              )
+            (call_expression
+              function: [
+                (selector_expression) @function_name
+                (identifier) @function_name
+              ]
+              arguments: (argument_list) @args
+              {match_var('function_name', function_name)}
+              {match_var('args', arg)}
             )
         """

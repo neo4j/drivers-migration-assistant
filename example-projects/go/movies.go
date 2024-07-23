@@ -14,6 +14,13 @@ import (
 
 	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
 )
+session.Run("RETURN 1", nil, WithTxTimeout(time.Second*0, 22))
+import (
+	c "context"
+	"github.com/neo4j/neo4j-go-driver/v5/neo4j/auth"
+	"github.com/neo4j/neo4j-go-driver/v5/neo4j/db"
+	"github.com/neo4j/neo4j-go-driver/v5/neo4j/db/AccessMode"
+	)
 
 type MovieResult struct {
 	Movie `json:"movie"`

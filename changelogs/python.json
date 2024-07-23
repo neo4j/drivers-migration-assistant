@@ -1,7 +1,7 @@
 [
   {
     "identifier": "last_bookmark",
-    "msg": "`Session.last_bookmark()` is deprecated in favor of `Session.last_bookmarks()`. The logic is similar, but the new method returns `neo4j.Bookmarks` rather than `str`.",
+    "msg": "`Session.last_bookmark()` is deprecated in favor of `Session.last_bookmarks()`. The logic is similar, but the new method returns `neo4j.Bookmarks` instead of `str`.",
     "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Session.last_bookmarks",
     "deprecated": "5.0",
     "patterns": [
