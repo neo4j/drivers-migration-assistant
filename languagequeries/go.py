@@ -6,10 +6,7 @@ class GoQueries:
     def function(self, name):
         return f"""
             (call_expression
-              function: [
-                (selector_expression) @function
-                (identifier) @function
-              ]
+              function: (selector_expression) @function
               {match_var('function', name)}
             )
         """

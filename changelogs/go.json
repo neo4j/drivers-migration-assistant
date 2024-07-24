@@ -14,18 +14,13 @@
   },
   {
     "identifier": "neo4j.db_internals",
-    "msg": "All previously exported types from `neo4j.db` are internal.\nFor `db.AccessMode`, `db.WriteMode` and `db.ReadMode`, use the existing `neo4j.AccessMode`, `neo4j.AccessModeWrite` and `neo4j.AccessModeRead`.\nFor `db.TxConfig`, use the existing `neo4j.TransactionConfig`.\nAll others have no replacement: `db.TxHandle`, `db.StreamHandle`, `db.Command`, `db.Connection`, `db.RoutingTable`, `db.DefaultDatabase`, `db.DatabaseSelector`.",
+    "msg": "Some of the previously exported types from `neo4j.db` are now internal.\nFor `db.AccessMode`, `db.WriteMode` and `db.ReadMode`, use the existing `neo4j.AccessMode`, `neo4j.AccessModeWrite` and `neo4j.AccessModeRead`.\nFor `db.TxConfig`, use the existing `neo4j.TransactionConfig`.\nAll others have no replacement: `db.TxHandle`, `db.StreamHandle`, `db.Command`, `db.Connection`, `db.RoutingTable`, `db.DefaultDatabase`, `db.DatabaseSelector`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#AccessMode",
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#TransactionConfig"
     ],
     "removed": "5.0",
     "patterns": [
-      {
-        "ts_pattern": "neo4j/db",
-        "ts_type": "import_dec",
-        "re_pattern": "\\bneo4j/db\\b"
-      },
       {
         "ts_pattern": "(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)",
         "ts_type": "type",
@@ -39,16 +34,69 @@
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#Config"
     ],
-    "deprecated": "5.0",
+    "deprecated": "5.8",
     "patterns": [
       {
         "ts_pattern": [
           "?!config\\.Config",
-          "\\\\bConfig\\\\b"
+          "\\.Config$"
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
         "re_pattern": "\\b(?<!config\\.)Config\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.ServerAddress",
+    "msg": "`neo4j.ServerAddress` is deprecated in favor of `config.ServerAddress`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#ServerAddress"
+    ],
+    "deprecated": "5.8",
+    "patterns": [
+      {
+        "ts_pattern": [
+          "?!config\\.ServerAddress",
+          "\\.ServerAddress$"
+         ],
+        "ts_type": "type",
+        "ts_uniqueify": "False",
+        "re_pattern": "\\b(?<!config\\.)ServerAddress\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.ServerAddressResolver",
+    "msg": "`neo4j.ServerAddressResolver` is deprecated in favor of `config.ServerAddressResolver`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#ServerAddressResolver"
+    ],
+    "deprecated": "5.8",
+    "patterns": [
+      {
+        "ts_pattern": [
+          "?!config\\.ServerAddressResolver",
+          "\\.ServerAddressResolver$"
+         ],
+        "ts_type": "type",
+        "ts_uniqueify": "False",
+        "re_pattern": "\\b(?<!config\\.)ServerAddressResolver\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "RootCAs",
+    "msg": "`Config.RootCAs` is deprecated, use `Config.TlsConfig` instead.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#Config.TlsConfig"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^RootCAs$",
+        "ts_type": "property",
+        "re_pattern": "\\bRootCAs\\b"
       }
     ]
   },
@@ -69,6 +117,22 @@
     ]
   },
   {
+    "identifier": "Version",
+    "msg": "`ServerInfo.Version` is deprecated. Use `ServerInfo.Agent`, `ServerInfo.ProtocolVersion`, or call the `dbms.components` Cypher procedure instead.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ServerInfo"
+    ],
+    "deprecated": "4.3",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^Version$",
+        "ts_type": "property",
+        "re_pattern": "\\bVersion\\b"
+      }
+    ]
+  },
+  {
     "identifier": "txTimeout",
     "msg": "A transaction timeout of `0` (which is not the default value anymore) now disables the timeout on the server side.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#WithTxTimeout",
@@ -80,6 +144,7 @@
           "\\\\b0\\\\b"
         ],
         "ts_type": "function_arg",
+        "ts_uniqueify": "True",
         "re_pattern": "WithTxTimeout\\(.*?\\b0\\b"
       }
     ]
@@ -91,9 +156,35 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "^(neo4j\\.)?NewDriver$",
+        "ts_pattern": "^(neo4j)?\\.NewDriver$",
         "ts_type": "function",
-        "re_pattern": "\\b(neo4j\\.)?NewDriver\\b"
+        "re_pattern": "\\b(neo4j)?\\.NewDriver\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "ConsoleLogger",
+    "msg": "`neo4j.log.ConsoleLogger()` is deprecated in favor of `neo4j.log.ToConsole()`.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#ToConsole",
+    "deprecated": "5.17",
+    "patterns": [
+      {
+        "ts_pattern": "^(log)?\\.ConsoleLogger$",
+        "ts_type": "function",
+        "re_pattern": "\\b(neo4j)?\\.ConsoleLogger\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "ConsoleBoltLogger",
+    "msg": "`neo4j.log.ConsoleBoltLogger()` is deprecated in favor of `neo4j.log.BoltToConsole()`.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#BoltToConsole",
+    "deprecated": "5.17",
+    "patterns": [
+      {
+        "ts_pattern": "^(log)?\\.ConsoleBoltLogger$",
+        "ts_type": "function",
+        "re_pattern": "\\b(neo4j)?\\.ConsoleBoltLogger\\b"
       }
     ]
   },

@@ -19,7 +19,6 @@ import (
 	c "context"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j/auth"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j/db"
-	"github.com/neo4j/neo4j-go-driver/v5/neo4j/db/AccessMode"
 	)
 
 
@@ -74,23 +73,29 @@ func Keys(streamHandle StreamHandle) ([]string, error) {
  // pass
 }
 
- var d Config = ""
-
-driver := NewDriverWithContext(func(config Config) {
+driver := NewDriverWithContext(func(config neo4j.Config) {
   lala
   })
-
-driver := NewDriverWithContext(func(config Config) {
-  lala
-  })
-driver := NewDriverWithContext(func(config Config) {
+driver := NewDriverWithContext(func(config neo4j.Config) {
   lala
   })
 
 
-var d config.Config = ""
-var d Config = ""
+var d Config = ""  // ok
+var d config.Config = ""  // ok
+var d neo4j.Config = "" // not ok
+var d neo4j.Config = "" // not ok
+var d ServerAddressResolver = ""
+var d neo4j.ServerAddress = ""
+var d neo4j.ServerAddress = ""
+server.Version
 
+driver, err := neo4j.NewDriverWithContext(
+    "neo4j://example.com:9999", neo4j.BasicAuth(dbUser, dbPassword, ""),
+    func(conf *config.Config) {
+        conf.RootCAs = "something-invalid"
+        }
+})
 
 func (nc *Neo4jConfiguration) newDriver() (neo4j.Driver, error) {
 	return NewDriver(nc.Url, neo4j.BasicAuth(nc.Username, nc.Password, ""))
