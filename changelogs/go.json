@@ -20,11 +20,12 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#TransactionConfig"
     ],
     "removed": "5.0",
+    "namespace": "db",
     "patterns": [
       {
-        "ts_pattern":"^db\\\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)$",
+        "ts_pattern":"^{{namespace}}\\\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)$",
         "ts_type": "type",
-        "re_pattern": "\\bdb\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)\\b"
+        "re_pattern": "\\b{{namespace}}\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)\\b"
       }
     ]
   },
@@ -36,13 +37,14 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#pkg-constants"
     ],
     "removed": "5.17",
+    "namespace": "neo4j",
     "patterns": [
       {
         "ts_pattern": [
-          "^neo4j\\\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)$"
+          "^{{namespace}}\\\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)$"
         ],
         "ts_type": "type",
-        "re_pattern": "\\bneo4j\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)\\b"
+        "re_pattern": "\\b{{namespace}}\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)\\b"
       }
     ]
   },
@@ -53,14 +55,15 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#Config"
     ],
     "deprecated": "5.8",
+    "namespace": "neo4j",
     "patterns": [
       {
         "ts_pattern": [
-          "^neo4j\\\\.Config$"
+          "^{{namespace}}\\\\.Config$"
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\bneo4j\\.Config\\b"
+        "re_pattern": "\\b{{namespace}}\\.Config\\b"
       }
     ]
   },
@@ -71,14 +74,15 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#ServerAddress"
     ],
     "deprecated": "5.8",
+    "namespace": "neo4j",
     "patterns": [
       {
         "ts_pattern": [
-          "^neo4j\\\\.ServerAddress$"
+          "^{{namespace}}\\\\.ServerAddress$"
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\bneo4j\\.ServerAddress\\b"
+        "re_pattern": "\\b{{namespace}}\\.ServerAddress\\b"
       }
     ]
   },
@@ -89,14 +93,15 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#ServerAddressResolver"
     ],
     "deprecated": "5.8",
+    "namespace": "neo4j",
     "patterns": [
       {
         "ts_pattern": [
-          "^neo4j\\\\.ServerAddressResolver$"
+          "^{{namespace}}\\\\.ServerAddressResolver$"
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\bneo4j\\.ServerAddressResolver\\b"
+        "re_pattern": "\\b{{namespace}}\\.ServerAddressResolver\\b"
       }
     ]
   },
@@ -107,12 +112,13 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ResultWithContext"
     ],
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.Result$",
+        "ts_pattern": "^{{namespace}}\\\\.Result$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\bneo4j\\.Result\\b"
+        "re_pattern": "\\b{{namespace}}\\.Result\\b"
       }
     ]
   },
@@ -123,12 +129,13 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SessionWithContext"
     ],
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.Session$",
+        "ts_pattern": "^{{namespace}}\\\\.Session$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\bneo4j\\.Session\\b"
+        "re_pattern": "\\b{{namespace}}\\.Session\\b"
       }
     ]
   },
@@ -139,12 +146,13 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ExplicitTransaction"
     ],
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.Transaction$",
+        "ts_pattern": "^{{namespace}}\\\\.Transaction$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\bneo4j\\.Transaction\\b"
+        "re_pattern": "\\b{{namespace}}\\.Transaction\\b"
       }
     ]
   },
@@ -155,12 +163,13 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ManagedTransactionWork"
     ],
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.TransactionWork$",
+        "ts_pattern": "^{{namespace}}\\\\.TransactionWork$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\bneo4j\\.TransactionWork\\b"
+        "re_pattern": "\\b{{namespace}}\\.TransactionWork\\b"
       }
     ]
   },
@@ -171,12 +180,13 @@
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#DriverWithContext"
     ],
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.Driver$",
+        "ts_pattern": "^{{namespace}}\\\\.Driver$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\bneo4j\\.Driver\\b"
+        "re_pattern": "\\b{{namespace}}\\.Driver\\b"
       }
     ]
   },
@@ -207,7 +217,7 @@
       {
         "ts_pattern": "^Id$",
         "ts_type": "property",
-        "re_pattern": "\\.Id\\b"
+        "re_pattern": "\\bId\\b"
       }
     ]
   },
@@ -223,7 +233,7 @@
       {
         "ts_pattern": "^Version$",
         "ts_type": "property",
-        "re_pattern": "\\.Version\\b"
+        "re_pattern": "\\bVersion\\b"
       }
     ]
   },
@@ -232,6 +242,7 @@
     "msg": "A transaction timeout of `0` (which is not the default value anymore) now disables the timeout on the server side.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#WithTxTimeout",
     "removed": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
         "ts_pattern": [
@@ -240,7 +251,7 @@
         ],
         "ts_type": "function_arg",
         "ts_uniqueify": "True",
-        "re_pattern": "\\bneo4j\\.WithTxTimeout\\(.*?\\b0\\b"
+        "re_pattern": "\\b{{namespace}}\\.WithTxTimeout\\(.*?\\b0\\b"
       }
     ]
   },
@@ -249,11 +260,12 @@
     "msg": "`NewDriver()` is deprecated in favor of `NewDriverWithContext()`. The behavior is similar, except that the new function takes a `ctx.Context` as first argument.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#NewDriverWithContext",
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.NewDriver$",
+        "ts_pattern": "^{{namespace}}\\\\.NewDriver$",
         "ts_type": "function",
-        "re_pattern": "\\bneo4j\\.NewDriver\\("
+        "re_pattern": "\\b{{namespace}}\\.NewDriver\\b"
       }
     ]
   },
@@ -262,11 +274,12 @@
     "msg": "`neo4j.ConsoleLogger()` is deprecated in favor of `neo4j.log.ToConsole()`.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#ToConsole",
     "deprecated": "5.17",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.ConsoleLogger$",
+        "ts_pattern": "^{{namespace}}\\\\.ConsoleLogger$",
         "ts_type": "function",
-        "re_pattern": "\\bneo4j\\.ConsoleLogger\\("
+        "re_pattern": "\\b{{namespace}}\\.ConsoleLogger\\b"
       }
     ]
   },
@@ -275,11 +288,12 @@
     "msg": "`neo4j.ConsoleBoltLogger()` is deprecated in favor of `neo4j.log.BoltToConsole()`.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#BoltToConsole",
     "deprecated": "5.17",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.ConsoleBoltLogger$",
+        "ts_pattern": "^{{namespace}}\\\\.ConsoleBoltLogger$",
         "ts_type": "function",
-        "re_pattern": "\\bneo4j\\.ConsoleBoltLogger\\("
+        "re_pattern": "\\b{{namespace}}\\.ConsoleBoltLogger\\b"
       }
     ]
   },
@@ -288,11 +302,12 @@
     "msg": "`neo4j.SingleT()` is deprecated in favor of `neo4j.SingleTWithContext()`. The behavior is similar, except that the new function takes a `ctx.Context` as first argument.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SingleTWithContext",
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.SingleT$",
+        "ts_pattern": "^{{namespace}}\\\\.SingleT$",
         "ts_type": "function",
-        "re_pattern": "\\bneo4j\\.SingleT\\("
+        "re_pattern": "\\b{{namespace}}\\.SingleT\\b"
       }
     ]
   },
@@ -301,11 +316,12 @@
     "msg": "`neo4j.Collect()` is deprecated in favor of `neo4j.CollectWithContext()`. The behavior is similar, except that the new function takes a `ctx.Context` as first argument.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#CollectWithContext",
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.Collect$",
+        "ts_pattern": "^{{namespace}}\\\\.Collect$",
         "ts_type": "function",
-        "re_pattern": "\\bneo4j\\.Collect\\("
+        "re_pattern": "\\b{{namespace}}\\.Collect\\b"
       }
     ]
   },
@@ -314,11 +330,12 @@
     "msg": "`neo4j.CollectT()` is deprecated in favor of `neo4j.CollectTWithContext()`. The behavior is similar, except that the new function takes a `ctx.Context` as first argument.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#CollectTWithContext",
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^neo4j\\\\.CollectT$",
+        "ts_pattern": "^{{namespace}}\\\\.CollectT$",
         "ts_type": "function",
-        "re_pattern": "\\bneo4j\\.CollectT\\("
+        "re_pattern": "\\b{{namespace}}\\.CollectT\\b"
       }
     ]
   },
@@ -335,7 +352,7 @@
       {
         "ts_pattern": "^Session$",
         "ts_type": "method",
-        "re_pattern": "\\.Session\\("
+        "re_pattern": "\\bSession\\b"
       }
     ]
   },
@@ -351,7 +368,7 @@
       {
         "ts_pattern": "^Params$",
         "ts_type": "method",
-        "re_pattern": "\\.Params\\("
+        "re_pattern": "\\bParams\\b"
       }
     ]
   },
@@ -367,7 +384,7 @@
       {
         "ts_pattern": "^GetByIndex$",
         "ts_type": "method",
-        "re_pattern": "\\.GetByIndex\\("
+        "re_pattern": "\\bGetByIndex\\b"
       }
     ]
   },
@@ -383,7 +400,7 @@
       {
         "ts_pattern": "^Statement$",
         "ts_type": "method",
-        "re_pattern": "\\.Statement\\("
+        "re_pattern": "\\bStatement\\b"
       }
     ]
   },
@@ -396,7 +413,7 @@
       {
         "ts_pattern": "^LastBookmark$",
         "ts_type": "method",
-        "re_pattern": "\\.LastBookmark\\("
+        "re_pattern": "\\bLastBookmark\\b"
       }
     ]
   },
@@ -409,7 +426,7 @@
       {
         "ts_pattern": "^WriteTransaction$",
         "ts_type": "method",
-        "re_pattern": "\\.WriteTransaction\\("
+        "re_pattern": "\\bWriteTransaction\\b"
       }
     ]
   },
@@ -422,7 +439,7 @@
       {
         "ts_pattern": "^ReadTransaction$",
         "ts_type": "method",
-        "re_pattern": "\\.ReadTransaction\\("
+        "re_pattern": "\\bReadTransaction\\b"
       }
     ]
   }

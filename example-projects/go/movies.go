@@ -12,13 +12,13 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
+	n "github.com/neo4j/neo4j-go-driver/v4/neo4j"
 )
 
 import (
 	c "context"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j/auth"
-	"github.com/neo4j/neo4j-go-driver/v5/neo4j/db"
+	dddb "github.com/neo4j/neo4j-go-driver/v5/neo4j/db"
 	)
 
 type MovieResult struct {
@@ -65,6 +65,9 @@ type Neo4jConfiguration struct {
 	Database string
 }
 
+var a db.Connection
+var b dddb.Connection
+
 session.Run("RETURN 1", nil, WithTxTimeout(time.Second*0, 22))
 node.Id
 obj.notANeoId
@@ -72,16 +75,16 @@ func Keys(streamHandle StreamHandle) ([]string, error) {
  // pass
 }
 
-var a neo4j.LogLevel = ""
-var a neo4j.LogLevel
+var a n.LogLevel = ""
+var a n.LogLevel
 var a n.ERROR
 var a n.ERROR=""
 var a log.WARNING
 var a log.WARNING =""
 
-records, err := neo4j.Collect(ctx, result, err)
-records, err := neo4j.CollectT(ctx, result, err)
-records, err := neo4j.SingleT(ctx, result, err)
+records, err := n.Collect(ctx, result, err)
+records, err := n.CollectT(ctx, result, err)
+records, err := n.SingleT(ctx, result, err)
 
 l := log.Void()
 l := log.ToVoid()

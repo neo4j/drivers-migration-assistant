@@ -68,3 +68,22 @@ class GoQueries:
               {match_var('args', arg)}
             )
         """
+
+    def _import_for_namespace(self):
+        regex = '\\\\bneo4j\\\\b'
+        return f"""
+            (import_spec
+              name: (package_identifier)? @alias
+              path: (interpreted_string_literal) @name
+              {match_var('name', regex)}
+            ) @root
+        """
+
+    def _parse_import_alias(self, match, source_lines):
+        line = source_lines[match[1]['root'].range.start_point[0]]
+        splitted = line.strip()[1:-1].split('/')
+        pkg_name = splitted[-1]
+        imported_as = splitted[-1]
+        if match[1].get('alias') != None:
+            imported_as = line[match[1]['alias'].range.start_point[1]:match[1]['alias'].range.end_point[1]]
+        return pkg_name, imported_as

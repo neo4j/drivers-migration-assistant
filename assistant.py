@@ -5,7 +5,7 @@ import click
 from sys import exit
 import os
 
-from parsers import TreeSitterParser, RegexParser
+from parsers import TreeSitterParser, RegexParser, format_pattern_string
 from utils import File, hash_message, Color as color
 
 
@@ -37,7 +37,7 @@ class DriverMigrationAssistant:
         for change in changes_json:
             captures = []
             for pattern in change['patterns']:
-                captures += self.parser.get_captures_for_pattern(pattern)
+                captures += self.parser.get_captures_for_pattern(pattern, change)
 
             for capture in captures:
                 msg = self.process_capture(capture[0], capture[1], change)
