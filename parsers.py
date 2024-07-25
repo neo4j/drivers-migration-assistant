@@ -2,6 +2,24 @@ import re
 from tree_sitter import Language, Parser
 
 
+'''
+Backslashes in ts_patterns should be escaped twice.
+Backslashes in re_patterns should be escaped once.
+Example:
+
+"patterns": [
+  {
+    "ts_pattern": [
+      "?!config\\\\.Config",
+      "\\\\bConfig\\\\b"
+     ],
+    "ts_type": "type",
+    "re_pattern": "\\b(?<!config\\.)Config\\b"
+  }
+]
+'''
+
+
 def format_pattern_string(pattern_s, change, namespaces):
     if change.get('namespace') != None:
         if namespaces.get(change['namespace']) != None:
@@ -13,7 +31,7 @@ def format_pattern_string(pattern_s, change, namespaces):
         raise ValueError(f'Pattern regex `{pattern_s}` contains `{{{{namespace}}}}` but namespace not given in json entry')
 
     return pattern_s
-
+  
 
 class TreeSitterParser:
 
@@ -53,7 +71,10 @@ class TreeSitterParser:
             raise ValueError('Change identifier must be str or list.')
 
         matches = self.language.query(query)
-        captures = self.uniqueify_captures(matches.captures(self.ast.root_node), pattern)
+        if pattern.get('ts_uniqueify') != None and pattern.get('ts_uniqueify') == 'True':
+            captures = self.uniqueify_captures(matches.captures(self.ast.root_node), pattern)
+        else:
+            captures = matches.captures(self.ast.root_node)
         return [(c[0].range.start_point, c[0].range.end_point) for c in captures]  # only extract relevant bits
 
     def uniqueify_captures(self, captures, pattern):

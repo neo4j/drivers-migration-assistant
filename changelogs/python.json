@@ -171,20 +171,21 @@
       {
         "ts_pattern": "^neo4j.Bookmark$",
         "ts_type": "import_from_statement__module_name",
-        "re_pattern": "from\\s*neo4j.Bookmark\\s*import"
+        "re_pattern": "from\\s*neo4j\\.Bookmark\\s*import"
       },
       {
         "ts_pattern": [
-          "neo4j",
-          "Bookmark"
+          "^neo4j$",
+          "^Bookmark$"
         ],
         "ts_type": "import_from_statement__name",
+        "ts_uniqueify": "True",
         "re_pattern": "from\\s*neo4j\\s*import\\s*Bookmark\\b"
       },
       {
         "ts_pattern": "^neo4j.Bookmark$",
         "ts_type": "import_statement__name",
-        "re_pattern": "import\\s*neo4j.Bookmark\\b"
+        "re_pattern": "import\\s*neo4j\\.Bookmark\\b"
       }
     ]
   },
@@ -196,20 +197,21 @@
       {
         "ts_pattern": "^neo4j.work$",
         "ts_type": "import_from_statement__module_name",
-        "re_pattern": "from\\s*neo4j.work\\s*import"
+        "re_pattern": "from\\s*neo4j\\.work\\s*import"
       },
       {
         "ts_pattern": [
-          "neo4j",
-          "work"
+          "^neo4j&",
+          "^work&"
         ],
         "ts_type": "import_from_statement__name",
+        "ts_uniqueify": "True",
         "re_pattern": "from\\s*neo4j\\s*import\\s*work\\b"
       },
       {
         "ts_pattern": "^neo4j.work$",
         "ts_type": "import_statement__name",
-        "re_pattern": "import\\s*neo4j.work\\b"
+        "re_pattern": "import\\s*neo4j\\.work\\b"
       }
     ]
   },
@@ -221,20 +223,21 @@
       {
         "ts_pattern": "^neo4j.packstream$",
         "ts_type": "import_from_statement__module_name",
-        "re_pattern": "from\\s*neo4j.packstream\\s*import"
+        "re_pattern": "from\\s*neo4j\\.packstream\\s*import"
       },
       {
         "ts_pattern": [
-          "neo4j",
-          "packstream"
+          "^neo4j$",
+          "^packstream$"
         ],
         "ts_type": "import_from_statement__name",
+        "ts_uniqueify": "True",
         "re_pattern": "from\\s*neo4j\\s*import\\s*packstream\\b"
       },
       {
         "ts_pattern": "^neo4j.packstream$",
         "ts_type": "import_statement__name",
-        "re_pattern": "import\\s*neo4j.packstream\\b"
+        "re_pattern": "import\\s*neo4j\\.packstream\\b"
       }
     ]
   },
@@ -246,20 +249,21 @@
       {
         "ts_pattern": "^neo4j.routing$",
         "ts_type": "import_from_statement__module_name",
-        "re_pattern": "from\\s*neo4j.routing\\s*import"
+        "re_pattern": "from\\s*neo4j\\.routing\\s*import"
       },
       {
         "ts_pattern": [
-          "neo4j",
-          "routing"
+          "^neo4j$",
+          "^routing$"
         ],
         "ts_type": "import_from_statement__name",
+        "ts_uniqueify": "True",
         "re_pattern": "from\\s*neo4j\\s*import\\s*routing\\b"
       },
       {
         "ts_pattern": "^neo4j.routing$",
         "ts_type": "import_statement__name",
-        "re_pattern": "import\\s*neo4j.routing\\b"
+        "re_pattern": "import\\s*neo4j\\.routing\\b"
       }
     ]
   },
@@ -271,20 +275,21 @@
       {
         "ts_pattern": "^neo4j.config$",
         "ts_type": "import_statement__name",
-        "re_pattern": "import\\s*neo4j.config\\b"
+        "re_pattern": "import\\s*neo4j\\.config\\b"
       },
       {
         "ts_pattern": [
-          "neo4j",
-          "config"
+          "^neo4j$",
+          "^config$"
         ],
         "ts_type": "import_from_statement__name",
+        "ts_uniqueify": "True",
         "re_pattern": "from\\s*neo4j\\s*import\\s*config\\b"
       },
       {
         "ts_pattern": "^neo4j.config$",
         "ts_type": "import_from_statement__module_name",
-        "re_pattern": "from\\s*neo4j.config\\s*import"
+        "re_pattern": "from\\s*neo4j\\.config\\s*import"
       }
     ]
   },
@@ -296,20 +301,21 @@
       {
         "ts_pattern": "^neo4j.meta$",
         "ts_type": "import_from_statement__module_name",
-        "re_pattern": "from\\s*neo4j.meta\\s*import"
+        "re_pattern": "from\\s*neo4j\\.meta\\s*import"
       },
       {
         "ts_pattern": [
-          "neo4j",
-          "meta"
+          "^neo4j$",
+          "^meta$"
         ],
         "ts_type": "import_from_statement__name",
+        "ts_uniqueify": "True",
         "re_pattern": "from\\s*neo4j\\s*import\\s*meta\\b"
       },
       {
         "ts_pattern": "^neo4j.meta$",
         "ts_type": "import_statement__name",
-        "re_pattern": "import\\s*neo4j.meta\\b"
+        "re_pattern": "import\\s*neo4j\\.meta\\b"
       }
     ]
   },
@@ -320,21 +326,22 @@
     "patterns": [
       {
         "ts_pattern": [
-          "neo4j",
-          "data"
+          "^neo4j$",
+          "^data$"
         ],
         "ts_type": "import_from_statement__name",
+        "ts_uniqueify": "True",
         "re_pattern": "from\\s*neo4j\\s*import\\s*data\\b"
       },
       {
         "ts_pattern": "^neo4j.data$",
         "ts_type": "import_from_statement__module_name",
-        "re_pattern": "from\\s*neo4j.data\\s*import"
+        "re_pattern": "from\\s*neo4j\\.data\\s*import"
       },
       {
         "ts_pattern": "^neo4j.data$",
         "ts_type": "import_statement__name",
-        "re_pattern": "import\\s*neo4j.data\\b"
+        "re_pattern": "import\\s*neo4j\\.data\\b"
       }
     ]
   },
@@ -346,12 +353,12 @@
       {
         "ts_pattern": "^neo4j.time$",
         "ts_type": "import_from_statement__module_name",
-        "re_pattern": "from\\s*neo4j.time\\s*import"
+        "re_pattern": "from\\s*neo4j\\.time\\s*import"
       },
       {
         "ts_pattern": "^neo4j.time..*$",
         "ts_type": "import_statement__name",
-        "re_pattern": "import\\s*neo4j.time..*\\b"
+        "re_pattern": "import\\s*neo4j\\.time\\..*\\b"
       }
     ]
   },
@@ -363,10 +370,11 @@
     "patterns": [
       {
         "ts_pattern": [
-          "driver",
-          "trust"
+          "^driver$",
+          "^trust$"
         ],
         "ts_type": "method__kwarg",
+        "ts_uniqueify": "True",
         "re_pattern": "\\btrust\\b"
       }
     ]
@@ -379,10 +387,11 @@
     "patterns": [
       {
         "ts_pattern": [
-          "driver",
-          "update_routing_table_timeout"
+          "^driver$",
+          "^update_routing_table_timeout$"
         ],
         "ts_type": "method__kwarg",
+        "ts_uniqueify": "True",
         "re_pattern": "\\bupdate_routing_table_timeout\\b"
       }
     ]
@@ -395,10 +404,11 @@
     "patterns": [
       {
         "ts_pattern": [
-          "driver",
-          "session_connection_timeout"
+          "^driver$",
+          "^session_connection_timeout$"
         ],
         "ts_type": "method__kwarg",
+        "ts_uniqueify": "True",
         "re_pattern": "\\bsession_connection_timeout\\b"
       }
     ]
@@ -412,10 +422,11 @@
     "patterns": [
       {
         "ts_pattern": [
-          "Duration",
-          "subseconds"
+          "^Duration$",
+          "^subseconds$"
         ],
         "ts_type": "function__kwarg",
+        "ts_uniqueify": "True",
         "re_pattern": "\\bsubseconds\\b"
       }
     ]
@@ -428,11 +439,12 @@
     "patterns": [
       {
         "ts_pattern": [
-          "Time",
-          "second",
+          "^Time$",
+          "^second$",
           "[0-9]+\\.[0-9]+"
         ],
         "ts_type": "function__kwarg__type",
+        "ts_uniqueify": "True",
         "re_pattern": "second\\b.*?[0-9]+\\.[0-9]+"
       }
     ]
@@ -445,11 +457,12 @@
     "patterns": [
       {
         "ts_pattern": [
-          "from_ticks",
-          "ticks",
+          "^from_ticks$",
+          "^ticks$",
           "[0-9]+\\.[0-9]+"
         ],
         "ts_type": "method__kwarg__type",
+        "ts_uniqueify": "True",
         "re_pattern": "ticks\\b.*?[0-9]+\\.[0-9]+"
       }
     ]
@@ -487,11 +500,12 @@
     "patterns": [
       {
         "ts_pattern": [
-          "neo4j.spatial",
-          "(de)?hydrate_point"
+          "^neo4j\\\\.spatial$",
+          "^(de)?hydrate_point$"
         ],
         "ts_type": "import_from_statement__name",
-        "re_pattern": "from\\s*neo4j.spatial\\s*import\\s*(de)?hydrate_point\\b"
+        "ts_uniqueify": "True",
+        "re_pattern": "from\\s*neo4j\\.spatial\\s*import\\s*(de)?hydrate_point\\b"
       },
       {
         "ts_pattern": "^(de)?hydrate_point$",
@@ -533,12 +547,12 @@
       {
         "ts_pattern": "^neo4j.SummaryNotificationPosition$",
         "ts_type": "import_statement__name",
-        "re_pattern": "import\\s*neo4j.SummaryNotificationPosition\\b"
+        "re_pattern": "import\\s*neo4j\\.SummaryNotificationPosition\\b"
       },
       {
         "ts_pattern": [
-          "neo4j",
-          "SummaryNotificationPosition"
+          "^neo4j$",
+          "^SummaryNotificationPosition$"
         ],
         "ts_type": "import_from_statement__name",
         "re_pattern": "from\\s*neo4j\\s*import\\s*SummaryNotificationPosition\\b"
