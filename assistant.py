@@ -61,12 +61,12 @@ class DriverMigrationAssistant:
         '''
         output = ''
 
+        if not self.is_removed(change) and not self.is_deprecated(change):
+            return False
         if self.is_deprecated(change):
             msg_color = color.deprecated
-        elif self.is_removed(change):
+        if self.is_removed(change):
             msg_color = color.removed
-        else:
-            return False
         output += click.style(change['msg'].format(**change) + '\n\n', fg=msg_color, bold=True)
 
         matched_line_n = start_point[0]
