@@ -22,9 +22,28 @@
     "removed": "5.0",
     "patterns": [
       {
-        "ts_pattern": "(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)",
+        "ts_pattern":"(db)?\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)",
         "ts_type": "type",
-        "re_pattern": "\\b(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)\\b"
+        "re_pattern": "\\b(db)?\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.log_levels",
+    "msg": "`neo4j.(LogLevel|ERROR|WARNING|INFO|DEBUG)` are deprecated in favor of `log.(Level|ERROR|WARNING|INFO|DEBUG)`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#Level",
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#pkg-constants"
+    ],
+    "removed": "5.17",
+    "patterns": [
+      {
+        "ts_pattern": [
+          "?!log\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)",
+          "(neo4j)?\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)"
+        ],
+        "ts_type": "type",
+        "re_pattern": "\\b(?<!log)(neo4j)?\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)\\b"
       }
     ]
   },
@@ -43,7 +62,7 @@
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\b(?<!config\\.)Config\\b"
+        "re_pattern": "\\b(?<!config)\\.Config\\b"
       }
     ]
   },
@@ -62,7 +81,7 @@
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\b(?<!config\\.)ServerAddress\\b"
+        "re_pattern": "\\b(?<!config)\\.ServerAddress\\b"
       }
     ]
   },
@@ -81,7 +100,87 @@
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\b(?<!config\\.)ServerAddressResolver\\b"
+        "re_pattern": "\\b(?<!config)\\.ServerAddressResolver\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.Result",
+    "msg": "`neo4j.Result` is deprecated in favor of `neo4j.ResultWithContext`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ResultWithContext"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "\\.Result$",
+        "ts_type": "type",
+        "ts_uniqueify": "False",
+        "re_pattern": "\\.Result\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.Session",
+    "msg": "`neo4j.Session` is deprecated in favor of `neo4j.SessionWithContext`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SessionWithContext"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "\\.Session$",
+        "ts_type": "type",
+        "ts_uniqueify": "False",
+        "re_pattern": "\\.Session\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.Transaction",
+    "msg": "`neo4j.Transaction` is deprecated in favor of `neo4j.ExplicitTransaction`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ExplicitTransaction"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "\\.Transaction$",
+        "ts_type": "type",
+        "ts_uniqueify": "False",
+        "re_pattern": "\\.Transaction\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.TransactionWork",
+    "msg": "`neo4j.TransactionWork` is deprecated in favor of `neo4j.ManagedTransactionWork`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ManagedTransactionWork"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "\\.TransactionWork$",
+        "ts_type": "type",
+        "ts_uniqueify": "False",
+        "re_pattern": "\\.TransactionWork\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.Driver",
+    "msg": "`neo4j.Driver` is deprecated in favor of `neo4j.DriverWithContext`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#DriverWithContext"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "\\.Driver$",
+        "ts_type": "type",
+        "ts_uniqueify": "False",
+        "re_pattern": "\\.Driver\\b"
       }
     ]
   },
@@ -151,7 +250,7 @@
   },
   {
     "identifier": "NewDriver",
-    "msg": "`NewDriver()` is deprecated in favor of `NewDriverWithContext()`. The logic is similar, but the new function/interface takes a `ctx.Context` as first argument.",
+    "msg": "`NewDriver()` is deprecated in favor of `NewDriverWithContext()`. The behavior is similar, except that the new function takes a `ctx.Context` as first argument.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#NewDriverWithContext",
     "deprecated": "5.0",
     "patterns": [
@@ -164,12 +263,12 @@
   },
   {
     "identifier": "ConsoleLogger",
-    "msg": "`neo4j.log.ConsoleLogger()` is deprecated in favor of `neo4j.log.ToConsole()`.",
+    "msg": "`neo4j.ConsoleLogger()` is deprecated in favor of `neo4j.log.ToConsole()`.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#ToConsole",
     "deprecated": "5.17",
     "patterns": [
       {
-        "ts_pattern": "^(log)?\\.ConsoleLogger$",
+        "ts_pattern": "^(neo4j)?\\.ConsoleLogger$",
         "ts_type": "function",
         "re_pattern": "\\b(neo4j)?\\.ConsoleLogger\\b"
       }
@@ -177,14 +276,118 @@
   },
   {
     "identifier": "ConsoleBoltLogger",
-    "msg": "`neo4j.log.ConsoleBoltLogger()` is deprecated in favor of `neo4j.log.BoltToConsole()`.",
+    "msg": "`neo4j.ConsoleBoltLogger()` is deprecated in favor of `neo4j.log.BoltToConsole()`.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#BoltToConsole",
     "deprecated": "5.17",
     "patterns": [
       {
-        "ts_pattern": "^(log)?\\.ConsoleBoltLogger$",
+        "ts_pattern": "^(neo4j)?\\.ConsoleBoltLogger$",
         "ts_type": "function",
         "re_pattern": "\\b(neo4j)?\\.ConsoleBoltLogger\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "SingleT",
+    "msg": "`neo4j.SingleT()` is deprecated in favor of `neo4j.SingleTWithContext()`. The behavior is similar, except that the new function takes a `ctx.Context` as first argument.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SingleTWithContext",
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^(neo4j)?\\.SingleT$",
+        "ts_type": "function",
+        "re_pattern": "\\b(neo4j)?\\.SingleT\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Collect",
+    "msg": "`neo4j.Collect()` is deprecated in favor of `neo4j.CollectWithContext()`. The behavior is similar, except that the new function takes a `ctx.Context` as first argument.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#CollectWithContext",
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^(neo4j)?\\.Collect$",
+        "ts_type": "function",
+        "re_pattern": "\\b(neo4j)?\\.Collect\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "CollectT",
+    "msg": "`neo4j.CollectT()` is deprecated in favor of `neo4j.CollectTWithContext()`. The behavior is similar, except that the new function takes a `ctx.Context` as first argument.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#CollectTWithContext",
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^(neo4j)?\\.CollectT$",
+        "ts_type": "function",
+        "re_pattern": "\\b(neo4j)?\\.CollectT\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Driver.Session",
+    "msg": "`Driver.Session()` is deprecated in {deprecated} and removed in {removed} in favor of `Driver.NewSession()`. The new function takes a single `SessionConfig` argument and returns `(Session, error)` rather than `Session` alone.\nNOTE: `Driver` is deprecated in favor of `DriverWithContext` too, so use `DriverWithContext.NewSession()`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#DriverWithContext.NewSession",
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#Driver.NewSession"
+    ],
+    "deprecated": "4.2.4",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^Session$",
+        "ts_type": "method",
+        "re_pattern": "\\.Session\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Query.Params",
+    "msg": "`Query.Params()` is deprecated in {deprecated} and removed in {removed} in favor of `Query.Parameters()`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#Query.Parameters"
+    ],
+    "deprecated": "4.4",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^Params$",
+        "ts_type": "method",
+        "re_pattern": "\\.Params\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Record.GetByIndex",
+    "msg": "`Record.GetByIndex()` is deprecated in {deprecated} and removed in {removed}. Access the `Record.Values` struct slice directly instead.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/db#Record"
+    ],
+    "deprecated": "4.4",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^GetByIndex$",
+        "ts_type": "method",
+        "re_pattern": "\\.GetByIndex\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "ResultSummary.Statement",
+    "msg": "`ResultSummary.Statement()` is deprecated in {deprecated} and removed in {removed} in favor of `ResultSummary.Query()`. The new method returns a `Query` rather than a `Statement` object.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ResultSummary.Query"
+    ],
+    "deprecated": "4.4",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^Statement$",
+        "ts_type": "method",
+        "re_pattern": "\\.Statement\\b"
       }
     ]
   },
@@ -203,7 +406,7 @@
   },
   {
     "identifier": "Session.WriteTransaction",
-    "msg": "`Session.WriteTransaction()` is deprecated in favor of `Session.ExecuteWrite()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`, `.Closed()`) are not available on managed transactions anymore.",
+    "msg": "`Session.WriteTransaction()` is deprecated in favor of `Session.ExecuteWrite()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`) are not available on managed transactions anymore.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SessionWithContext.ExecuteWrite",
     "deprecated": "5.0",
     "patterns": [
@@ -216,7 +419,7 @@
   },
   {
     "identifier": "Session.ReadTransaction",
-    "msg": "`Session.ReadTransaction()` is deprecated in favor of `Session.ExecuteRead()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`, `.Closed()`) are not available on managed transactions anymore.",
+    "msg": "`Session.ReadTransaction()` is deprecated in favor of `Session.ExecuteRead()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`) are not available on managed transactions anymore.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SessionWithContext.ExecuteRead",
     "deprecated": "5.0",
     "patterns": [

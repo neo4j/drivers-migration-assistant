@@ -21,7 +21,6 @@ import (
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j/db"
 	)
 
-
 type MovieResult struct {
 	Movie `json:"movie"`
 }
@@ -72,6 +71,24 @@ obj.notANeoId
 func Keys(streamHandle StreamHandle) ([]string, error) {
  // pass
 }
+
+var a neo4j.LogLevel = ""
+var a neo4j.LogLevel
+var a n.ERROR
+var a n.ERROR=""
+var a log.WARNING
+var a log.WARNING =""
+
+records, err := neo4j.Collect(ctx, result, err)
+records, err := neo4j.CollectT(ctx, result, err)
+records, err := neo4j.SingleT(ctx, result, err)
+
+l := log.Void()
+l := log.ToVoid()
+
+sess := d.Session(bla,bli)
+
+record.GetByIndex(1)
 
 driver := NewDriverWithContext(func(config neo4j.Config) {
   lala
