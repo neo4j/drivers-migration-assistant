@@ -1,58 +1,89 @@
+from ._common import match_var
+
+
 class GoQueries:
+
+    def function(self, name):
+        return f"""
+            (call_expression
+              function: (selector_expression) @function
+              {match_var('function', name)}
+            )
+        """
 
     def method(self, name):
         return f"""
             (call_expression
               function: (selector_expression
-                field: (field_identifier) @method_name
-                (#eq? @method_name "{name}")))
+                field: (field_identifier) @method
+                {match_var('method', name)}
+            ))
         """
 
-    def type(self, name):
+    def property(self, name):
         return f"""
-            (type
-              (identifier) @type_name
-              (#eq? @type_name "{name}"))
-        """
-
-    def import_from_statement__module_name(self, name):
-        return f"""
-            (import_from_statement
-              module_name: (dotted_name) @module_name
-              (#eq? @module_name "{name}")
+            (selector_expression
+              field: (field_identifier) @property
+              {match_var('property', name)}
             )
         """
 
-    def import_from_statement__name(self, module_name, name):
+    def type(self, *args):
+        '''
+        Allows for complex type queries, such as
+        (_
+          type: (_) @type_name
+          (#match? @type_name "Config")
+          (#not-match? @type_name "config\\.Config")
+        )
+        '''
+        conditions = ''
+        for arg in args:
+            conditions += f'''{match_var('type', arg)}
+              '''
         return f"""
-            (import_from_statement
-              module_name: (dotted_name) @module_name
-              (#eq? @module_name "{module_name}")
-              name: (dotted_name) @name
-              (#eq? @name "{name}")
+            (_
+              type: (_) @type
+              {conditions}
             )
         """
 
-    def import_statement__name(self, name):
+    def import_dec(self, name):
         return f"""
-            (import_statement
-              name: (dotted_name) @name
-              (#eq? @name "{name}")
+            (import_spec
+              path: (interpreted_string_literal) @name
+              {match_var('name', name)}
             )
         """
 
-    def method__kwarg(self, method_name, kwarg_name):
+    def function_arg(self, function_name, arg):
         return f"""
-            (call
-              function: (attribute
-                attribute: (identifier) @method_name
-                (#eq? @method_name "{method_name}")
-              )
-              arguments: (argument_list
-                (keyword_argument
-                  name: (identifier) @kwarg_name
-                  (#eq? @kwarg_name "{kwarg_name}")
-                )
-              )
+            (call_expression
+              function: [
+                (selector_expression) @function
+                (identifier) @function
+              ]
+              arguments: (argument_list) @args
+              {match_var('function', function_name)}
+              {match_var('args', arg)}
             )
         """
+
+    def _import_for_namespace(self):
+        regex = '\\\\bneo4j\\\\b'
+        return f"""
+            (import_spec
+              name: (package_identifier)? @alias
+              path: (interpreted_string_literal) @name
+              {match_var('name', regex)}
+            ) @root
+        """
+
+    def _parse_import_alias(self, match, source_lines):
+        line = source_lines[match[1]['root'].range.start_point[0]]
+        splitted = line.strip()[1:-1].split('/')
+        pkg_name = splitted[-1]
+        imported_as = splitted[-1]
+        if match[1].get('alias') != None:
+            imported_as = line[match[1]['alias'].range.start_point[1]:match[1]['alias'].range.end_point[1]]
+        return pkg_name, imported_as

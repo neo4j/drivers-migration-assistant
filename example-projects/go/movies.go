@@ -12,8 +12,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
+	n "github.com/neo4j/neo4j-go-driver/v4/neo4j"
 )
+
+import (
+	c "context"
+	"github.com/neo4j/neo4j-go-driver/v5/neo4j/auth"
+	dddb "github.com/neo4j/neo4j-go-driver/v5/neo4j/db"
+	)
 
 type MovieResult struct {
 	Movie `json:"movie"`
@@ -59,8 +65,63 @@ type Neo4jConfiguration struct {
 	Database string
 }
 
+var a db.Connection
+var b dddb.Connection
+
+session.Run("RETURN 1", nil, WithTxTimeout(time.Second*0, 22))
+node.Id
+obj.notANeoId
+func Keys(streamHandle StreamHandle) ([]string, error) {
+ // pass
+}
+
+var a n.LogLevel = ""
+var a n.LogLevel
+var a n.ERROR
+var a n.ERROR=""
+var a log.WARNING
+var a log.WARNING =""
+
+records, err := n.Collect(ctx, result, err)
+records, err := n.CollectT(ctx, result, err)
+records, err := n.SingleT(ctx, result, err)
+
+l := log.Void()
+l := log.ToVoid()
+
+sess := d.Session(bla,bli)
+
+record.GetByIndex(1)
+
+driver := NewDriverWithContext(func(config neo4j.Config) {
+  lala
+  })
+driver := NewDriverWithContext(func(config neo4j.Config) {
+  lala
+  })
+
+
+var d Config = ""  // ok
+var d config.Config = ""  // ok
+var d neo4j.Config = "" // not ok
+var d neo4j.Config = "" // not ok
+var d ServerAddressResolver = ""
+var d neo4j.ServerAddress = ""
+var d neo4j.ServerAddress = ""
+server.Version
+
+driver, err := neo4j.NewDriverWithContext(
+    "neo4j://example.com:9999", neo4j.BasicAuth(dbUser, dbPassword, ""),
+    func(conf *config.Config) {
+        conf.RootCAs = "something-invalid"
+        }
+})
+
 func (nc *Neo4jConfiguration) newDriver() (neo4j.Driver, error) {
+	return NewDriver(nc.Url, neo4j.BasicAuth(nc.Username, nc.Password, ""))
 	return neo4j.NewDriver(nc.Url, neo4j.BasicAuth(nc.Username, nc.Password, ""))
+	s.LastBookmark()
+	s.LastBookmarks()
 }
 
 func defaultHandler(w http.ResponseWriter, req *http.Request) {

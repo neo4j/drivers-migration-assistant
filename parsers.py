@@ -10,7 +10,7 @@ Example:
 "patterns": [
   {
     "ts_pattern": [
-      "?!config\\.Config",
+      "?!config\\\\.Config",
       "\\\\bConfig\\\\b"
      ],
     "ts_type": "type",
@@ -19,6 +19,19 @@ Example:
 ]
 '''
 
+
+def format_pattern_string(pattern_s, change, namespaces):
+    if change.get('namespace') != None:
+        if namespaces.get(change['namespace']) != None:
+            pattern_s = pattern_s.replace('{{namespace}}', namespaces.get(change['namespace']))
+        else:
+            pattern_s = pattern_s.replace('{{namespace}}', change['namespace'])
+
+    if '{namespace}}' in pattern_s:
+        raise ValueError(f'Pattern regex `{pattern_s}` contains `{{{{namespace}}}}` but namespace not given in json entry')
+
+    return pattern_s
+  
 
 class TreeSitterParser:
 
@@ -39,15 +52,21 @@ class TreeSitterParser:
     def set_source(self, source):
         self.source = source
         self.ast = Parser(self.language).parse(bytes(self.source.text, 'utf8'))
+        try:
+            self.namespaces = self.build_namespaces_dict()
+        except:  # python not implemented yet
+            self.namespaces = {}
 
-    def get_captures_for_pattern(self, pattern):
+    def get_captures_for_pattern(self, pattern, change):
         if pattern.get('ts_pattern') == None:
             return []
 
         if isinstance(pattern['ts_pattern'], str):
-            query = getattr(self.queries, pattern['ts_type'])(pattern['ts_pattern'])
+            pattern_formatted = format_pattern_string(pattern['ts_pattern'], change, self.namespaces)
+            query = getattr(self.queries, pattern['ts_type'])(pattern_formatted)
         elif isinstance(pattern['ts_pattern'], list):
-            query = getattr(self.queries, pattern['ts_type'])(*pattern['ts_pattern'])
+            pattern_formatted = [format_pattern_string(p, change, self.namespaces) for p in pattern['ts_pattern']]
+            query = getattr(self.queries, pattern['ts_type'])(*pattern_formatted)
         else:
             raise ValueError('Change identifier must be str or list.')
 
@@ -70,13 +89,24 @@ class TreeSitterParser:
 
         return captures[step_size-1::step_size]
 
+    def build_namespaces_dict(self):
+        namespaces_d = {}
+        ast = self.ast
+        query = self.queries._import_for_namespace()
+        matches = self.language.query(query).matches(ast.root_node)
+        for m in matches:
+            if m[1] == {}:
+                continue
+            pkg_name, imported_as = self.queries._parse_import_alias(m, self.source.lines)
+            namespaces_d[pkg_name] = imported_as
+        return namespaces_d
 
 class RegexParser:
 
     def set_source(self, source):
         self.source = source
 
-    def get_captures_for_pattern(self, pattern):
+    def get_captures_for_pattern(self, pattern, change):
         captures = []
 
         if pattern.get('re_pattern') == None:
