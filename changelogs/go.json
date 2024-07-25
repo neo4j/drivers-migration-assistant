@@ -22,9 +22,9 @@
     "removed": "5.0",
     "patterns": [
       {
-        "ts_pattern":"(db)?\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)",
+        "ts_pattern":"^db\\\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)$",
         "ts_type": "type",
-        "re_pattern": "\\b(db)?\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)\\b"
+        "re_pattern": "\\bdb\\.(TxHandle|StreamHandle|Command|Connection|RoutingTable|DefaultDatabase|DatabaseSelector)\\b"
       }
     ]
   },
@@ -39,11 +39,10 @@
     "patterns": [
       {
         "ts_pattern": [
-          "?!log\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)",
-          "(neo4j)?\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)"
+          "^neo4j\\\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)$"
         ],
         "ts_type": "type",
-        "re_pattern": "\\b(?<!log)(neo4j)?\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)\\b"
+        "re_pattern": "\\bneo4j\\.(LogLevel|ERROR|WARNING|INFO|DEBUG)\\b"
       }
     ]
   },
@@ -57,12 +56,11 @@
     "patterns": [
       {
         "ts_pattern": [
-          "?!config\\.Config",
-          "\\.Config$"
+          "^neo4j\\\\.Config$"
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\b(?<!config)\\.Config\\b"
+        "re_pattern": "\\bneo4j\\.Config\\b"
       }
     ]
   },
@@ -76,12 +74,11 @@
     "patterns": [
       {
         "ts_pattern": [
-          "?!config\\.ServerAddress",
-          "\\.ServerAddress$"
+          "^neo4j\\\\.ServerAddress$"
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\b(?<!config)\\.ServerAddress\\b"
+        "re_pattern": "\\bneo4j\\.ServerAddress\\b"
       }
     ]
   },
@@ -95,12 +92,11 @@
     "patterns": [
       {
         "ts_pattern": [
-          "?!config\\.ServerAddressResolver",
-          "\\.ServerAddressResolver$"
+          "^neo4j\\\\.ServerAddressResolver$"
          ],
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\b(?<!config)\\.ServerAddressResolver\\b"
+        "re_pattern": "\\bneo4j\\.ServerAddressResolver\\b"
       }
     ]
   },
@@ -113,10 +109,10 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "\\.Result$",
+        "ts_pattern": "^neo4j\\\\.Result$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\.Result\\b"
+        "re_pattern": "\\bneo4j\\.Result\\b"
       }
     ]
   },
@@ -129,10 +125,10 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "\\.Session$",
+        "ts_pattern": "^neo4j\\\\.Session$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\.Session\\b"
+        "re_pattern": "\\bneo4j\\.Session\\b"
       }
     ]
   },
@@ -145,10 +141,10 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "\\.Transaction$",
+        "ts_pattern": "^neo4j\\\\.Transaction$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\.Transaction\\b"
+        "re_pattern": "\\bneo4j\\.Transaction\\b"
       }
     ]
   },
@@ -161,10 +157,10 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "\\.TransactionWork$",
+        "ts_pattern": "^neo4j\\\\.TransactionWork$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\.TransactionWork\\b"
+        "re_pattern": "\\bneo4j\\.TransactionWork\\b"
       }
     ]
   },
@@ -177,10 +173,10 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "\\.Driver$",
+        "ts_pattern": "^neo4j\\\\.Driver$",
         "ts_type": "type",
         "ts_uniqueify": "False",
-        "re_pattern": "\\.Driver\\b"
+        "re_pattern": "\\bneo4j\\.Driver\\b"
       }
     ]
   },
@@ -211,7 +207,7 @@
       {
         "ts_pattern": "^Id$",
         "ts_type": "property",
-        "re_pattern": "\\bId\\b"
+        "re_pattern": "\\.Id\\b"
       }
     ]
   },
@@ -227,7 +223,7 @@
       {
         "ts_pattern": "^Version$",
         "ts_type": "property",
-        "re_pattern": "\\bVersion\\b"
+        "re_pattern": "\\.Version\\b"
       }
     ]
   },
@@ -239,12 +235,12 @@
     "patterns": [
       {
         "ts_pattern": [
-          "WithTxTimeout",
+          "^WithTxTimeout$",
           "\\\\b0\\\\b"
         ],
         "ts_type": "function_arg",
         "ts_uniqueify": "True",
-        "re_pattern": "WithTxTimeout\\(.*?\\b0\\b"
+        "re_pattern": "\\bneo4j\\.WithTxTimeout\\(.*?\\b0\\b"
       }
     ]
   },
@@ -255,9 +251,9 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "^(neo4j)?\\.NewDriver$",
+        "ts_pattern": "^neo4j\\\\.NewDriver$",
         "ts_type": "function",
-        "re_pattern": "\\b(neo4j)?\\.NewDriver\\b"
+        "re_pattern": "\\bneo4j\\.NewDriver\\("
       }
     ]
   },
@@ -268,9 +264,9 @@
     "deprecated": "5.17",
     "patterns": [
       {
-        "ts_pattern": "^(neo4j)?\\.ConsoleLogger$",
+        "ts_pattern": "^neo4j\\\\.ConsoleLogger$",
         "ts_type": "function",
-        "re_pattern": "\\b(neo4j)?\\.ConsoleLogger\\b"
+        "re_pattern": "\\bneo4j\\.ConsoleLogger\\("
       }
     ]
   },
@@ -281,9 +277,9 @@
     "deprecated": "5.17",
     "patterns": [
       {
-        "ts_pattern": "^(neo4j)?\\.ConsoleBoltLogger$",
+        "ts_pattern": "^neo4j\\\\.ConsoleBoltLogger$",
         "ts_type": "function",
-        "re_pattern": "\\b(neo4j)?\\.ConsoleBoltLogger\\b"
+        "re_pattern": "\\bneo4j\\.ConsoleBoltLogger\\("
       }
     ]
   },
@@ -294,9 +290,9 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "^(neo4j)?\\.SingleT$",
+        "ts_pattern": "^neo4j\\\\.SingleT$",
         "ts_type": "function",
-        "re_pattern": "\\b(neo4j)?\\.SingleT\\b"
+        "re_pattern": "\\bneo4j\\.SingleT\\("
       }
     ]
   },
@@ -307,9 +303,9 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "^(neo4j)?\\.Collect$",
+        "ts_pattern": "^neo4j\\\\.Collect$",
         "ts_type": "function",
-        "re_pattern": "\\b(neo4j)?\\.Collect\\b"
+        "re_pattern": "\\bneo4j\\.Collect\\("
       }
     ]
   },
@@ -320,9 +316,9 @@
     "deprecated": "5.0",
     "patterns": [
       {
-        "ts_pattern": "^(neo4j)?\\.CollectT$",
+        "ts_pattern": "^neo4j\\\\.CollectT$",
         "ts_type": "function",
-        "re_pattern": "\\b(neo4j)?\\.CollectT\\b"
+        "re_pattern": "\\bneo4j\\.CollectT\\("
       }
     ]
   },
@@ -339,7 +335,7 @@
       {
         "ts_pattern": "^Session$",
         "ts_type": "method",
-        "re_pattern": "\\.Session\\b"
+        "re_pattern": "\\.Session\\("
       }
     ]
   },
@@ -355,7 +351,7 @@
       {
         "ts_pattern": "^Params$",
         "ts_type": "method",
-        "re_pattern": "\\.Params\\b"
+        "re_pattern": "\\.Params\\("
       }
     ]
   },
@@ -371,7 +367,7 @@
       {
         "ts_pattern": "^GetByIndex$",
         "ts_type": "method",
-        "re_pattern": "\\.GetByIndex\\b"
+        "re_pattern": "\\.GetByIndex\\("
       }
     ]
   },
@@ -387,7 +383,7 @@
       {
         "ts_pattern": "^Statement$",
         "ts_type": "method",
-        "re_pattern": "\\.Statement\\b"
+        "re_pattern": "\\.Statement\\("
       }
     ]
   },
@@ -400,7 +396,7 @@
       {
         "ts_pattern": "^LastBookmark$",
         "ts_type": "method",
-        "re_pattern": "\\bLastBookmark\\b"
+        "re_pattern": "\\.LastBookmark\\("
       }
     ]
   },
@@ -413,7 +409,7 @@
       {
         "ts_pattern": "^WriteTransaction$",
         "ts_type": "method",
-        "re_pattern": "\\bWriteTransaction\\b"
+        "re_pattern": "\\.WriteTransaction\\("
       }
     ]
   },
@@ -426,7 +422,7 @@
       {
         "ts_pattern": "^ReadTransaction$",
         "ts_type": "method",
-        "re_pattern": "\\bReadTransaction\\b"
+        "re_pattern": "\\.ReadTransaction\\("
       }
     ]
   }
