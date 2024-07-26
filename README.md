@@ -11,17 +11,18 @@ Points of care:
 
 
 # Usage
+To set up the environment, assuming `python3` and `pip3` are already installed,
 
 ```bash
-python -m venv virtualenvs/neomigration
-source virtualenvs/migration/bin/activate
-pip install -r requirements.txt
+python3 -m venv virtualenvs/neo-migration
+source virtualenvs/neo-migration/bin/activate
+pip3 install -r requirements.txt
 ```
 
 The basic invocation looks like:
 
 ```bash
-python main.py -l <codebase-language> <path-to-your-codebase>
+python main.py -l <codebase-language> <path-to-codebase>
 ```
 
 For example, for a python application,
@@ -30,7 +31,7 @@ For example, for a python application,
 python main.py -l python example-projects/python/movies.py
 ```
 
-Paths support globbing.
+Paths support [globbing](https://www.man7.org/linux/man-pages/man7/glob.7.html).
 You can provide multiple paths as positional arguments.
 For example (quotes for shell expansion),
 
@@ -77,7 +78,8 @@ getattr(session, tx_func())(callback, args)
 The regex parser works with regexes on the raw source code rather that on its AST.
 To enable it, use `--regex-parser`.
 
-This has less awareness of code structure and is thus likely to return more false positives, so the best course of action is to run the assistant with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
+This has less awareness of code structure and is thus likely to return more false positives, but also to raise deprecated usage that only gets surfaced at runtime. 
+The best course of action is thus to run the assistant with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
 
 Example of false positive from the regex parser:
 
