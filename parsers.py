@@ -31,7 +31,7 @@ def format_pattern_string(pattern_s, change, namespaces):
         raise ValueError(f'Pattern regex `{pattern_s}` contains `{{{{namespace}}}}` but namespace not given in json entry')
 
     return pattern_s
-  
+
 
 class TreeSitterParser:
 
@@ -52,10 +52,7 @@ class TreeSitterParser:
     def set_source(self, source):
         self.source = source
         self.ast = Parser(self.language).parse(bytes(self.source.text, 'utf8'))
-        try:
-            self.namespaces = self.build_namespaces_dict()
-        except:  # python not implemented yet
-            self.namespaces = {}
+        self.namespaces = self.build_namespaces_dict()
 
     def get_captures_for_pattern(self, pattern, change):
         if pattern.get('ts_pattern') == None:
@@ -92,7 +89,10 @@ class TreeSitterParser:
     def build_namespaces_dict(self):
         namespaces_d = {}
         ast = self.ast
-        query = self.queries._import_for_namespace()
+        try:
+            query = self.queries._import_for_namespace()
+        except AttributeError:  # python not implemented
+            return namespaces_d
         matches = self.language.query(query).matches(ast.root_node)
         for m in matches:
             if m[1] == {}:
