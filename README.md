@@ -9,6 +9,11 @@ Points of care:
 - Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. See [Accuracy](#accuracy).
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See [Cypher -> Deprecations, additions, and compatibility](https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/).
 
+Why doesn't it automatically rewrite code? The main reasons are two:
+
+1. In many instances, breaking changes are not simple method renames or things that could easily be automatically rewritten. Maybe the _behavior_ of one method changed, maybe some of the methods on an object have been deprecated without a 1:1 replacement, maybe a property containing decimal seconds has been split into two properties containing seconds and microseconds separately. In many cases, you need to evaluate how to address the change depending on what behavior your application expects.
+2. We want users to have all the information they need to address changes, and to make it readily available. But we still want the users to be responsible and aware of the changes they make. Automatic rewriting promotes lack of understanding.
+
 
 # Usage
 To set up the environment, assuming `python3` and `pip3` are already installed,
