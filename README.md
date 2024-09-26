@@ -27,13 +27,13 @@ pip3 install -r requirements.txt
 The basic invocation looks like:
 
 ```bash
-python main.py -l <codebase-language> <path-to-codebase>
+python3 main.py -l <codebase-language> <path-to-codebase>
 ```
 
 For example, for a python application,
 
 ```bash
-python main.py -l python example-projects/python/movies.py
+python3 main.py -l python example-projects/python/movies.py
 ```
 
 Paths support [globbing](https://www.man7.org/linux/man-pages/man7/glob.7.html).
@@ -41,7 +41,7 @@ You can provide multiple paths as positional arguments.
 For example (quotes for shell expansion),
 
 ```bash
-python main.py -l python 'example-projects/python/*.py' 'example-projects/python/subdir/**/*.py' '/a/full/dir/'
+python3 main.py -l python 'example-projects/python/*.py' 'example-projects/python/subdir/**/*.py' '/a/full/dir/'
 ```
 
 By default the tool runs in interactive mode. To get all the output at once, use `--no-interactive`.
