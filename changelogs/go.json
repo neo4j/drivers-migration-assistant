@@ -14,7 +14,7 @@
   },
   {
     "identifier": "neo4j.db_internals",
-    "msg": "Some of the previously exported types from `neo4j.db` are now internal.\nFor `db.AccessMode`, `db.WriteMode` and `db.ReadMode`, use the existing `neo4j.AccessMode`, `neo4j.AccessModeWrite` and `neo4j.AccessModeRead`.\nFor `db.TxConfig`, use the existing `neo4j.TransactionConfig`.\nAll others have no replacement: `db.TxHandle`, `db.StreamHandle`, `db.Command`, `db.Connection`, `db.RoutingTable`, `db.DefaultDatabase`, `db.DatabaseSelector`.",
+    "msg": "Some of the previously exported types from `neo4j.db` are now internal.\nFor `db.AccessMode`, `db.WriteMode` and `db.ReadMode`, use `neo4j.AccessMode`, `neo4j.AccessModeWrite` and `neo4j.AccessModeRead`.\nFor `db.TxConfig`, use `neo4j.TransactionConfig`.\nAll others have no replacement: `db.TxHandle`, `db.StreamHandle`, `db.Command`, `db.Connection`, `db.RoutingTable`, `db.DefaultDatabase`, `db.DatabaseSelector`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#AccessMode",
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#TransactionConfig"
@@ -223,7 +223,7 @@
   },
   {
     "identifier": "Version",
-    "msg": "`ServerInfo.Version` is deprecated. Use `ServerInfo.Agent`, `ServerInfo.ProtocolVersion`, or call the `dbms.components` Cypher procedure instead.",
+    "msg": "`ServerInfo.Version` is deprecated in {deprecated} and removed in {removed}. Use `ServerInfo.Agent`, `ServerInfo.ProtocolVersion`, or call the `dbms.components` Cypher procedure instead.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ServerInfo"
     ],
