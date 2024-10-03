@@ -1,10 +1,10 @@
-# Neo4j Drivers Migration Assistant
+# Neo4j Drivers Migration Assistent
 
-The migration assistant for Neo4j language libraries (drivers) scans your codebase and raises issues you should address before upgrading to a more recent version.
+The migration assistent for Neo4j language libraries (drivers) scans your codebase and raises issues you should address before upgrading to a more recent version.
 It doesn't automatically rewrite your code; it only points at where action is needed, providing in-context information on how each hit should be addressed.
 
 Points of care:
-- The assistant can detect the largest majority of the changes you need to do in your code, but a small percentage of changelog entries can't be surfaced in this form. For a thorough list of changes across versions, see the migration page for [language libraries](https://neo4j.com/docs/create-applications/).
+- The assistent can detect the largest majority of the changes you need to do in your code, but a small percentage of changelog entries can't be surfaced in this form. For a thorough list of changes across versions, see the migration page for [language libraries](https://neo4j.com/docs/create-applications/).
 - Some of the hits may be false positives, so evaluate each hit.
 - Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. See [Accuracy](#accuracy).
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See [Cypher -> Deprecations, additions, and compatibility](https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/).
@@ -50,7 +50,7 @@ For a list of all options, see `-h`.
 
 # Accuracy
 ## Tree-sitter parser
-By default, the assistant works on an AST of your source, relying on [tree-sitter](https://tree-sitter.github.io/) to generate it.
+By default, the assistent works on an AST of your source, relying on [tree-sitter](https://tree-sitter.github.io/) to generate it.
 This makes the deprecation/removal hits fairly accurate (although not perfect: there's no type checking in most cases).
 However, invocations that materialize in their entirety only at runtime can't be surfaced.
 
@@ -84,7 +84,7 @@ The regex parser works with regexes on the raw source code rather that on its AS
 To enable it, use `--regex-parser`.
 
 This has less awareness of code structure and is thus likely to return more false positives, but also to raise deprecated usage that only gets surfaced at runtime. 
-The best course of action is thus to run the assistant with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
+The best course of action is thus to run the assistent with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
 
 Example of false positive from the regex parser:
 
