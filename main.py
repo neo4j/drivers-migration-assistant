@@ -55,7 +55,7 @@ Points of care:
     help='Include ignored entries in output.'
 )
 def assist(path, language_name, context_lines, version, accept_warning, no_output_colors, regex_parser, no_interactive, show_ignored):
-    assistent = DriverMigrationassistent(language_name, context_lines, version, no_output_colors, regex_parser)
+    assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors, regex_parser)
     warn_user(accept_warning, language_name)
     file_paths = parse_path(path)
     assistent.print_msg('-'*50)
