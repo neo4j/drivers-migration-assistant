@@ -31,7 +31,7 @@
   },
   {
     "identifier": "neo4j.log_levels",
-    "msg": "`neo4j.(LogLevel|ERROR|WARNING|INFO|DEBUG)` are deprecated in favor of `log.(Level|ERROR|WARNING|INFO|DEBUG)`.",
+    "msg": "Types `neo4j.(LogLevel|ERROR|WARNING|INFO|DEBUG)` are deprecated in favor of `log.(Level|ERROR|WARNING|INFO|DEBUG)`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#Level",
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#pkg-constants"
@@ -50,7 +50,7 @@
   },
   {
     "identifier": "neo4j.notifications",
-    "msg": "`Notifications-related objects have been moved from the global namespace `neo4j` into `neo4j/notifications`: neo4j.(NotificationSeverity|Warning|Information|UnknownSeverity|NotificationCategory|Hint|Unrecognized|Unsupported|Performance|Deprecation|Generic|Security|Topology|UnknownCategory)` are deprecated in favor of `notifications.(NotificationSeverity|Warning|Information|UnknownSeverity|NotificationCategory|Hint|Unrecognized|Unsupported|Performance|Deprecation|Generic|Security|Topology|UnknownCategory)`.",
+    "msg": "`Notifications-related objects have been moved from the global namespace `neo4j` into `neo4j/notifications`: types neo4j.(NotificationSeverity|Warning|Information|UnknownSeverity|NotificationCategory|Hint|Unrecognized|Unsupported|Performance|Deprecation|Generic|Security|Topology|UnknownCategory)` are deprecated in favor of `notifications.(NotificationSeverity|Warning|Information|UnknownSeverity|NotificationCategory|Hint|Unrecognized|Unsupported|Performance|Deprecation|Generic|Security|Topology|UnknownCategory)`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/notifications"
     ],
@@ -68,7 +68,7 @@
   },
   {
     "identifier": "neo4j.Config",
-    "msg": "`neo4j.Config` is deprecated in favor of `config.Config`.",
+    "msg": "Type `neo4j.Config` is deprecated in favor of `config.Config`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#Config"
     ],
@@ -87,7 +87,7 @@
   },
   {
     "identifier": "neo4j.ServerAddress",
-    "msg": "`neo4j.ServerAddress` is deprecated in favor of `config.ServerAddress`.",
+    "msg": "Type `neo4j.ServerAddress` is deprecated in favor of `config.ServerAddress`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#ServerAddress"
     ],
@@ -106,7 +106,7 @@
   },
   {
     "identifier": "neo4j.ServerAddressResolver",
-    "msg": "`neo4j.ServerAddressResolver` is deprecated in favor of `config.ServerAddressResolver`.",
+    "msg": "Type `neo4j.ServerAddressResolver` is deprecated in favor of `config.ServerAddressResolver`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/config#ServerAddressResolver"
     ],
@@ -125,7 +125,7 @@
   },
   {
     "identifier": "neo4j.Result",
-    "msg": "`neo4j.Result` is deprecated in favor of `neo4j.ResultWithContext`.",
+    "msg": "Type `neo4j.Result` is deprecated in favor of `neo4j.ResultWithContext`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ResultWithContext"
     ],
@@ -142,7 +142,7 @@
   },
   {
     "identifier": "neo4j.Session",
-    "msg": "`neo4j.Session` is deprecated in favor of `neo4j.SessionWithContext`.",
+    "msg": "Type `neo4j.Session` is deprecated in favor of `neo4j.SessionWithContext`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SessionWithContext"
     ],
@@ -159,7 +159,7 @@
   },
   {
     "identifier": "neo4j.Transaction",
-    "msg": "`neo4j.Transaction` is deprecated in favor of `neo4j.ExplicitTransaction`.",
+    "msg": "Type `neo4j.Transaction` is deprecated in favor of `neo4j.ExplicitTransaction`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ExplicitTransaction"
     ],
@@ -176,7 +176,7 @@
   },
   {
     "identifier": "neo4j.TransactionWork",
-    "msg": "`neo4j.TransactionWork` is deprecated in favor of `neo4j.ManagedTransactionWork`.",
+    "msg": "Type `neo4j.TransactionWork` is deprecated in favor of `neo4j.ManagedTransactionWork`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#ManagedTransactionWork"
     ],
@@ -193,7 +193,7 @@
   },
   {
     "identifier": "neo4j.Driver",
-    "msg": "`neo4j.Driver` is deprecated in favor of `neo4j.DriverWithContext`.",
+    "msg": " Type `neo4j.Driver` is deprecated in favor of `neo4j.DriverWithContext`.",
     "ref": [
       "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#DriverWithContext"
     ],
@@ -205,6 +205,40 @@
         "ts_type": "type",
         "ts_uniqueify": "False",
         "re_pattern": "\\b{{namespace}}\\.Driver\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j/log.Console",
+    "msg": "Type `neo4j/log.Console` is deprecated in favor of `neo4j/log.Logger`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#Logger"
+    ],
+    "deprecated": "5.17",
+    "namespace": "log",
+    "patterns": [
+      {
+        "ts_pattern": "^{{namespace}}\\\\.Console$",
+        "ts_type": "type",
+        "ts_uniqueify": "False",
+        "re_pattern": "\\b{{namespace}}\\.Console\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j/log.Void",
+    "msg": "Type `neo4j/log.Void` is deprecated in favor of `neo4j/log.Logger`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#Logger"
+    ],
+    "deprecated": "5.17",
+    "namespace": "log",
+    "patterns": [
+      {
+        "ts_pattern": "^{{namespace}}\\\\.Void$",
+        "ts_type": "type",
+        "ts_uniqueify": "False",
+        "re_pattern": "\\b{{namespace}}\\.Void\\b"
       }
     ]
   },
@@ -288,20 +322,6 @@
     ]
   },
   {
-    "identifier": "ConsoleLogger",
-    "msg": "`neo4j.ConsoleLogger()` is deprecated in favor of `neo4j.log.ToConsole()`.",
-    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#ToConsole",
-    "deprecated": "5.17",
-    "namespace": "neo4j",
-    "patterns": [
-      {
-        "ts_pattern": "^{{namespace}}\\\\.ConsoleLogger$",
-        "ts_type": "function",
-        "re_pattern": "\\b{{namespace}}\\.ConsoleLogger\\b"
-      }
-    ]
-  },
-  {
     "identifier": "ConsoleBoltLogger",
     "msg": "`neo4j.ConsoleBoltLogger()` is deprecated in favor of `neo4j.log.BoltToConsole()`.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#BoltToConsole",
@@ -354,6 +374,34 @@
         "ts_pattern": "^{{namespace}}\\\\.CollectT$",
         "ts_type": "function",
         "re_pattern": "\\b{{namespace}}\\.CollectT\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.ConsoleLogger",
+    "msg": "`neo4j.ConsoleLogger()` is deprecated in favor of `neo4j/log.ToConsole()`. The behavior is similar, except that the new function returns type `neo4j/log.Logger` rather than `neo4j/log.Console`.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#ToConsole",
+    "deprecated": "5.17",
+    "namespace": "neo4j",
+    "patterns": [
+      {
+        "ts_pattern": "^{{namespace}}\\\\.ConsoleLogger$",
+        "ts_type": "function",
+        "re_pattern": "\\b{{namespace}}\\.ConsoleLogger\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "neo4j.Void",
+    "msg": "`neo4j.Void()` is deprecated in favor of `neo4j/log.ToVoid()`. The behavior is similar, except that the new function returns type `neo4j/log.Logger` rather than `neo4j/log.Console`.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#ToVoid",
+    "deprecated": "5.17",
+    "namespace": "neo4j",
+    "patterns": [
+      {
+        "ts_pattern": "^{{namespace}}\\\\.Void$",
+        "ts_type": "function",
+        "re_pattern": "\\b{{namespace}}\\.Void\\b"
       }
     ]
   },

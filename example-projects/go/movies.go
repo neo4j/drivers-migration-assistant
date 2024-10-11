@@ -18,6 +18,7 @@ import (
 import (
 	c "context"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j/auth"
+	ll "github.com/neo4j/neo4j-go-driver/v5/neo4j/log"
 	dddb "github.com/neo4j/neo4j-go-driver/v5/neo4j/db"
 	)
 
@@ -75,6 +76,8 @@ func Keys(streamHandle StreamHandle) ([]string, error) {
  // pass
 }
 
+var b ll.Console
+
 var a n.LogLevel = ""
 var a n.LogLevel
 var a n.ERROR
@@ -84,6 +87,9 @@ var a log.WARNING =""
 
 var a n.NotificationCategory =""
 var a n.UnknownSeverity =""
+
+n.Void()
+n.ConsoleLogger()
 
 records, err := n.Collect(ctx, result, err)
 records, err := n.CollectT(ctx, result, err)
