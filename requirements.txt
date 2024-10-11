@@ -1,4 +1,5 @@
 tree-sitter==0.22.3
 tree-sitter-python==0.21.0
+tree-sitter-go==0.21.0
 click==8.1.7
 packaging==23.2
