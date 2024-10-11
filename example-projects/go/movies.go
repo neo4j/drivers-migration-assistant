@@ -82,6 +82,9 @@ var a n.ERROR=""
 var a log.WARNING
 var a log.WARNING =""
 
+var a n.NotificationCategory =""
+var a n.UnknownSeverity =""
+
 records, err := n.Collect(ctx, result, err)
 records, err := n.CollectT(ctx, result, err)
 records, err := n.SingleT(ctx, result, err)

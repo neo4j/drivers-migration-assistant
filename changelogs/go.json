@@ -49,6 +49,24 @@
     ]
   },
   {
+    "identifier": "neo4j.notifications",
+    "msg": "`Notifications-related objects have been moved from the global namespace `neo4j` into `neo4j/notifications`: neo4j.(NotificationSeverity|Warning|Information|UnknownSeverity|NotificationCategory|Hint|Unrecognized|Unsupported|Performance|Deprecation|Generic|Security|Topology|UnknownCategory)` are deprecated in favor of `notifications.(NotificationSeverity|Warning|Information|UnknownSeverity|NotificationCategory|Hint|Unrecognized|Unsupported|Performance|Deprecation|Generic|Security|Topology|UnknownCategory)`.",
+    "ref": [
+      "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/notifications"
+    ],
+    "removed": "5.23",
+    "namespace": "neo4j",
+    "patterns": [
+      {
+        "ts_pattern": [
+          "^{{namespace}}\\\\.(NotificationSeverity|Warning|Information|UnknownSeverity|NotificationCategory|Hint|Unrecognized|Unsupported|Performance|Deprecation|Generic|Security|Topology|UnknownCategory)$"
+        ],
+        "ts_type": "type",
+        "re_pattern": "\\b{{namespace}}\\.(NotificationSeverity|Warning|Information|UnknownSeverity|NotificationCategory|Hint|Unrecognized|Unsupported|Performance|Deprecation|Generic|Security|Topology|UnknownCategory)\\b"
+      }
+    ]
+  },
+  {
     "identifier": "neo4j.Config",
     "msg": "`neo4j.Config` is deprecated in favor of `config.Config`.",
     "ref": [
