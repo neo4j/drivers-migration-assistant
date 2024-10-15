@@ -7,7 +7,7 @@ The assistent supports codebases in Python and Go. <br>
 For further information see the upgrade guide for each language library: [Python](https://neo4j.com/docs/python-manual/5/upgrade/), [Go](https://neo4j.com/docs/go-manual/5/upgrade/), [JavaScript](https://neo4j.com/docs/javascript-manual/5/upgrade/), [Java](https://neo4j.com/docs/java-manual/5/upgrade/), [.NET](https://neo4j.com/docs/dotnet-manual/5/upgrade/).
 
 Points of care:
-- The assistent can detect the largest majority of the changes you need to do in your code, but a small percentage of changelog entries can't be surfaced in this form. For a thorough list of changes across versions, see each driver's migration page.
+- The assistent can detect most of the changes you need to do in your code, but a small percentage of changelog entries can't be surfaced in this form. For a thorough list of changes across versions, see each driver's migration page.
 - Some of the hits may be false positives, so evaluate each of them.
 - Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. See [Accuracy](#accuracy).
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See [Cypher -> Deprecations, additions, and compatibility](https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/).
