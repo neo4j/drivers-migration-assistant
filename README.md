@@ -3,16 +3,19 @@
 The migration assistent for Neo4j language libraries (drivers) scans your codebase and raises issues you should address before upgrading to a more recent version.
 It doesn't automatically rewrite your code; it only points at where action is needed, providing in-context information on how each hit should be addressed.
 
+The assistent supports codebases in Python and Go. <br>
+For further information see the upgrade guide for each language library: [Python](https://neo4j.com/docs/python-manual/5/upgrade/), [Go](https://neo4j.com/docs/go-manual/5/upgrade/), [JavaScript](https://neo4j.com/docs/javascript-manual/5/upgrade/), [Java](https://neo4j.com/docs/java-manual/5/upgrade/), [.NET](https://neo4j.com/docs/dotnet-manual/5/upgrade/).
+
 Points of care:
-- The assistent can detect the largest majority of the changes you need to do in your code, but a small percentage of changelog entries can't be surfaced in this form. For a thorough list of changes across versions, see the migration page for [language libraries](https://neo4j.com/docs/create-applications/).
-- Some of the hits may be false positives, so evaluate each hit.
+- The assistent can detect the largest majority of the changes you need to do in your code, but a small percentage of changelog entries can't be surfaced in this form. For a thorough list of changes across versions, see each driver's migration page.
+- Some of the hits may be false positives, so evaluate each of them.
 - Implicit function calls and other hard to parse expressions will not be surfaced by the default parser. See [Accuracy](#accuracy).
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See [Cypher -> Deprecations, additions, and compatibility](https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/).
 
 Why doesn't it automatically rewrite code? The main reasons are two:
 
-1. In many instances, breaking changes are not simple method renames or things that could easily be automatically rewritten. Maybe the _behavior_ of one method changed, maybe some of the methods on an object have been deprecated without a 1:1 replacement, maybe a property containing decimal seconds has been split into two properties containing seconds and microseconds separately. In many cases, you need to evaluate how to address the change depending on what behavior your application expects.
-2. We want users to have all the information they need to address changes, and to make it readily available. But we still want the users to be responsible and aware of the changes they make. Automatic rewriting promotes lack of understanding.
+1. In many instances, breaking changes are not simple method renames or things that could easily be automatically rewritten. Sometimes the _behavior_ of a function changed, sometimes a method was deprecated without a 1:1 replacement, sometimes a property containing decimal seconds has been split into two properties containing seconds and microseconds separately. In many cases, you need to _evaluate_ how to address the change depending on what behavior your application expects.
+2. We want users to have all the information they need to address changes, and to make it readily available. We also still want the users to be responsible and aware of the changes they make. Automatic rewriting promotes lack of understanding.
 
 
 # Usage
@@ -52,9 +55,9 @@ For a list of all options, see `-h`.
 ## Tree-sitter parser
 By default, the assistent works on an AST of your source, relying on [tree-sitter](https://tree-sitter.github.io/) to generate it.
 This makes the deprecation/removal hits fairly accurate (although not perfect: there's no type checking in most cases).
-However, invocations that materialize in their entirety only at runtime can't be surfaced.
+However, invocations that materialize only at runtime can't be surfaced.
 
-Here are a few examples containing deprecated usage that would not be raised by the tree-sitter parser:
+Here are a few examples containing deprecated usage that would **not** be raised by the tree-sitter parser:
 
 ```python
 method_name = 'read_transaction'
@@ -83,8 +86,8 @@ getattr(session, tx_func())(callback, args)
 The regex parser works with regexes on the raw source code rather that on its AST.
 To enable it, use `--regex-parser`.
 
-This has less awareness of code structure and is thus likely to return more false positives, but also to raise deprecated usage that only gets surfaced at runtime. 
-The best course of action is thus to run the assistent with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
+The regex parser has less awareness of code structure and is thus likely to return **more false positives**, but is also capable of raising deprecated usage that only gets surfaced at runtime. 
+The best course of action is to run the assistent with the default parser, fix all the surfaced hits, and then run it again with the regex parser.
 
 Example of false positive from the regex parser:
 
