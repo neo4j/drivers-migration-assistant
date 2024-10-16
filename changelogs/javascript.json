@@ -1,9 +1,10 @@
 [
   {
     "identifier": "Session.writeTransaction",
-    "msg": "`Session.WriteTransaction()` is deprecated in favor of `Session.ExecuteWrite()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`) are not available on managed transactions anymore.",
-    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SessionWithContext.ExecuteWrite",
+    "msg": "`Session.writeTransaction()` is deprecated in {deprecated} and removed in {removed} in favor of `Session.executeWrite()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`) are not available on managed transactions anymore.",
+    "ref": "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/session.js~Session.html#instance-method-executeWrite",
     "deprecated": "5.0",
+    "removed": "6.0",
     "patterns": [
       {
         "ts_pattern": "^writeTransaction$",
@@ -13,15 +14,126 @@
     ]
   },
   {
-    "identifier": "Session.ReadTransaction",
-    "msg": "`Session.ReadTransaction()` is deprecated in favor of `Session.ExecuteRead()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`) are not available on managed transactions anymore.",
-    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SessionWithContext.ExecuteRead",
+    "identifier": "Session.readTransaction",
+    "msg": "`Session.readTransaction()` is deprecated in {deprecated} and removed in {removed} in favor of `Session.executeRead()`. The logic is the same, but the argument type changed from `Transaction` to `ManagedTransaction`, and explicit transaction handling methods (`.Commit()`, `.Rollback()`, `.Close()`) are not available on managed transactions anymore.",
+    "ref": "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/session.js~Session.html#instance-method-executeRead",
     "deprecated": "5.0",
+    "removed": "6.0",
     "patterns": [
       {
         "ts_pattern": "^readTransaction$",
         "ts_type": "method",
         "re_pattern": "\\breadTransaction\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Session.lastBookmark",
+    "msg": "`Session.lastBookmark()` is deprecated in {deprecated} and removed in {removed} in favor of `Session.lastBookmarks()`.",
+    "ref": "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/session.js~Session.html#instance-method-lastBookmarks",
+    "deprecated": "5.0",
+    "removed": "6.0",
+    "patterns": [
+      {
+        "ts_pattern": "^lastBookmark$",
+        "ts_type": "method",
+        "re_pattern": "\\blastBookmark\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Driver.verifyConnectivity",
+    "msg": "The return value of `Driver.verifyConnectivity()` is deprecated in {deprecated} and removed in {removed}. The method still exists, but returns void. To retrieve the server info, use `Driver.getServerInfo()`.",
+    "ref": [
+        "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/driver.js~Driver.html#instance-method-verifyConnectivity",
+        "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/driver.js~Driver.html#instance-method-getServerInfo"
+    ],
+    "deprecated": "5.0",
+    "removed": "6.0",
+    "patterns": [
+      {
+        "ts_pattern": "^verifyConnectivity$",
+        "ts_type": "method",
+        "re_pattern": "\\bverifyConnectivity\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Version",
+    "msg": "`ServerInfo.version` is deprecated in {deprecated} and removed in {removed}. Use `ServerInfo.agent`, `ServerInfo.protocolVersion`, or call the `dbms.components` Cypher procedure instead.",
+    "ref": [
+      "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/result-summary.js~ServerInfo.html"
+    ],
+    "deprecated": "4.3",
+    "removed": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^version$",
+        "ts_type": "property",
+        "re_pattern": "\\bversion\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Id",
+    "msg": "`Node.identity` and `Relationship.identity` are deprecated in favor of `Node.elementId` and `Relationship.elementId`. Old identifiers were `NumberOrInteger`, wereas new ElementIds are `string`.",
+    "ref": [
+      "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/graph-types.js~Node.html",
+      "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/graph-types.js~Relationship.html"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^identity$",
+        "ts_type": "property",
+        "re_pattern": "\\bidentity\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Relationship.start/end",
+    "msg": "`Relationship.start` and `Relationship.end` are deprecated in favor of `Relationship.startNodeElementId` and `Relationship.endNodeElementId`. Old identifiers were `NumberOrInteger`, wereas new ElementIds are `string`.",
+    "ref": [
+      "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/graph-types.js~Relationship.html"
+    ],
+    "deprecated": "5.0",
+    "patterns": [
+      {
+        "ts_pattern": "^(start)|(end)$",
+        "ts_type": "property",
+        "re_pattern": "\\b(start)|(end)\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "Notification.severity",
+    "msg": "`Notification.severity` is deprecated in {deprecated} and removed in {removed}. Use `Notification.rawSeverityLevel` for the raw value and `Notification.severityLevel` for an enumerated value.",
+    "ref": [
+      "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/notification.js~Notification.html"
+    ],
+    "deprecated": "5.7",
+    "removed": "6.0",
+    "patterns": [
+      {
+        "ts_pattern": "^severity$",
+        "ts_type": "property",
+        "re_pattern": "\\bseverity\\b"
+      }
+    ]
+  },
+  {
+    "identifier": "ResultSummary.notifications",
+    "msg": "`ResultSummary.notifications` is deprecated in favor of `ResultSummary.gqlStatusObjects`. The replacement contains GQL-complaint statuses, which are a superset of the old notifications.",
+    "ref": [
+      "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/result-summary.js~ResultSummary.html",
+      "https://neo4j.com/docs/api/javascript-driver/current/class/lib6/notification.js~GqlStatusObject.html"
+    ],
+    "deprecated": "5.27",
+    "patterns": [
+      {
+        "ts_pattern": "^notifications$",
+        "ts_type": "property",
+        "re_pattern": "\\bnotifications\\b"
       }
     ]
   }

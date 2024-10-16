@@ -19,10 +19,16 @@ const driver = neo4j.driver(
     neo4j.auth.basic(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD),
 );
 
+driver.verifyConnectivity()
+info = driver.getServerInfo()
+console.log(info.version)
+
 console.log(`Database running at ${neo4jUri}`)
 
 function searchMovies(title) {
   const session = driver.session({database: database});
+  session.lastBookmark();
+
   return session.readTransaction((tx) =>
       tx.run('MATCH (movie:Movie) \
       WHERE toLower(movie.title) CONTAINS toLower($title) \
@@ -32,6 +38,10 @@ function searchMovies(title) {
     .then(result => {
       return result.records.map(record => {
         return new Movie(record.get('movie'));
+        record.start  // pretend it's a Relationship
+        record.end  // pretend it's a Relationship
+        record.identity  // pretend it's a Relationship
+        not.severity // Notification.severity
       });
     })
     .catch(error => {
