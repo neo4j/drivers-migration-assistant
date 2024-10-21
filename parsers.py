@@ -44,8 +44,13 @@ class TreeSitterParser:
             import tree_sitter_go as tslang
             from languagequeries.go import GoQueries
             self.queries = GoQueries()
+        elif language_name == 'javascript':
+            import tree_sitter_javascript as tslang
+            from languagequeries.javascript import JSQueries
+            self.queries = JSQueries()
         else:
-            raise ValueError('Invalid language. Valid choices are: python, java, go, javascript, dotnet.')
+            # click should prevent ever getting here
+            raise ValueError('Invalid language. Valid choices are: python, go, javascript.')
 
         self.language = Language(tslang.language())
 
