@@ -47,4 +47,8 @@ class JSQueries:
         """
 
     def _parse_import_alias(self, match, source_lines):
-        return 'neo4j', match[1]['root']
+        line = source_lines[match[1]['root'].range.start_point[0]]
+        splitted = line.strip().split(' ')
+        pkg_name = 'neo4j'  # no sub-packages in js
+        imported_as = splitted[1]
+        return pkg_name, imported_as
