@@ -39,6 +39,19 @@
     ]
   },
   {
+    "identifier": "hydrate",
+    "msg": "`Neo4jError.hydrate()` is deprecated and will be removed without replacement. It's internal and should not be used by client code.",
+    "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.exceptions.Neo4jError",
+    "deprecated": "5.27",
+    "patterns": [
+      {
+        "ts_pattern": "^hydrate$",
+        "ts_type": "method",
+        "re_pattern": "\\bhydrate\\b"
+      }
+    ]
+  },
+  {
     "identifier": "from_ticks_ns",
     "msg": "`neo4j.time.Time.from_ticks_ns()` has been renamed to `neo4j.time.Time.from_ticks()`.",
     "ref": "https://neo4j.com/docs/api/python-driver/current/types/temporal.html#neo4j.time.Time.from_ticks",
