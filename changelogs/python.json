@@ -155,11 +155,12 @@
     "msg": "`neo4j.Bookmark` is deprecated in favor of `neo4j.Bookmarks`.",
     "ref": "https://neo4j.com/docs/api/python-driver/current/api.html#neo4j.Bookmarks",
     "deprecated": "5.0",
+    "namespace": "neo4j",
     "patterns": [
       {
-        "ts_pattern": "^(neo4j\\.)?Bookmark$",
+        "ts_pattern": "^({{namespace}}\\.)?Bookmark$",
         "ts_type": "type",
-        "re_pattern": "\\b(neo4j\\.)?Bookmark\\b"
+        "re_pattern": "\\b({{namespace}}\\.)?Bookmark\\b"
       }
     ]
   },

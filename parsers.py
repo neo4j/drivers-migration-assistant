@@ -92,12 +92,20 @@ class TreeSitterParser:
         return captures[step_size-1::step_size]
 
     def build_namespaces_dict(self):
+        """
+        Allows library to work with apps that have aliased their imports,
+        for example in Go:
+            import n "github.com/neo4j/neo4j-go-driver/v4/neo4j"
+            import ll "github.com/neo4j/neo4j-go-driver/v5/neo4j/log"
+
+        The changelog json specifies the standard namespace to which each changelog
+        entry is about, and this function infers the actual namespace names from
+        the user's codebase so that the defaults may be overwritten.
+        Dict has form {default_name : alias}.
+        """
         namespaces_d = {}
         ast = self.ast
-        try:
-            query = self.queries._import_for_namespace()
-        except AttributeError:  # python not implemented
-            return namespaces_d
+        query = self.queries._import_for_namespace()
         matches = self.language.query(query).matches(ast.root_node)
         for m in matches:
             if m[1] == {}:

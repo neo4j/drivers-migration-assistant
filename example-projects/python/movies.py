@@ -23,10 +23,7 @@ from flask import (
     request,
     Response,
 )
-from neo4j import (
-    GraphDatabase,
-    basic_auth,
-)
+import neo4j as n
 
 hydrate_point(p)
 dehydrate_point(p)
@@ -62,16 +59,16 @@ config = {
     'update_routing_table_timeout': 4
 }
 
-other_driver = GraphDatabase.driver(url, **config)
+other_driver = n.GraphDatabase.driver(url, **config, update_routing_table_timeout=4)
 
 
 
-driver = GraphDatabase.driver(url,
-    auth=basic_auth(username, password),
+driver = n.GraphDatabase.driver(url,
+    auth=n.basic_auth(username, password),
     trust=None, session_connection_timeout=10, update_routing_table_timeout=4)
 
 b: Bookmark = session.last_bookmark()
-b: neo4j.Bookmark = session.last_bookmark()
+b: n.Bookmark = session.last_bookmark()
 p: SummaryNotificationPosition = None
 
 session.id

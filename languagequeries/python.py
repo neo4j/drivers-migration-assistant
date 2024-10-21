@@ -126,3 +126,22 @@ class PythonQueries:
               )
             )
         """
+
+    def _import_for_namespace(self):
+        regex = '\\\\bneo4j\\\\b'
+        return f"""
+            (import_statement
+              name: (aliased_import
+                name: (dotted_name) @default_namespace
+                {match_var('default_namespace', regex)}
+                alias: (identifier) @alias
+              )
+            ) @root
+        """
+
+    def _parse_import_alias(self, match, source_lines):
+        line = source_lines[match[1]['root'].range.start_point[0]]
+        splitted = line.strip().split(' ')
+        pkg_name = splitted[1]
+        imported_as = splitted[-1]
+        return pkg_name, imported_as
