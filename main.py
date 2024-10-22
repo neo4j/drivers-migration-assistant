@@ -1,19 +1,19 @@
 import click
 from sys import exit
 
-from assistent import DriverMigrationAssistent
+from assistant import DriverMigrationAssistant
 from utils import Color as color, parse_path
 
 
 intro = '''
-This is the migration assistent for Neo4j language libraries (drivers). It scans your codebase and raises issues you should address before upgrading to a more recent version.
+This is the migration assistant for Neo4j language libraries (drivers). It scans your codebase and raises issues you should address before upgrading to a more recent version.
 It doesn't automatically rewrite your code; it only points at where action is needed, providing in-context information on how each hit should be addressed.
 '''
 welcome_warning = intro + '''
 Points of care:
-- The assistent can detect almost all the changes you need to do in your code, but a few changelog entries can't be surfaced in this form. For a thorough list of changes, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
+- The assistant can detect almost all the changes you need to do in your code, but a few changelog entries can't be surfaced in this form. For a thorough list of changes, see https://neo4j.com/docs/{language_name}-manual/current/migration/ .
 - Some of the hits may be false positives, so evaluate each hit.
-- Implicit function calls and other hard-to-parse expressions aren't be surfaced by the default parser. To broaden the search radius, use the regex parser.
+- Implicit function calls and other hard-to-parse expressions aren't be surfaced by the default parser. To broaden the search radius, use the regex parser (--regex-parser).
 - Your Cypher queries may also need changing, but this tool doesn't analyze them. See https://neo4j.com/docs/cypher-manual/current/deprecations-additions-removals-compatibility/ .
 '''
 
@@ -55,27 +55,27 @@ Points of care:
     help='Include ignored entries in output.'
 )
 def assist(path, language_name, context_lines, version, accept_warning, no_output_colors, regex_parser, no_interactive, show_ignored):
-    assistent = DriverMigrationAssistent(language_name, context_lines, version, no_output_colors, regex_parser)
+    assistant = DriverMigrationAssistant(language_name, context_lines, version, no_output_colors, regex_parser)
     warn_user(accept_warning, language_name)
     file_paths = parse_path(path)
-    assistent.print_msg('-'*50)
-    assistent.print_msg('\n' + click.style('Files to process: ', bold=True) + str(len(file_paths)) + '\n')
-    assistent.print_msg('-'*50 + '\n')
+    assistant.print_msg('-'*50)
+    assistant.print_msg('\n' + click.style('Files to process: ', bold=True) + str(len(file_paths)) + '\n')
+    assistant.print_msg('-'*50 + '\n')
 
     deprecated_count = 0; removed_count = 0;
     for file_path in file_paths:
-        assistent.print_msg(click.style(f'File: {file_path}\n', fg=color.file, bold=True))
-        messages = assistent.process_file(file_path)
+        assistant.print_msg(click.style(f'File: {file_path}\n', fg=color.file, bold=True))
+        messages = assistant.process_file(file_path)
         for i in range(len(messages)):
             msg = messages[i]
 
-            if not show_ignored and assistent.is_ignored_msg(msg):
-                assistent.print_msg(click.style(
+            if not show_ignored and assistant.is_ignored_msg(msg):
+                assistant.print_msg(click.style(
                     f'({i+1}/{len(messages)}) ' + 'Ignored\n',
                     fg='blue', bold=True))
                 continue
 
-            assistent.print_msg(click.style(
+            assistant.print_msg(click.style(
                 f'({i+1}/{len(messages)}) {msg["content"]}',
                 fg='blue', bold=True))
 
@@ -86,26 +86,26 @@ def assist(path, language_name, context_lines, version, accept_warning, no_outpu
                         fg='blue', bold=True
                     ), type=click.Choice(['n', 'i']), show_choices=False)
                 if choice == 'i':
-                    assistent.set_ignore_msg(msg)
-                assistent.print_msg('')  # newline
+                    assistant.set_ignore_msg(msg)
+                assistant.print_msg('')  # newline
 
-        deprecated_count += assistent.source.deprecated_count
-        removed_count += assistent.source.removed_count
+        deprecated_count += assistant.source.deprecated_count
+        removed_count += assistant.source.removed_count
 
-        assistent.print_msg(
+        assistant.print_msg(
             click.style('\nDeprecations in file: ', bold=True) +
-            click.style(assistent.source.deprecated_count, fg=color.deprecated))
-        assistent.print_msg(
+            click.style(assistant.source.deprecated_count, fg=color.deprecated))
+        assistant.print_msg(
             click.style('Removals in file: ', bold=True) +
-            click.style(assistent.source.removed_count, fg=color.removed) + '\n')
+            click.style(assistant.source.removed_count, fg=color.removed) + '\n')
 
-        assistent.print_msg('-'*50)
+        assistant.print_msg('-'*50)
 
-    assistent.print_msg(click.style('\nTotal deprecations: ', bold=True) + click.style(deprecated_count, fg=color.deprecated))
-    assistent.print_msg(click.style('Total removals: ', bold=True) + click.style(removed_count, fg=color.removed))
+    assistant.print_msg(click.style('\nTotal deprecations: ', bold=True) + click.style(deprecated_count, fg=color.deprecated))
+    assistant.print_msg(click.style('Total removals: ', bold=True) + click.style(removed_count, fg=color.removed))
 
-    assistent.print_msg(click.style('\nLibrary full manual: ', bold=True) + f'https://neo4j.com/docs/{language_name}-manual/current/')
-    assistent.print_msg(click.style('Migration guide: ', bold=True) + f'https://neo4j.com/docs/{language_name}-manual/current/migration/' + '\n')
+    assistant.print_msg(click.style('\nLibrary full manual: ', bold=True) + f'https://neo4j.com/docs/{language_name}-manual/current/')
+    assistant.print_msg(click.style('Migration guide: ', bold=True) + f'https://neo4j.com/docs/{language_name}-manual/current/migration/' + '\n')
 
 
 def warn_user(accept_warning, language_name):

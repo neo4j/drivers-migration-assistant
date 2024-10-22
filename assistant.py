@@ -9,7 +9,7 @@ from parsers import TreeSitterParser, RegexParser, format_pattern_string
 from utils import File, hash_message, Color as color
 
 
-class DriverMigrationAssistent:
+class DriverMigrationAssistant:
 
     def __init__(self, language_name, context_lines, version, no_output_colors, regex_parser):
         self.language_name = language_name
