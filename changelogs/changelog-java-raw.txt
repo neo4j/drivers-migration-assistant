@@ -1,0 +1,92 @@
+
+5.26.0
+vv This release brings a preview support for GQL Errors.
+https://github.com/neo4j/neo4j-java-driver/wiki/5.x-changelog#5260
+
+
+5.22.0
+vv This release introduces a preview support for GQL-status objects
+
+
+5.19.0
+vv This release introduces mTLS support preview and includes dependency updates.
+
+5.14.0
+vv This release makes the AuthToken rotation and session auth support API GA. #1495
+
+
+5.13.0
+
+vv    Introduce Api Telemetry
+    https://github.com/neo4j/neo4j-java-driver/pull/1487
+
+
+5.11
+
+Add support for cancellation on reactive session run #1457
+https://github.com/neo4j/neo4j-java-driver/pull/1457
+
+
+5.8.0
+vv This release introduces a new preview feature called AuthToken rotation and session auth support. See a dedicated discussion for more details.
+https://github.com/neo4j/neo4j-java-driver/discussions/1419
+
+
+5.7.0
+vv The main feature of the new release is an ability to specify notifications configuration.
+
+
+5.2.0
+
+This is a refinement release that brings several new features, improvements and dependency updates.
+https://github.com/neo4j/neo4j-java-driver/wiki/5.x-changelog#520
+
+vv This update introduces a new reactive session org.neo4j.driver.reactivestreams.ReactiveSession that is similar to the deprecated org.neo4j.driver.reactive.RxSession and includes improvements introduced with org.neo4j.driver.reactive.ReactiveSession.
+
+vv The following methods have been deprecated:
+
+    asyncSession
+    reactiveSession
+
+
+5.0.0
+
+vv The driver has been upgraded to Java 17 and it is the baseline Java version for this release.
+
+vv The org.neo4j.driver:neo4j-java-driver artifact no longer includes shaded Netty and Project Reactor dependencies and replaces the org.neo4j.driver:neo4j-java-driver-slim introduced in 4.4 series.
+
+A new org.neo4j.driver:neo4j-java-driver-all artifact includes shaded Netty and Project Reactor dependencies dependencies and is similar to the original packaging of the org.neo4j.driver:neo4j-java-driver before this update.
+
+The org.neo4j.driver:neo4j-java-driver includes an explicit module declaration for Java Platform Module System (JMPS). The module name remains unchanged.
+
+vv A new ReactiveSession has been introduced that includes API improvement and is based on Java Flow API. The RxSession has been deprecated.
+https://github.com/neo4j/neo4j-java-driver/pull/1208
+
+A RetryableException marker interface has been introduced to enable easier checking of retryable driver exceptions.
+
+vv A new experimental BookmarkManager feature has been introduced to allow simpler bookmark management, including multi-session level. This is an opt-in feature that is available via SessionConfig.
+https://github.com/neo4j/neo4j-java-driver/pull/1285
+
+
+vv Removed GraphDatabase.routingDriver #1239
+
+vv Introduce new managed transaction methods and deprecate existing ones #1196
+https://github.com/neo4j/neo4j-java-driver/pull/1196
+
+
+The new methods are:
+
+    executeRead (synchronous and reactive), executeReadAsync (asynchronous)
+    executeWrite (synchronous and reactive), executeWriteAsync (asynchronous)
+   executeWriteWithoutResult (synchronous)
+
+
+vv Update Bookmarks API https://github.com/neo4j/neo4j-java-driver/pull/1211
+
+
+vv Delete Session.reset #1149
+
+vv This update deletes the deprecated Neo4jException.neo4jErrorCode() method and updates documentation.
+
+
+vv Remove deprecated ServerVersion #1126
