@@ -3,7 +3,7 @@
 The migration assistant for Neo4j language libraries (drivers) scans your codebase and raises issues you should address before upgrading to a more recent version.
 It doesn't automatically rewrite your code; it only points at where action is needed, providing in-context information on how each hit should be addressed.
 
-The assistant supports codebases in Python and Go. <br>
+The assistant supports codebases in Python, JavaScript, and Go. <br>
 For further information see the upgrade guide for each language library: [Python](https://neo4j.com/docs/python-manual/5/upgrade/), [Go](https://neo4j.com/docs/go-manual/5/upgrade/), [JavaScript](https://neo4j.com/docs/javascript-manual/5/upgrade/), [Java](https://neo4j.com/docs/java-manual/5/upgrade/), [.NET](https://neo4j.com/docs/dotnet-manual/5/upgrade/).
 
 Points of care:
