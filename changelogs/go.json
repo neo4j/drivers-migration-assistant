@@ -378,6 +378,20 @@
     ]
   },
   {
+    "identifier": "Single",
+    "msg": "`neo4j.Single()` is deprecated in favor of `neo4j.SingleWithContext()`. The behavior is similar, except that the new function takes a `ctx.Context` as first argument.",
+    "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j#SingleWithContext",
+    "deprecated": "5.28.2",
+    "namespace": "neo4j",
+    "patterns": [
+      {
+        "ts_pattern": "^{{namespace}}\\\\.Single$",
+        "ts_type": "function",
+        "re_pattern": "\\b{{namespace}}\\.Single\\b"
+      }
+    ]
+  },
+  {
     "identifier": "neo4j.ConsoleLogger",
     "msg": "`neo4j.ConsoleLogger()` is deprecated in favor of `neo4j/log.ToConsole()`. The behavior is similar, except that the new function returns type `neo4j/log.Logger` rather than `neo4j/log.Console`.",
     "ref": "https://pkg.go.dev/github.com/neo4j/neo4j-go-driver/v5/neo4j/log#ToConsole",
